@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="445dda079fca4b4a87dae384df1ecbe8" Name="Diagram1">
+        <EntityTypeShape EntityType="BusinessToolDBModel.chat" Width="1.5" PointX="7.5" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessToolDBModel.complain" Width="1.5" PointX="7.5" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessToolDBModel.customer" Width="1.5" PointX="5.25" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessToolDBModel.employee" Width="1.5" PointX="5.25" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessToolDBModel.log_in" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessToolDBModel.note" Width="1.5" PointX="7.5" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessToolDBModel.notice" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessToolDBModel.order" Width="1.5" PointX="9.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessToolDBModel.product" Width="1.5" PointX="7.5" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessToolDBModel.profile_images" Width="1.5" PointX="7.5" PointY="17.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessToolDBModel.sale" Width="1.5" PointX="9.75" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessToolDBModel.status" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessToolDBModel.sysdiagram" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <AssociationConnector Association="BusinessToolDBModel.FK_chats_employees1" ManuallyRouted="false" />
+        <AssociationConnector Association="BusinessToolDBModel.FK_chats_employees2" ManuallyRouted="false" />
+        <AssociationConnector Association="BusinessToolDBModel.FK_complains_customers" ManuallyRouted="false" />
+        <AssociationConnector Association="BusinessToolDBModel.FK_customers_log_in" ManuallyRouted="false" />
+        <AssociationConnector Association="BusinessToolDBModel.FK_orders_customers" ManuallyRouted="false" />
+        <AssociationConnector Association="BusinessToolDBModel.FK_employees_log_in1" ManuallyRouted="false" />
+        <AssociationConnector Association="BusinessToolDBModel.FK_employees_log_in2" ManuallyRouted="false" />
+        <AssociationConnector Association="BusinessToolDBModel.FK_notes_employees" ManuallyRouted="false" />
+        <AssociationConnector Association="BusinessToolDBModel.FK_orders_employees" ManuallyRouted="false" />
+        <AssociationConnector Association="BusinessToolDBModel.FK_products_employees" ManuallyRouted="false" />
+        <AssociationConnector Association="BusinessToolDBModel.FK_profile_images_employees" ManuallyRouted="false" />
+        <AssociationConnector Association="BusinessToolDBModel.FK_sales_employees" ManuallyRouted="false" />
+        <AssociationConnector Association="BusinessToolDBModel.FK_log_in_status" ManuallyRouted="false" />
+        <AssociationConnector Association="BusinessToolDBModel.FK_orders_products" ManuallyRouted="false" />
+        <AssociationConnector Association="BusinessToolDBModel.FK_sales_products" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

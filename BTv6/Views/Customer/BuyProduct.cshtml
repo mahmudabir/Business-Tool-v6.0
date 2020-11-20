@@ -1,0 +1,36 @@
+﻿@model BTv6.Models.product
+
+@RenderPage("~/Views/Customer/Common.cshtml")
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/common.css">
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/buy.css">
+    <title>Order Products</title>
+</head>
+<body>
+    <form method="post">
+        <div class="box">
+            <h1>Confirm Order</h1>
+            <hr>
+            <img src="@Model.P_IMG" alt="@Model.PID" height="45" width="45" />
+            <p>Product ID</p>
+            <input type="text" name="PID" value="@Model.PID" readonly>
+            <p>Product Name</p>
+            <input type="text" name="P_NAME" value="@Model.P_NAME" readonly>
+            <p>Type</p>
+            <input type="text" name="TYPE" value="@Model.TYPE" readonly>
+            <p>Available Quantity</p>
+            <input type="text" name="QUANTITY" value="@Model.QUANTITY" readonly>
+            <p>Price</p>
+            <input type="number" name="SELL_PRICE" value="@Model.SELL_PRICE" readonly>
+            <p>Quantity</p>
+            <input type="number" placeholder="Enter Quantity that you need" min="1" max="@Model.QUANTITY" name="orderQuantity"><br>
+            <input type="submit" value="CONFIRM">
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Registration</title>
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/signup.css">
+</head>
+
+<body>
+    <div class="wrap">
+        <h2>Sign Up</h2>
+        <form method="post">
+
+            <input type="text" name="cusid" id="cusid" placeholder="Username" value="@TempData["cusid"]">
+
+            <input type="Password" name="password" id="password" placeholder="Password"><br>
+
+            <input type="Password" name="confirmpassword" id="confirmpassword" placeholder="Confirm Password"><br>
+
+            <input type="text" name="name" id="name" placeholder="Full Name" value="@TempData["name"]">
+
+            <input type="text" name="design" id="design" placeholder="Designation" value="@TempData["design"]">
+
+            <input type="email" name="email" id="email" placeholder="Email" value="@TempData["email"]">
+
+            <input type="text" name="mobile" id="mobile" placeholder="Mobile Number" value="@TempData["mobile"]">
+
+            <span style="color:red;">@TempData["Error"]</span>
+
+            <input type="submit" name="REGISTER" value="REGISTER"><br><br>
+
+
+            <p><b>Or Signup with Social Media @Html.ActionLink("here", "Index", "Login")</b></p>
+            <p><b>Or Log In @Html.ActionLink("here", "Index", "Login")</b></p>
+        </form>
+    </div>
+</body>
+
+</html>

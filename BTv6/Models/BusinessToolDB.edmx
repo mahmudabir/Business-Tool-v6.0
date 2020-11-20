@@ -1,0 +1,1009 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BusinessToolDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="chats">
+          <Key>
+            <PropertyRef Name="MSG_ID" />
+          </Key>
+          <Property Name="MSG_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DATE" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="SUB" Type="varchar" MaxLength="250" />
+          <Property Name="SENDER" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TEXT" Type="varchar(max)" Nullable="false" />
+          <Property Name="ATTACHMENT" Type="varchar" MaxLength="300" />
+          <Property Name="RECEIVER" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="STATUS" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="complains">
+          <Key>
+            <PropertyRef Name="cID" />
+          </Key>
+          <Property Name="cID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sub" Type="varchar" MaxLength="50" />
+          <Property Name="OwnerID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Text" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="customers">
+          <Key>
+            <PropertyRef Name="cusid" />
+          </Key>
+          <Property Name="cusid" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="design" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="mobile" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="reg_date" Type="datetime2" Precision="0" />
+          <Property Name="status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="employees">
+          <Key>
+            <PropertyRef Name="EmpID" />
+          </Key>
+          <Property Name="EmpID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="E_NAME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DID" Type="int" Nullable="false" />
+          <Property Name="SAL" Type="float" Nullable="false" />
+          <Property Name="E_MOB" Type="varchar" MaxLength="14" Nullable="false" />
+          <Property Name="E_MAIL" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="JOIN_DATE" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="ADDED_BY" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="log_in">
+          <Key>
+            <PropertyRef Name="LID" />
+          </Key>
+          <Property Name="LID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SID" Type="int" Nullable="false" />
+          <Property Name="PASS" Type="varchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="notes">
+          <Key>
+            <PropertyRef Name="NoteID" />
+          </Key>
+          <Property Name="NoteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NoteName" Type="varchar" MaxLength="50" />
+          <Property Name="OwnerID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Text" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="notices">
+          <Key>
+            <PropertyRef Name="noticeID" />
+          </Key>
+          <Property Name="noticeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="noteSub" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="noticetext" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="orders">
+          <Key>
+            <PropertyRef Name="orderid" />
+          </Key>
+          <Property Name="orderid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="prodid" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="quant" Type="int" Nullable="false" />
+          <Property Name="ammout" Type="float" Nullable="false" />
+          <Property Name="stat" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ord_date" Type="datetime2" Precision="0" />
+          <Property Name="deliveryby" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="orderby" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="products">
+          <Key>
+            <PropertyRef Name="PID" />
+          </Key>
+          <Property Name="PID" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="P_NAME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="P_IMG" Type="varchar" MaxLength="50" />
+          <Property Name="TYPE" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="AVAILABILITY" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="QUANTITY" Type="int" Nullable="false" />
+          <Property Name="BUY_PRICE" Type="float" Nullable="false" />
+          <Property Name="SELL_PRICE" Type="float" Nullable="false" />
+          <Property Name="MOD_BY" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Add_PDate" Type="datetime2" Precision="0" />
+        </EntityType>
+        <EntityType Name="profile_images">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IMAGE" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sales">
+          <Key>
+            <PropertyRef Name="SLID" />
+          </Key>
+          <Property Name="SLID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PID" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="QUANT" Type="int" Nullable="false" />
+          <Property Name="OB_AMMOUNT" Type="float" Nullable="false" />
+          <Property Name="PROFIT" Type="float" Nullable="false" />
+          <Property Name="C_NAME" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="C_MOB" Type="varchar" MaxLength="14" Nullable="false" />
+          <Property Name="SOLD_BY" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Sell_SDate" Type="datetime2" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="status">
+          <Key>
+            <PropertyRef Name="SID" />
+          </Key>
+          <Property Name="SID" Type="int" Nullable="false" />
+          <Property Name="DESIGNATION" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_chats_employees1">
+          <End Role="employees" Type="Self.employees" Multiplicity="1" />
+          <End Role="chats" Type="Self.chats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employees">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="chats">
+              <PropertyRef Name="SENDER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_chats_employees2">
+          <End Role="employees" Type="Self.employees" Multiplicity="1" />
+          <End Role="chats" Type="Self.chats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employees">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="chats">
+              <PropertyRef Name="RECEIVER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_complains_customers">
+          <End Role="customers" Type="Self.customers" Multiplicity="1" />
+          <End Role="complains" Type="Self.complains" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customers">
+              <PropertyRef Name="cusid" />
+            </Principal>
+            <Dependent Role="complains">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_customers_log_in">
+          <End Role="log_in" Type="Self.log_in" Multiplicity="1" />
+          <End Role="customers" Type="Self.customers" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="log_in">
+              <PropertyRef Name="LID" />
+            </Principal>
+            <Dependent Role="customers">
+              <PropertyRef Name="cusid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_employees_log_in1">
+          <End Role="log_in" Type="Self.log_in" Multiplicity="1" />
+          <End Role="employees" Type="Self.employees" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="log_in">
+              <PropertyRef Name="LID" />
+            </Principal>
+            <Dependent Role="employees">
+              <PropertyRef Name="EmpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_employees_log_in2">
+          <End Role="log_in" Type="Self.log_in" Multiplicity="1" />
+          <End Role="employees" Type="Self.employees" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="log_in">
+              <PropertyRef Name="LID" />
+            </Principal>
+            <Dependent Role="employees">
+              <PropertyRef Name="EmpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_log_in_status">
+          <End Role="status" Type="Self.status" Multiplicity="1" />
+          <End Role="log_in" Type="Self.log_in" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="log_in">
+              <PropertyRef Name="SID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_notes_employees">
+          <End Role="employees" Type="Self.employees" Multiplicity="1" />
+          <End Role="notes" Type="Self.notes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employees">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="notes">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orders_customers">
+          <End Role="customers" Type="Self.customers" Multiplicity="1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customers">
+              <PropertyRef Name="cusid" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="orderby" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orders_employees">
+          <End Role="employees" Type="Self.employees" Multiplicity="1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employees">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="deliveryby" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orders_products">
+          <End Role="products" Type="Self.products" Multiplicity="1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="PID" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="prodid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_products_employees">
+          <End Role="employees" Type="Self.employees" Multiplicity="1" />
+          <End Role="products" Type="Self.products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employees">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="products">
+              <PropertyRef Name="MOD_BY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_profile_images_employees">
+          <End Role="employees" Type="Self.employees" Multiplicity="1" />
+          <End Role="profile_images" Type="Self.profile_images" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="employees">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="profile_images">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sales_employees">
+          <End Role="employees" Type="Self.employees" Multiplicity="1" />
+          <End Role="sales" Type="Self.sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employees">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="sales">
+              <PropertyRef Name="SOLD_BY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sales_products">
+          <End Role="products" Type="Self.products" Multiplicity="1" />
+          <End Role="sales" Type="Self.sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="PID" />
+            </Principal>
+            <Dependent Role="sales">
+              <PropertyRef Name="PID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BusinessToolDBModelStoreContainer">
+          <EntitySet Name="chats" EntityType="Self.chats" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="complains" EntityType="Self.complains" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="customers" EntityType="Self.customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employees" EntityType="Self.employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="log_in" EntityType="Self.log_in" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="notes" EntityType="Self.notes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="notices" EntityType="Self.notices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="orders" EntityType="Self.orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="profile_images" EntityType="Self.profile_images" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sales" EntityType="Self.sales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="status" EntityType="Self.status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_chats_employees1" Association="Self.FK_chats_employees1">
+            <End Role="employees" EntitySet="employees" />
+            <End Role="chats" EntitySet="chats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_chats_employees2" Association="Self.FK_chats_employees2">
+            <End Role="employees" EntitySet="employees" />
+            <End Role="chats" EntitySet="chats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_complains_customers" Association="Self.FK_complains_customers">
+            <End Role="customers" EntitySet="customers" />
+            <End Role="complains" EntitySet="complains" />
+          </AssociationSet>
+          <AssociationSet Name="FK_customers_log_in" Association="Self.FK_customers_log_in">
+            <End Role="log_in" EntitySet="log_in" />
+            <End Role="customers" EntitySet="customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_employees_log_in1" Association="Self.FK_employees_log_in1">
+            <End Role="log_in" EntitySet="log_in" />
+            <End Role="employees" EntitySet="employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_employees_log_in2" Association="Self.FK_employees_log_in2">
+            <End Role="log_in" EntitySet="log_in" />
+            <End Role="employees" EntitySet="employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_log_in_status" Association="Self.FK_log_in_status">
+            <End Role="status" EntitySet="status" />
+            <End Role="log_in" EntitySet="log_in" />
+          </AssociationSet>
+          <AssociationSet Name="FK_notes_employees" Association="Self.FK_notes_employees">
+            <End Role="employees" EntitySet="employees" />
+            <End Role="notes" EntitySet="notes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orders_customers" Association="Self.FK_orders_customers">
+            <End Role="customers" EntitySet="customers" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orders_employees" Association="Self.FK_orders_employees">
+            <End Role="employees" EntitySet="employees" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orders_products" Association="Self.FK_orders_products">
+            <End Role="products" EntitySet="products" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_products_employees" Association="Self.FK_products_employees">
+            <End Role="employees" EntitySet="employees" />
+            <End Role="products" EntitySet="products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_profile_images_employees" Association="Self.FK_profile_images_employees">
+            <End Role="employees" EntitySet="employees" />
+            <End Role="profile_images" EntitySet="profile_images" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sales_employees" Association="Self.FK_sales_employees">
+            <End Role="employees" EntitySet="employees" />
+            <End Role="sales" EntitySet="sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sales_products" Association="Self.FK_sales_products">
+            <End Role="products" EntitySet="products" />
+            <End Role="sales" EntitySet="sales" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BusinessToolDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="chat">
+          <Key>
+            <PropertyRef Name="MSG_ID" />
+          </Key>
+          <Property Name="MSG_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DATE" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="SUB" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="SENDER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TEXT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ATTACHMENT" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="RECEIVER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="STATUS" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="employee" Relationship="Self.FK_chats_employees1" FromRole="chats" ToRole="employees" />
+          <NavigationProperty Name="employee1" Relationship="Self.FK_chats_employees2" FromRole="chats" ToRole="employees" />
+        </EntityType>
+        <EntityType Name="complain">
+          <Key>
+            <PropertyRef Name="cID" />
+          </Key>
+          <Property Name="cID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sub" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OwnerID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="customer" Relationship="Self.FK_complains_customers" FromRole="complains" ToRole="customers" />
+        </EntityType>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="cusid" />
+          </Key>
+          <Property Name="cusid" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="design" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="reg_date" Type="DateTime" Precision="0" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="complains" Relationship="Self.FK_complains_customers" FromRole="customers" ToRole="complains" />
+          <NavigationProperty Name="log_in" Relationship="Self.FK_customers_log_in" FromRole="customers" ToRole="log_in" />
+          <NavigationProperty Name="orders" Relationship="Self.FK_orders_customers" FromRole="customers" ToRole="orders" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="EmpID" />
+          </Key>
+          <Property Name="EmpID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="E_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DID" Type="Int32" Nullable="false" />
+          <Property Name="SAL" Type="Double" Nullable="false" />
+          <Property Name="E_MOB" Type="String" MaxLength="14" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="E_MAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="JOIN_DATE" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ADDED_BY" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="chats" Relationship="Self.FK_chats_employees1" FromRole="employees" ToRole="chats" />
+          <NavigationProperty Name="chats1" Relationship="Self.FK_chats_employees2" FromRole="employees" ToRole="chats" />
+          <NavigationProperty Name="log_in" Relationship="Self.FK_employees_log_in1" FromRole="employees" ToRole="log_in" />
+          <NavigationProperty Name="log_in1" Relationship="Self.FK_employees_log_in2" FromRole="employees" ToRole="log_in" />
+          <NavigationProperty Name="notes" Relationship="Self.FK_notes_employees" FromRole="employees" ToRole="notes" />
+          <NavigationProperty Name="orders" Relationship="Self.FK_orders_employees" FromRole="employees" ToRole="orders" />
+          <NavigationProperty Name="products" Relationship="Self.FK_products_employees" FromRole="employees" ToRole="products" />
+          <NavigationProperty Name="profile_images" Relationship="Self.FK_profile_images_employees" FromRole="employees" ToRole="profile_images" />
+          <NavigationProperty Name="sales" Relationship="Self.FK_sales_employees" FromRole="employees" ToRole="sales" />
+        </EntityType>
+        <EntityType Name="log_in">
+          <Key>
+            <PropertyRef Name="LID" />
+          </Key>
+          <Property Name="LID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SID" Type="Int32" Nullable="false" />
+          <Property Name="PASS" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="customer" Relationship="Self.FK_customers_log_in" FromRole="log_in" ToRole="customers" />
+          <NavigationProperty Name="employee" Relationship="Self.FK_employees_log_in1" FromRole="log_in" ToRole="employees" />
+          <NavigationProperty Name="employee1" Relationship="Self.FK_employees_log_in2" FromRole="log_in" ToRole="employees" />
+          <NavigationProperty Name="status" Relationship="Self.FK_log_in_status" FromRole="log_in" ToRole="status" />
+        </EntityType>
+        <EntityType Name="note">
+          <Key>
+            <PropertyRef Name="NoteID" />
+          </Key>
+          <Property Name="NoteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NoteName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OwnerID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="employee" Relationship="Self.FK_notes_employees" FromRole="notes" ToRole="employees" />
+        </EntityType>
+        <EntityType Name="notice">
+          <Key>
+            <PropertyRef Name="noticeID" />
+          </Key>
+          <Property Name="noticeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="noteSub" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="noticetext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="order">
+          <Key>
+            <PropertyRef Name="orderid" />
+          </Key>
+          <Property Name="orderid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="prodid" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="quant" Type="Int32" Nullable="false" />
+          <Property Name="ammout" Type="Double" Nullable="false" />
+          <Property Name="stat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ord_date" Type="DateTime" Precision="0" />
+          <Property Name="deliveryby" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="orderby" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="customer" Relationship="Self.FK_orders_customers" FromRole="orders" ToRole="customers" />
+          <NavigationProperty Name="employee" Relationship="Self.FK_orders_employees" FromRole="orders" ToRole="employees" />
+          <NavigationProperty Name="product" Relationship="Self.FK_orders_products" FromRole="orders" ToRole="products" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="PID" />
+          </Key>
+          <Property Name="PID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="P_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="P_IMG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TYPE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AVAILABILITY" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="QUANTITY" Type="Int32" Nullable="false" />
+          <Property Name="BUY_PRICE" Type="Double" Nullable="false" />
+          <Property Name="SELL_PRICE" Type="Double" Nullable="false" />
+          <Property Name="MOD_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Add_PDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="employee" Relationship="Self.FK_products_employees" FromRole="products" ToRole="employees" />
+          <NavigationProperty Name="orders" Relationship="Self.FK_orders_products" FromRole="products" ToRole="orders" />
+          <NavigationProperty Name="sales" Relationship="Self.FK_sales_products" FromRole="products" ToRole="sales" />
+        </EntityType>
+        <EntityType Name="profile_images">
+          <Key>
+            <PropertyRef Name="UID" />
+          </Key>
+          <Property Name="UID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IMAGE" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="employee" Relationship="Self.FK_profile_images_employees" FromRole="profile_images" ToRole="employees" />
+        </EntityType>
+        <EntityType Name="sale">
+          <Key>
+            <PropertyRef Name="SLID" />
+          </Key>
+          <Property Name="SLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="QUANT" Type="Int32" Nullable="false" />
+          <Property Name="OB_AMMOUNT" Type="Double" Nullable="false" />
+          <Property Name="PROFIT" Type="Double" Nullable="false" />
+          <Property Name="C_NAME" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="C_MOB" Type="String" MaxLength="14" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SOLD_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Sell_SDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="employee" Relationship="Self.FK_sales_employees" FromRole="sales" ToRole="employees" />
+          <NavigationProperty Name="product" Relationship="Self.FK_sales_products" FromRole="sales" ToRole="products" />
+        </EntityType>
+        <EntityType Name="status">
+          <Key>
+            <PropertyRef Name="SID" />
+          </Key>
+          <Property Name="SID" Type="Int32" Nullable="false" />
+          <Property Name="DESIGNATION" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="log_in" Relationship="Self.FK_log_in_status" FromRole="status" ToRole="log_in" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_chats_employees1">
+          <End Role="employees" Type="Self.employee" Multiplicity="1" />
+          <End Role="chats" Type="Self.chat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employees">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="chats">
+              <PropertyRef Name="SENDER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_chats_employees2">
+          <End Role="employees" Type="Self.employee" Multiplicity="1" />
+          <End Role="chats" Type="Self.chat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employees">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="chats">
+              <PropertyRef Name="RECEIVER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_complains_customers">
+          <End Role="customers" Type="Self.customer" Multiplicity="1" />
+          <End Role="complains" Type="Self.complain" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customers">
+              <PropertyRef Name="cusid" />
+            </Principal>
+            <Dependent Role="complains">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_customers_log_in">
+          <End Role="log_in" Type="Self.log_in" Multiplicity="1" />
+          <End Role="customers" Type="Self.customer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="log_in">
+              <PropertyRef Name="LID" />
+            </Principal>
+            <Dependent Role="customers">
+              <PropertyRef Name="cusid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orders_customers">
+          <End Role="customers" Type="Self.customer" Multiplicity="1" />
+          <End Role="orders" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customers">
+              <PropertyRef Name="cusid" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="orderby" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_employees_log_in1">
+          <End Role="log_in" Type="Self.log_in" Multiplicity="1" />
+          <End Role="employees" Type="Self.employee" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="log_in">
+              <PropertyRef Name="LID" />
+            </Principal>
+            <Dependent Role="employees">
+              <PropertyRef Name="EmpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_employees_log_in2">
+          <End Role="log_in" Type="Self.log_in" Multiplicity="1" />
+          <End Role="employees" Type="Self.employee" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="log_in">
+              <PropertyRef Name="LID" />
+            </Principal>
+            <Dependent Role="employees">
+              <PropertyRef Name="EmpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_notes_employees">
+          <End Role="employees" Type="Self.employee" Multiplicity="1" />
+          <End Role="notes" Type="Self.note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employees">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="notes">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orders_employees">
+          <End Role="employees" Type="Self.employee" Multiplicity="1" />
+          <End Role="orders" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employees">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="deliveryby" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_products_employees">
+          <End Role="employees" Type="Self.employee" Multiplicity="1" />
+          <End Role="products" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employees">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="products">
+              <PropertyRef Name="MOD_BY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_profile_images_employees">
+          <End Role="employees" Type="Self.employee" Multiplicity="1" />
+          <End Role="profile_images" Type="Self.profile_images" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="employees">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="profile_images">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sales_employees">
+          <End Role="employees" Type="Self.employee" Multiplicity="1" />
+          <End Role="sales" Type="Self.sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employees">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="sales">
+              <PropertyRef Name="SOLD_BY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_log_in_status">
+          <End Role="status" Type="Self.status" Multiplicity="1" />
+          <End Role="log_in" Type="Self.log_in" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="log_in">
+              <PropertyRef Name="SID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orders_products">
+          <End Role="products" Type="Self.product" Multiplicity="1" />
+          <End Role="orders" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="PID" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="prodid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_sales_products">
+          <End Role="products" Type="Self.product" Multiplicity="1" />
+          <End Role="sales" Type="Self.sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="PID" />
+            </Principal>
+            <Dependent Role="sales">
+              <PropertyRef Name="PID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BusinessToolDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="chats" EntityType="Self.chat" />
+          <EntitySet Name="complains" EntityType="Self.complain" />
+          <EntitySet Name="customers" EntityType="Self.customer" />
+          <EntitySet Name="employees" EntityType="Self.employee" />
+          <EntitySet Name="log_in" EntityType="Self.log_in" />
+          <EntitySet Name="notes" EntityType="Self.note" />
+          <EntitySet Name="notices" EntityType="Self.notice" />
+          <EntitySet Name="orders" EntityType="Self.order" />
+          <EntitySet Name="products" EntityType="Self.product" />
+          <EntitySet Name="profile_images" EntityType="Self.profile_images" />
+          <EntitySet Name="sales" EntityType="Self.sale" />
+          <EntitySet Name="status" EntityType="Self.status" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK_chats_employees1" Association="Self.FK_chats_employees1">
+            <End Role="employees" EntitySet="employees" />
+            <End Role="chats" EntitySet="chats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_chats_employees2" Association="Self.FK_chats_employees2">
+            <End Role="employees" EntitySet="employees" />
+            <End Role="chats" EntitySet="chats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_complains_customers" Association="Self.FK_complains_customers">
+            <End Role="customers" EntitySet="customers" />
+            <End Role="complains" EntitySet="complains" />
+          </AssociationSet>
+          <AssociationSet Name="FK_customers_log_in" Association="Self.FK_customers_log_in">
+            <End Role="log_in" EntitySet="log_in" />
+            <End Role="customers" EntitySet="customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orders_customers" Association="Self.FK_orders_customers">
+            <End Role="customers" EntitySet="customers" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_employees_log_in1" Association="Self.FK_employees_log_in1">
+            <End Role="log_in" EntitySet="log_in" />
+            <End Role="employees" EntitySet="employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_employees_log_in2" Association="Self.FK_employees_log_in2">
+            <End Role="log_in" EntitySet="log_in" />
+            <End Role="employees" EntitySet="employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_notes_employees" Association="Self.FK_notes_employees">
+            <End Role="employees" EntitySet="employees" />
+            <End Role="notes" EntitySet="notes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orders_employees" Association="Self.FK_orders_employees">
+            <End Role="employees" EntitySet="employees" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_products_employees" Association="Self.FK_products_employees">
+            <End Role="employees" EntitySet="employees" />
+            <End Role="products" EntitySet="products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_profile_images_employees" Association="Self.FK_profile_images_employees">
+            <End Role="employees" EntitySet="employees" />
+            <End Role="profile_images" EntitySet="profile_images" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sales_employees" Association="Self.FK_sales_employees">
+            <End Role="employees" EntitySet="employees" />
+            <End Role="sales" EntitySet="sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_log_in_status" Association="Self.FK_log_in_status">
+            <End Role="status" EntitySet="status" />
+            <End Role="log_in" EntitySet="log_in" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orders_products" Association="Self.FK_orders_products">
+            <End Role="products" EntitySet="products" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_sales_products" Association="Self.FK_sales_products">
+            <End Role="products" EntitySet="products" />
+            <End Role="sales" EntitySet="sales" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BusinessToolDBModelStoreContainer" CdmEntityContainer="BusinessToolDBEntities">
+          <EntitySetMapping Name="chats">
+            <EntityTypeMapping TypeName="BusinessToolDBModel.chat">
+              <MappingFragment StoreEntitySet="chats">
+                <ScalarProperty Name="MSG_ID" ColumnName="MSG_ID" />
+                <ScalarProperty Name="DATE" ColumnName="DATE" />
+                <ScalarProperty Name="SUB" ColumnName="SUB" />
+                <ScalarProperty Name="SENDER" ColumnName="SENDER" />
+                <ScalarProperty Name="TEXT" ColumnName="TEXT" />
+                <ScalarProperty Name="ATTACHMENT" ColumnName="ATTACHMENT" />
+                <ScalarProperty Name="RECEIVER" ColumnName="RECEIVER" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="complains">
+            <EntityTypeMapping TypeName="BusinessToolDBModel.complain">
+              <MappingFragment StoreEntitySet="complains">
+                <ScalarProperty Name="cID" ColumnName="cID" />
+                <ScalarProperty Name="sub" ColumnName="sub" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customers">
+            <EntityTypeMapping TypeName="BusinessToolDBModel.customer">
+              <MappingFragment StoreEntitySet="customers">
+                <ScalarProperty Name="cusid" ColumnName="cusid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="design" ColumnName="design" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="reg_date" ColumnName="reg_date" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employees">
+            <EntityTypeMapping TypeName="BusinessToolDBModel.employee">
+              <MappingFragment StoreEntitySet="employees">
+                <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+                <ScalarProperty Name="E_NAME" ColumnName="E_NAME" />
+                <ScalarProperty Name="DID" ColumnName="DID" />
+                <ScalarProperty Name="SAL" ColumnName="SAL" />
+                <ScalarProperty Name="E_MOB" ColumnName="E_MOB" />
+                <ScalarProperty Name="E_MAIL" ColumnName="E_MAIL" />
+                <ScalarProperty Name="JOIN_DATE" ColumnName="JOIN_DATE" />
+                <ScalarProperty Name="ADDED_BY" ColumnName="ADDED_BY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="log_in">
+            <EntityTypeMapping TypeName="BusinessToolDBModel.log_in">
+              <MappingFragment StoreEntitySet="log_in">
+                <ScalarProperty Name="LID" ColumnName="LID" />
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="PASS" ColumnName="PASS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="notes">
+            <EntityTypeMapping TypeName="BusinessToolDBModel.note">
+              <MappingFragment StoreEntitySet="notes">
+                <ScalarProperty Name="NoteID" ColumnName="NoteID" />
+                <ScalarProperty Name="NoteName" ColumnName="NoteName" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="notices">
+            <EntityTypeMapping TypeName="BusinessToolDBModel.notice">
+              <MappingFragment StoreEntitySet="notices">
+                <ScalarProperty Name="noticeID" ColumnName="noticeID" />
+                <ScalarProperty Name="noteSub" ColumnName="noteSub" />
+                <ScalarProperty Name="noticetext" ColumnName="noticetext" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orders">
+            <EntityTypeMapping TypeName="BusinessToolDBModel.order">
+              <MappingFragment StoreEntitySet="orders">
+                <ScalarProperty Name="orderid" ColumnName="orderid" />
+                <ScalarProperty Name="prodid" ColumnName="prodid" />
+                <ScalarProperty Name="quant" ColumnName="quant" />
+                <ScalarProperty Name="ammout" ColumnName="ammout" />
+                <ScalarProperty Name="stat" ColumnName="stat" />
+                <ScalarProperty Name="ord_date" ColumnName="ord_date" />
+                <ScalarProperty Name="deliveryby" ColumnName="deliveryby" />
+                <ScalarProperty Name="orderby" ColumnName="orderby" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="products">
+            <EntityTypeMapping TypeName="BusinessToolDBModel.product">
+              <MappingFragment StoreEntitySet="products">
+                <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="P_NAME" ColumnName="P_NAME" />
+                <ScalarProperty Name="P_IMG" ColumnName="P_IMG" />
+                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+                <ScalarProperty Name="AVAILABILITY" ColumnName="AVAILABILITY" />
+                <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+                <ScalarProperty Name="BUY_PRICE" ColumnName="BUY_PRICE" />
+                <ScalarProperty Name="SELL_PRICE" ColumnName="SELL_PRICE" />
+                <ScalarProperty Name="MOD_BY" ColumnName="MOD_BY" />
+                <ScalarProperty Name="Add_PDate" ColumnName="Add_PDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="profile_images">
+            <EntityTypeMapping TypeName="BusinessToolDBModel.profile_images">
+              <MappingFragment StoreEntitySet="profile_images">
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="IMAGE" ColumnName="IMAGE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sales">
+            <EntityTypeMapping TypeName="BusinessToolDBModel.sale">
+              <MappingFragment StoreEntitySet="sales">
+                <ScalarProperty Name="SLID" ColumnName="SLID" />
+                <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="QUANT" ColumnName="QUANT" />
+                <ScalarProperty Name="OB_AMMOUNT" ColumnName="OB_AMMOUNT" />
+                <ScalarProperty Name="PROFIT" ColumnName="PROFIT" />
+                <ScalarProperty Name="C_NAME" ColumnName="C_NAME" />
+                <ScalarProperty Name="C_MOB" ColumnName="C_MOB" />
+                <ScalarProperty Name="SOLD_BY" ColumnName="SOLD_BY" />
+                <ScalarProperty Name="Sell_SDate" ColumnName="Sell_SDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="status">
+            <EntityTypeMapping TypeName="BusinessToolDBModel.status">
+              <MappingFragment StoreEntitySet="status">
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="DESIGNATION" ColumnName="DESIGNATION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="BusinessToolDBModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

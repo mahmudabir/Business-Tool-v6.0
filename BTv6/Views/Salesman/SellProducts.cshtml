@@ -1,0 +1,78 @@
+﻿@RenderPage("~/Views/Salesman/Common.cshtml")
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sell</title>
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/Sellmanage.css">
+</head>
+<body>
+    <div class="box">
+        <form method="POST" name="manage">
+            
+            <input style="width: 20%; margin-left: 580px;" id="search" type="text" name="PID" placeholder="Search By ID" value="@TempData["pid"]">
+            <input id="btnSearch" type="submit" value="Search" name="SEARCH">
+            <p style="">Product ID <span style="color: red"></p>
+            <input type="text" name="PID" placeholder="Enter Product Id" value="@TempData["pid"]" readonly>
+            <p>Product name</p>
+            <input type="text" name="proName" placeholder="Enter Product Name" value="@TempData["pname"]" readonly>
+            <p>Type </p>
+            <input type="text" name="type"  placeholder="Product Type" value="@TempData["ptype"]" readonly>
+            <br>
+            <p>Quantity</p>
+            <input type="number" name="QUANT" placeholder="Enter Quantity" min='1' max="" value="@TempData["QUANT"]"><br>
+            @*<input type="number" name="preQuantity" placeholder="Enter Quantity" value="" hidden>
+        <input type="text" name="proBuyPrice" value="" hidden>*@
+            <p>Sell Price </p>
+            <input type="number" name="SELL_PRICE" min='' placeholder="Price" value="@TempData["price"]" readonly >
+            <p>Customer Name</p>
+            <input type="text" name="C_NAME" placeholder="Customer Name" value="@TempData["C_NAME"]">
+            <p>Customer Number </p>
+            <input type="text" name="C_MOB" placeholder="Customer Number" value="@TempData["C_MOB"]"><br>
+            <!-- <p>Seller ID</p> -->
+            <input type="text" name="sellerID" placeholder="Type ID" value="" readonly hidden>
+            <!-- <p>Sell Date</p> -->
+            <input type="text" name="SellDate" placeholder="Date" value="" readonly hidden>
+            <input type="submit" name="REFRESH" value="Refresh">
+            <input type="submit" name="SELL" id="SELL" value="Sell"><br><br>
+            <input style="margin-left: 80px" type="submit" name="PRINT" id="PRINT" onclick="savePDF()" value="Print">
+        </form>
+        <div align="right" class="table" id="table">
+            <h4 align="center" style="color:red;">@TempData["message"]</h4>
+            <table class="content-table">
+                <thead>
+                    <tr>
+                        <th>Prod. ID</th>
+                        <th>Prod. Name</th>
+                        <th>Type</th>
+                        <th>Availability</th>
+                        <th>Quantity</th>
+                        <th>Buy Price</th>
+                        <th>Sell Price</th>
+                        <th>Mod_By</th>
+                        <th>add_PDate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in  ViewData["products"] as List<BTv6.Models.product>) {
+                    <tr>
+                        @if(@item.AVAILABILITY.ToUpper()=="AVAILABLE"){
+                        <td>@item.PID </td>
+                        <td>@item.P_NAME</td>
+                        <td>@item.TYPE</td>
+                        <td>@item.AVAILABILITY.ToUpper()</td>
+                        <td>@item.QUANTITY</td>
+                        <td>@item.BUY_PRICE</td>
+                        <td>@item.SELL_PRICE</td>
+                        <td>@item.MOD_BY</td>
+                        <td>@item.Add_PDate</td>
+                        }
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

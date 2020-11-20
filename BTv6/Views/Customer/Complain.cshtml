@@ -1,0 +1,25 @@
+﻿@RenderPage("~/Views/Customer/Common.cshtml")
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/common.css">
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/complainBox.css">
+    <title>Complain Box</title>
+</head>
+<body>
+    <form method="post">
+        <div class="box">
+            <h1>Complain Box</h1>
+            <hr>
+            <p style="margin-top: 5px;">Subject</p>
+            <input type="text" name="sub" placeholder="Type Subject">
+            <p>Your Complain</p>
+            <textarea style="margin-top: 5px;" name="Text" id="complain" cols="50" rows="20"></textarea><br>
+            <input type="submit" name="send" value="Send">
+        </div>
+    </form>
+</body>
+</html>

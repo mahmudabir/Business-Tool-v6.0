@@ -1,0 +1,59 @@
+﻿@if ((int)Session["SID"] == 1)
+{
+    @RenderPage("~/Views/Admin/Common.cshtml")
+}
+@if ((int)Session["SID"] == 2)
+{
+    @RenderPage("~/Views/Manager/Common.cshtml")
+}
+@if ((int)Session["SID"] == 3)
+{
+    @RenderPage("~/Views/Salesman/Common.cshtml")
+}
+@if ((int)Session["SID"] == 4)
+{
+    @RenderPage("~/Views/Deliveryman/Common.cshtml")
+}
+@if ((int)Session["SID"] == 5)
+{
+    @RenderPage("~/Views/Customer/Common.cshtml")
+}
+@using BTv6.Models;
+@{ 
+    employee emp = ViewData["employee"] as employee;
+    customer cus = ViewData["customer"] as customer;
+    profile_images image = ViewData["image"] as profile_images;
+   
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/about.css">
+</head>
+<body>
+    <div class="box">
+        <form method="POST">
+            <h1>Profile Info <i class="fas fa-users"></i></h1>
+            <img src="@Url.Content(image.IMAGE)" style="height: 50px;width:50px;border-radius:50%">
+            <p></p>Username<br>
+            <input type="text" name="username" value="@if ((int)Session["SID"] != 5) { @emp.EmpID} else { @cus.cusid} " readonly><br>
+            <p>Full Name</p><br>
+            <input type="text" name="fullname" value="@if ((int)Session["SID"] != 5) { @emp.E_NAME} else { @cus.name}" readonly><br>
+            <p>Designation</p><br>
+            <input type="text" name="designation" value="@if ((int)Session["SID"] != 5) {@ViewData["a"]@ViewData["m"]@ViewData["s"]@ViewData["d"]} else { @cus.design} " readonly><br>
+            <p>Email<i class="far fa-envelope"></i></p><br>
+            <input type="email" name="email" value="@if ((int)Session["SID"] != 5) { @emp.E_MAIL} else { @cus.email}" readonly><br>
+            <p>Mobile No.</p><br>
+            <input type="text" name="mobile" value="@if ((int)Session["SID"] != 5) { @emp.E_MOB} else { @cus.mobile}" readonly><br>
+            <p>Join Date</p>
+            <input type="text" name="joinDate" value="@if ((int)Session["SID"] != 5) { @emp.JOIN_DATE} else { @cus.reg_date}" readonly><br>
+        </form>
+        <a href="/AboutUser/EditProfile"> <input type="submit" value="Edit Profile"> </a>
+    </div>
+</body>
+</html>
+

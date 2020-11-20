@@ -1,0 +1,224 @@
+CREATE TABLE `chats` (
+  `MSG_ID` int(11) NOT NULL,
+  `DATE` datetime NOT NULL DEFAULT current_timestamp(),
+  `SUB` varchar(250) DEFAULT NULL,
+  `SENDER` varchar(50) NOT NULL,
+  `TEXT` longtext NOT NULL,
+  `ATTACHMENT` varchar(300) DEFAULT NULL,
+  `RECEIVER` varchar(50) NOT NULL,
+  `STATUS` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE `complains` (
+  `cID` int(255) NOT NULL,
+  `sub` varchar(50) NOT NULL,
+  `OwnerID` varchar(50) NOT NULL,
+  `Text` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `customers` (
+  `cusid` varchar(50) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `design` varchar(30) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `mobile` varchar(50) NOT NULL,
+  `reg_date` datetime DEFAULT current_timestamp(),
+  `status` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `employees` (
+  `EmpID` varchar(50) NOT NULL,
+  `E_NAME` varchar(50) NOT NULL,
+  `DID` int(1) NOT NULL,
+  `SAL` double(10,2) NOT NULL,
+  `E_MOB` varchar(14) NOT NULL,
+  `E_MAIL` varchar(50) NOT NULL,
+  `JOIN_DATE` datetime NOT NULL DEFAULT current_timestamp(),
+  `ADDED_BY` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `log_in` (
+  `LID` varchar(50) NOT NULL,
+  `SID` int(1) NOT NULL,
+  `PASS` varchar(1000) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `notes` (
+  `NoteID` int(255) NOT NULL,
+  `NoteName` varchar(50) NOT NULL,
+  `OwnerID` varchar(50) NOT NULL,
+  `Text` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE `notices` (
+  `noticeID` int(254) NOT NULL,
+  `noteSub` varchar(100) NOT NULL,
+  `noticetext` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `orders` (
+  `orderid` int(254) NOT NULL,
+  `prodid` varchar(15) NOT NULL,
+  `quant` int(15) NOT NULL,
+  `ammout` double(10,2) NOT NULL,
+  `stat` varchar(50) NOT NULL,
+  `ord_date` datetime DEFAULT current_timestamp(),
+  `deliveryby` varchar(50) DEFAULT NULL,
+  `orderby` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE `products` (
+  `PID` varchar(15) NOT NULL,
+  `P_NAME` varchar(50) NOT NULL,
+  `P_IMG` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `TYPE` varchar(20) NOT NULL,
+  `AVAILABILITY` varchar(20) NOT NULL DEFAULT 'AVAILABLE',
+  `QUANTITY` int(15) NOT NULL,
+  `BUY_PRICE` double(10,2) NOT NULL,
+  `SELL_PRICE` double(10,2) NOT NULL,
+  `MOD_BY` varchar(50) NOT NULL,
+  `Add_PDate` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE `profile_images` (
+  `UID` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `IMAGE` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE `sales` (
+  `SLID` int(254) NOT NULL,
+  `PID` varchar(15) NOT NULL,
+  `QUANT` int(15) NOT NULL,
+  `OB_AMMOUNT` double(10,2) NOT NULL,
+  `PROFIT` double(10,2) NOT NULL,
+  `C_NAME` varchar(25) NOT NULL,
+  `C_MOB` varchar(14) NOT NULL,
+  `SOLD_BY` varchar(50) NOT NULL,
+  `Sell_SDate` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `status` (
+  `SID` int(1) NOT NULL,
+  `DESIGNATION` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `status`
+--
+
+INSERT INTO `status` (`SID`, `DESIGNATION`) VALUES
+(1, 'ADMIN'),
+(5, 'CUSTOMER'),
+(4, 'DELIVERYMAN'),
+(2, 'MANAGER'),
+(0, 'RESTRICT'),
+(3, 'SALESMAN');
+
+ALTER TABLE `chats`
+  ADD PRIMARY KEY (`MSG_ID`),
+  ADD KEY `SENDER` (`SENDER`),
+  ADD KEY `RECEIVER` (`RECEIVER`);
+
+ALTER TABLE `complains`
+  ADD PRIMARY KEY (`cID`),
+  ADD KEY `OwnerID` (`OwnerID`);
+
+
+ALTER TABLE `customers`
+  ADD PRIMARY KEY (`cusid`);
+
+ALTER TABLE `employees`
+  ADD PRIMARY KEY (`EmpID`),
+  ADD UNIQUE KEY `E_MOB` (`E_MOB`),
+  ADD UNIQUE KEY `E_MAIL` (`E_MAIL`),
+  ADD KEY `D_ID` (`DID`),
+  ADD KEY `ADDED_BY` (`ADDED_BY`);
+
+ALTER TABLE `log_in`
+  ADD PRIMARY KEY (`LID`),
+  ADD KEY `SID` (`SID`);
+
+ALTER TABLE `notes`
+  ADD PRIMARY KEY (`NoteID`),
+  ADD KEY `OwnerID` (`OwnerID`);
+
+ALTER TABLE `notices`
+  ADD PRIMARY KEY (`noticeID`);
+
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`orderid`),
+  ADD KEY `deliveryby` (`deliveryby`),
+  ADD KEY `prodid` (`prodid`);
+
+
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`PID`),
+  ADD KEY `MOD_BY` (`MOD_BY`);
+
+ALTER TABLE `profile_images`
+  ADD PRIMARY KEY (`UID`);
+
+ALTER TABLE `sales`
+  ADD PRIMARY KEY (`SLID`),
+  ADD KEY `PID` (`PID`),
+  ADD KEY `SOLD_BY` (`SOLD_BY`);
+
+ALTER TABLE `status`
+  ADD PRIMARY KEY (`SID`),
+  ADD UNIQUE KEY `DESIGNATION` (`DESIGNATION`);
+
+
+ALTER TABLE `chats`
+  MODIFY `MSG_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+ALTER TABLE `complains`
+  MODIFY `cID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+ALTER TABLE `notes`
+  MODIFY `NoteID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+ALTER TABLE `notices`
+  MODIFY `noticeID` int(254) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+ALTER TABLE `orders`
+  MODIFY `orderid` int(254) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+ALTER TABLE `sales`
+  MODIFY `SLID` int(254) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+ALTER TABLE `chats`
+  ADD CONSTRAINT `chat_ibfk_1` FOREIGN KEY (`SENDER`) REFERENCES `log_in` (`LID`),
+  ADD CONSTRAINT `chat_ibfk_2` FOREIGN KEY (`RECEIVER`) REFERENCES `log_in` (`LID`);
+
+ALTER TABLE `complains`
+  ADD CONSTRAINT `complain_ibfk_1` FOREIGN KEY (`OwnerID`) REFERENCES `customers` (`cusid`);
+
+ALTER TABLE `customers`
+  ADD CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`cusid`) REFERENCES `log_in` (`LID`);
+
+ALTER TABLE `employees`
+  ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`DID`) REFERENCES `status` (`SID`),
+  ADD CONSTRAINT `employee_ibfk_2` FOREIGN KEY (`ADDED_BY`) REFERENCES `log_in` (`LID`),
+  ADD CONSTRAINT `employee_ibfk_3` FOREIGN KEY (`EmpID`) REFERENCES `log_in` (`LID`);
+
+ALTER TABLE `log_in`
+  ADD CONSTRAINT `log_in_ibfk_1` FOREIGN KEY (`SID`) REFERENCES `status` (`SID`);
+
+ALTER TABLE `notes`
+  ADD CONSTRAINT `note_ibfk_1` FOREIGN KEY (`OwnerID`) REFERENCES `log_in` (`LID`);
+
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orderlist_ibfk_1` FOREIGN KEY (`deliveryby`) REFERENCES `log_in` (`LID`),
+  ADD CONSTRAINT `orderlist_ibfk_2` FOREIGN KEY (`prodid`) REFERENCES `products` (`PID`);
+
+ALTER TABLE `products`
+  ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`MOD_BY`) REFERENCES `log_in` (`LID`);
+
+ALTER TABLE `sales`
+  ADD CONSTRAINT `sales_ibfk_1` FOREIGN KEY (`PID`) REFERENCES `products` (`PID`),
+  ADD CONSTRAINT `sales_ibfk_2` FOREIGN KEY (`SOLD_BY`) REFERENCES `log_in` (`LID`);

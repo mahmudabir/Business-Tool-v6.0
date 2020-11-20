@@ -1,0 +1,72 @@
+﻿@if ((int)Session["SID"] == 1)
+{
+    @RenderPage("~/Views/Admin/Common.cshtml")
+}
+@if ((int)Session["SID"] == 2)
+{
+    @RenderPage("~/Views/Manager/Common.cshtml")
+}
+@if ((int)Session["SID"] == 3)
+{
+    @RenderPage("~/Views/Salesman/Common.cshtml")
+}
+@model List<BTv6.Models.sale>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.$i">
+    <title>Sales History</title>
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/history.css">
+    @*<script src="{{ URL::to('js/printSalesHistory.js') }}"></script>
+        <script src="{{ URL::to('js/excelPrint.js') }}"></script>
+        <script src="{{ URL::to('js/jquery.js') }}"></script>*@
+</head>
+<body>
+    <div class="table">
+        <h1>Sales History</h1>
+        <input style="margin-top: 5px;margin-left: 14px;" name="PRINT" id="PRINT" onclick="savePDF()" type="submit" value="Export PDF">
+        <input style="margin-top: 5px;margin-left: 14px;" type="submit" name="excel" onclick="exportToExcel('tblexportData', 'user-data')" value="Export Excel">
+        <div class=tab1 id="table">
+            <table class="content-table" id="tblexportData" border="1">
+                <thead>
+                    <tr>
+                        <th>SLID</th>
+                        <th>PID</th>
+                        <th>QUANT</th>
+                        <th>OB_AMMOUNT</th>
+                        <th>PROFIT</th>
+                        <th>C_NAME</th>
+                        <th>C_MOB</th>
+                        <th>SOLD_BY</th>
+                        <th>Sell_SDate</th>
+                    </tr>
+                </thead>
+                <tbody id="">
+                    @if (Model.Count > 0)
+                    {
+                        foreach (var sale in Model)
+                        {
+                            <tr>
+                                <td>@sale.SLID</td>
+                                <td>@sale.PID</td>
+                                <td>@sale.QUANT</td>
+                                <td>@sale.OB_AMMOUNT</td>
+                                <td>@sale.PROFIT</td>
+                                <td>@sale.C_NAME</td>
+                                <td>@sale.C_MOB</td>
+                                <td>@sale.SOLD_BY</td>
+                                <td>@sale.Sell_SDate</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+
+            </table>
+        </div>
+        <hr>
+
+
+    </div>
+</body>
+</html>

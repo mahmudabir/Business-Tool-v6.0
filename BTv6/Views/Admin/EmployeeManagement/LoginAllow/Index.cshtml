@@ -1,0 +1,105 @@
+﻿@model BTv6.Models.employee
+
+@RenderPage("~/Views/Admin/Common.cshtml")
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allow Employee Login</title>
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/common.css">
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/manage.css">
+</head>
+<body>
+    <div class="box">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.EmpID)
+
+            <div class="form-group">
+                NAME
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.E_NAME, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.E_NAME, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                SALARY
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.SAL, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.SAL, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                MOBILE NO.
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.E_MOB, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.E_MOB, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                MAIL
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.E_MAIL, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.E_MAIL, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                JOIN DATE
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.JOIN_DATE, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.JOIN_DATE, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                ADDED BY
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ADDED_BY, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.ADDED_BY, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                CHOSE LOGIN ROLE
+                <div class="col-md-10">
+                    <select name="DID">
+                        @foreach (var item in ViewData["design"] as List<BTv6.Models.status>)
+                        {
+                            if (item.SID != 0 && item.SID != 5)
+                            {
+                                if (item.SID == Model.DID)
+                                {
+                                    <option value="@item.SID" selected>@item.DESIGNATION</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.SID">@item.DESIGNATION</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</body>
+</html>

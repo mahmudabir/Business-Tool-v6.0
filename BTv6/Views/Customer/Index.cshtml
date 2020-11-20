@@ -1,0 +1,20 @@
+﻿@RenderPage("~/Views/Customer/Common.cshtml")
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard</title>
+    <!--<link rel="stylesheet" href="assets/styles/alldash.css">-->
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/alldash.css">
+</head>
+<body>
+    <div class="pro">
+        <h1>Welcome to Customer Homepage</h1>
+        <br />
+        <br />
+        <span style="color: lawngreen; padding-left:200px;">@TempData["success"]</span>
+        <span style="color: red; padding-left:200px;">@TempData["error"]</span>
+    </div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+﻿@using BTv6.Models
+
+@{
+    order ordr = ViewData["order"] as order;
+    product prdct = ViewData["product"] as product;
+}
+
+@RenderPage("~/Views/Customer/Common.cshtml")
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/common.css">
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/buy.css">
+    <title>Order Products</title>
+</head>
+<body>
+    <div class="box">
+        <form method="post">
+
+            <h1>Confirm Order</h1>
+            <hr>
+            <img src="@prdct.P_IMG" alt="@prdct.PID" height="45" width="45" />
+            <p>Product ID</p>
+            <input type="text" name="PID" value="@prdct.PID" readonly>
+            <p>Product Name</p>
+            <input type="text" name="P_NAME" value="@prdct.P_NAME" readonly>
+            <p>Type</p>
+            <input type="text" name="TYPE" value="@prdct.TYPE" readonly>
+            <p>Available Quantity</p>
+            <input type="text" name="QUANTITY" value="@prdct.QUANTITY" readonly>
+            <p>Price</p>
+            <input type="number" name="SELL_PRICE" value="@prdct.SELL_PRICE" readonly>
+            <p>Quantity</p>
+            <input type="number" placeholder="Enter Quantity that you need" min="1" max="@prdct.QUANTITY" name="quant" value="@ordr.quant"><br>
+
+
+            <input type="text" name="orderid" value="@ordr.orderid" readonly hidden />
+
+            <input type="submit" name="update" value="Update" />
+
+        </form>
+    </div>
+
+
+</body>
+</html>
