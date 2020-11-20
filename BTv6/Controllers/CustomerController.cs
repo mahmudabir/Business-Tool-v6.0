@@ -382,7 +382,8 @@ namespace BTv6.Controllers
                     else
                     {
                         //Here the logic for updating order & product will reside
-                        return View(orderid);
+                        TempData["success"] = "Your Order Updated Successfully!";
+                        return RedirectToAction("Index");
                     }
                 }
                 else
