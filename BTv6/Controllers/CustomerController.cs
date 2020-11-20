@@ -134,27 +134,6 @@ namespace BTv6.Controllers
         }
 
 
-        //[HttpPost]
-        //public ActionResult OrderProduct(string PID)
-        //{
-        //    if (Session["SID"] != null)
-        //    {
-        //        if (this.CheckCustomer((int)Session["SID"]))
-        //        {
-
-        //            return RedirectToAction("BuyProduct", "Customer", PID);
-        //        }
-        //        else
-        //        {
-        //            return RedirectToAction("Index", "Login");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return RedirectToAction("Index", "Login");
-        //    }
-        //}
-
         [HttpGet]
         public ActionResult BuyProduct(string id)
         {
@@ -166,7 +145,24 @@ namespace BTv6.Controllers
 
                     var productFromDB = productRepository.GetProductByID(id);
 
-                    return View(productFromDB);
+                    if (productFromDB != null)
+                    {
+                        if (productFromDB.AVAILABILITY == "AVAILABLE" && productFromDB.QUANTITY > 0)
+                        {
+                            return View(productFromDB);
+                        }
+                        else
+                        {
+                            TempData["error"] = "The Product you are searching is not Available.";
+                            return RedirectToAction("Index");
+                        }
+                    }
+                    else
+                    {
+                        TempData["error"] = "The Product you are searching is not Available.";
+                        return RedirectToAction("Index");
+                    }
+
                 }
                 else
                 {
@@ -289,14 +285,23 @@ namespace BTv6.Controllers
                     OrderRepository orderRepository = new OrderRepository();
 
                     var orderFromDB = orderRepository.GetOrderByID(id);
-                    if (orderFromDB.orderby == (string)Session["LID"])
+
+                    if (orderFromDB != null)
                     {
-                        var productFromDB = productRepository.GetProductByID(orderFromDB.prodid);
+                        if (orderFromDB.orderby == (string)Session["LID"])
+                        {
+                            var productFromDB = productRepository.GetProductByID(orderFromDB.prodid);
 
-                        ViewData["order"] = (order)orderFromDB;
-                        ViewData["product"] = (product)productFromDB;
+                            ViewData["order"] = (order)orderFromDB;
+                            ViewData["product"] = (product)productFromDB;
 
-                        return View();
+                            return View();
+                        }
+                        else
+                        {
+                            TempData["error"] = "Sorry, Cannot view the order!";
+                            return RedirectToAction("Index");
+                        }
                     }
                     else
                     {
