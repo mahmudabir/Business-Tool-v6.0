@@ -28,17 +28,65 @@
                         <th>Name</th>
                         <th>Type</th>
                         <th>Sell Status</th>
-                        <th>Contact</th>
-                        <th>Email</th>
-                        <th>Join Date</th>
-                        <th>Added By</th>
+                        <th>Qunatity</th>
+                        <th>Buy Price</th>
+                        <th>Sell Price</th>
+                        <th>Added Date</th>
+                        <th>Modify By</th>
                         <th></th>
                         <th></th>
                     </tr>
                 </thead>
 
                 <tbody id='tab'>
-                    
+                    @if (Model.Count > 0)
+                    {
+                        foreach (var product in Model)
+                        {
+                            <tr>
+                                <td align='center'>@product.P_NAME</td>
+                                <td align='center'>@product.TYPE</td>
+                                <td align='center'>
+                                    @if (product.AVAILABILITY.Equals("AVAILABLE"))
+                                    {
+                                        <span>&#9989;</span>
+                                    }
+                                    else
+                                    {
+                                        <span>&#9940;</span>
+                                    }
+                                </td>
+                                <td align='center'>@product.QUANTITY</td>
+                                <td align='center'>@product.BUY_PRICE</td>
+                                <td align='center'>@product.SELL_PRICE</td>
+                                <td align='center'>@product.Add_PDate</td>
+                                <td align='center'>@product.MOD_BY</td>
+                                <td align='center'>
+                                    <button style="width: 50px;height: 20px; font-size:12px;">@Html.ActionLink("Edit", "UpdateProduct", new { id = product.PID })</button>
+                                </td>
+                                <td align='center'>
+                                    @if (product.AVAILABILITY.Equals("UNAVAILABLE"))
+                                    {
+                                        <button style="width: 50px;height: 20px; font-size:12px;">@Html.ActionLink("Allow", "AllowProdutSell", new { id = product.PID })</button>
+                                    }
+
+                                    else
+                                    {
+                                        <button style="width: 50px;height: 20px; font-size:12px;">@Html.ActionLink("Restrict", "RestrictProdutSell", new { id = product.PID })</button>
+                                    }
+
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                    else
+                    {
+                        <tr>
+                            <td colspan='10' align='center'><span style="color:red">NO DATA FOUND</span></td>
+                        </tr>
+                    }
+
                 </tbody>
             </table>
         </div>

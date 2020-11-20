@@ -276,6 +276,7 @@
     <Content Include="Views\Admin\EmployeeManagement\Create\Index.cshtml" />
     <Content Include="Views\Customer\EditPendingOrder.cshtml" />
     <Content Include="Views\Admin\ProductManagement\Index.cshtml" />
+    <Content Include="Views\Admin\ProductManagement\Update\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

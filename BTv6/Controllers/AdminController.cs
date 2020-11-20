@@ -34,26 +34,10 @@ namespace BTv6.Controllers
         {
             if ((int)Session["SID"] == 1)
             {
-                if(employee != null)
-                {
-                    EmployeeRepository employees = new EmployeeRepository();
-                    var employeesList = employees.GetAll();
+                EmployeeRepository employees = new EmployeeRepository();
+                var employeesList = employees.GetAll();
 
-                    ViewBag.Id = employee.EmpID;
-                    ViewBag.Name = employee.E_NAME;
-                    ViewBag.Design = employee.DID;
-
-                    return View("EmployeeManagement/Index", employeesList);
-                }
-
-                else
-                {
-                    EmployeeRepository employees = new EmployeeRepository();
-                    var employeesList = employees.GetAll();
-
-                    return View("EmployeeManagement/Index", employeesList);
-                }
-
+                return View("EmployeeManagement/Index", employeesList);
             }
 
             else
@@ -122,7 +106,7 @@ namespace BTv6.Controllers
 
                 var av = employees.CheckUser(employee);
 
-                if(!av)
+                if (!av)
                 {
                     logins.InsertByObj(l);
 
@@ -139,7 +123,7 @@ namespace BTv6.Controllers
                 {
                     return RedirectToAction("CreateEmployee");
                 }
-                
+
             }
 
             else
@@ -182,7 +166,7 @@ namespace BTv6.Controllers
 
                 employees.Update(employee);
 
-                if(Session["LID"].Equals((string)employee.EmpID) || (string)Session["LID"] == (string)employee.EmpID)
+                if (Session["LID"].Equals((string)employee.EmpID) || (string)Session["LID"] == (string)employee.EmpID)
                 {
                     return RedirectToAction("Index", "Logout");
                 }
@@ -190,7 +174,7 @@ namespace BTv6.Controllers
                 else
                 {
                     return RedirectToAction("EmployeeManagement");
-                }      
+                }
             }
 
             else
@@ -295,6 +279,84 @@ namespace BTv6.Controllers
 
                 return View("ProductManagement/Index", productsList);
 
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult UpdateProduct(string id)
+        {
+            if ((int)Session["SID"] == 1)
+            {
+                ProductRepository products = new ProductRepository();
+                var prod = products.Get(id);
+
+                return View("ProductManagement/Update/Index", prod);
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult UpdateProduct(product product)
+        {
+            if ((int)Session["SID"] == 1)
+            {
+                ProductRepository products = new ProductRepository();
+                product.MOD_BY = (string)Session["LID"];
+                product.Add_PDate = DateTime.Now;
+                products.Update(product);
+
+                return RedirectToAction("ProductManagement");
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult RestrictProdutSell(string id)
+        {
+            if ((int)Session["SID"] == 1)
+            {
+                BusinessToolDBEntities context = new BusinessToolDBEntities();
+
+                var prod = context.products.Where(x => x.PID == (string)id).FirstOrDefault();
+                prod.AVAILABILITY = "UNAVAILABLE";
+                context.Entry(prod).State = EntityState.Modified;
+                context.SaveChanges();
+
+                return RedirectToAction("ProductManagement");
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult AllowProdutSell(string id)
+        {
+            if ((int)Session["SID"] == 1)
+            {
+                BusinessToolDBEntities context = new BusinessToolDBEntities();
+
+                var prod = context.products.Where(x => x.PID == (string)id).FirstOrDefault();
+                prod.AVAILABILITY = "AVAILABLE";
+                context.Entry(prod).State = EntityState.Modified;
+                context.SaveChanges();
+
+                return RedirectToAction("ProductManagement");
             }
 
             else
