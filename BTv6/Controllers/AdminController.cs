@@ -287,6 +287,43 @@ namespace BTv6.Controllers
             }
         }
 
+        [HttpPost, ActionName("ProductManagement")]
+        public ActionResult PostProductManagement()
+        {
+            if ((int)Session["SID"] == 1)
+            {
+                if (Request["CREATE"] != null)
+                {
+                    return RedirectToAction("CreateProduct");
+                }
+
+                else
+                {
+                    return RedirectToAction("ProductManagement");
+                }
+
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult CreateProduct()
+        {
+            if ((int)Session["SID"] == 1)
+            {
+                return View("ProductManagement/Create/Index");
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
         [HttpGet]
         public ActionResult UpdateProduct(string id)
         {
