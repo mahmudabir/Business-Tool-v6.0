@@ -332,14 +332,22 @@ namespace BTv6.Controllers
                     ProductRepository productRepository = new ProductRepository();
                     OrderRepository orderRepository = new OrderRepository();
 
-
                     var orderFromDB = orderRepository.GetOrderByID(id);
-                    var productFromDB = productRepository.GetProductByID(orderFromDB.prodid);
+                    if (orderFromDB.orderby == (string)Session["LID"])
+                    {
+                        var productFromDB = productRepository.GetProductByID(orderFromDB.prodid);
 
-                    ViewData["order"] = (order)orderFromDB;
-                    ViewData["product"] = (product)productFromDB;
+                        ViewData["order"] = (order)orderFromDB;
+                        ViewData["product"] = (product)productFromDB;
 
-                    return View();
+                        return View();
+                    }
+                    else
+                    {
+                        TempData["error"] = "Sorry, Cannot view the order!";
+                        return RedirectToAction("Index");
+                    }
+
                 }
                 else
                 {
@@ -353,7 +361,7 @@ namespace BTv6.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditPendingOrder(order ordr, product prdct)
+        public ActionResult EditPendingOrder(int orderid, int quant)
         {
 
             if (Session["SID"] != null)
@@ -363,42 +371,18 @@ namespace BTv6.Controllers
                     OrderRepository orderRepository = new OrderRepository();
                     ProductRepository productRepository = new ProductRepository();
 
-                    var orderFromDB = orderRepository.GetOrderByID(ordr.orderid);
-                    var productFromDB = productRepository.GetProductByID(ordr.prodid);
+                    var orderFromDB = orderRepository.GetOrderByID(orderid);
+                    var productFromDB = productRepository.GetProductByID(orderFromDB.prodid);
 
-                    if ((productFromDB.QUANTITY < prdct.QUANTITY) || (orderFromDB.orderby != (string)Session["LID"]))
+                    if (orderFromDB.orderby != (string)Session["LID"])
                     {
-                        TempData["error"] = "Quantity can not be 0 or exceed available quantity.";
-                        return View(ordr.orderid);
+                        TempData["error"] = "Sorry, Cannot update the order!";
+                        return View(orderid);
                     }
                     else
                     {
-                        //assining values to the object and then passing for intertin the value
-                        order orderToUpdate = orderFromDB;
-
-                        orderToUpdate.quant = ordr.quant;
-                        orderToUpdate.ammout = ordr.quant * prdct.SELL_PRICE;
-                        orderToUpdate.deliveryby = "1";
-                        orderToUpdate.orderby = (string)Session["LID"];
-
-                        orderRepository.Update(orderToUpdate);
-
-                        //Update product quantity
-                        var updatedQuantity = ordr.quant - orderFromDB.quant;
-
-                        product productToUpdate = productFromDB;
-                        if (updatedQuantity > 0)
-                        {
-                            productToUpdate.QUANTITY = productFromDB.QUANTITY + Math.Abs(updatedQuantity);
-                            productRepository.Update(productToUpdate);
-                            return RedirectToAction("OrderProduct");
-                        }
-                        else
-                        {
-                            productToUpdate.QUANTITY = productFromDB.QUANTITY - Math.Abs(updatedQuantity);
-                            productRepository.Update(productToUpdate);
-                            return RedirectToAction("OrderProduct");
-                        }
+                        //Here the logic for updating order & product will reside
+                        return View(orderid);
                     }
                 }
                 else
