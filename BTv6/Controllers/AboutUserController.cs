@@ -126,6 +126,23 @@ namespace BTv6.Controllers
                     empToUpdate.E_MOB = mobile;
                     empToUpdate.E_MAIL = email;
                     employee.UpdateUser(empToUpdate);
+
+                    string path = Server.MapPath("~/Assets/image/profile");
+                    string fileName = Path.GetFileName(avatar.FileName);
+                    string fullPath = Path.Combine(path, fileName);
+                    avatar.SaveAs(fullPath);
+                    profile_images images = new profile_images();
+                    images.UID = (string)Session["LID"];
+                    images.IMAGE = "~/Assets/image/profile/" + fileName;
+                    Profile_imagesRepository profile_Images = new Profile_imagesRepository();
+                    var img = profile_Images.GetByID((string)Session["LID"]);
+                    string image = img.IMAGE;
+                    if (image != "~/Assets/image/profile/default.png")
+                    {
+                        System.IO.File.Delete(Server.MapPath(image));
+                    }
+          
+                    
                 }
                 else
                 {
@@ -141,20 +158,7 @@ namespace BTv6.Controllers
                     cusToUpdate.email = email;
                     customer.UpdateUser(cusToUpdate);
                 }
-                string path = Server.MapPath("~/Assets/image/profile");
-                string fileName = Path.GetFileName(avatar.FileName);
-                string fullPath = Path.Combine(path,fileName);
-                avatar.SaveAs(fullPath);
-                profile_images images = new profile_images();
-                images.UID = (string)Session["LID"];
-                images.IMAGE = "~/Assets/image/profile/"+ fileName;
-                Profile_imagesRepository profile_Images = new Profile_imagesRepository();
-                /*string oldfile = images.IMAGE;
-                if (oldfile != null)
-                { 
-                    
-                }*/
-                profile_Images.Update(images);
+                
                 return RedirectToAction("Index", "AboutUser");
             }
             else

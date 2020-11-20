@@ -39,14 +39,18 @@
         <h1>Profile Info <i class="fas fa-users"></i></h1>
 
         <form method="POST" autocomplete="off" enctype="multipart/form-data">
-            <p>Upload Profile Picture</p><input style="margin-top: 5px" type="file" name="avatar" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
+            @if ((int)Session["SID"] != 5)
+            {
+                <p>Upload Profile Picture</p>
+                <input style="margin-top: 5px" type="file" name="avatar" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
+            }
             <p style="margin-top:5px">Username</p><br>
             <input type="text" name="EmpID" value="@if ((int)Session["SID"] != 5) { @emp.EmpID} else { @cus.cusid}" readonly><br>
             <p>Full Name</p><br>
             <input type="text" name="name" value="@if ((int)Session["SID"] != 5) { @emp.E_NAME} else { @cus.name}"><br>
 
             <p>Designation</p><br>
-            <input type="text" name="designation" value="@if ((int)Session["SID"] != 5) {@ViewData["a"]@ViewData["m"]@ViewData["s"]@ViewData["d"]} else { @cus.design}" readonly><br>
+            <input type="text" name="designation" value="@if ((int)Session["SID"] != 5) {@ViewData["a"]@ViewData["m"]@ViewData["s"]@ViewData["d"]} else { @cus.design } " readonly><br>
             <p>Email<i class="far fa-envelope"></i></p><br>
             <input type="email" name="email" value="@if ((int)Session["SID"] != 5) { @emp.E_MAIL} else { @cus.email}"><br>
 

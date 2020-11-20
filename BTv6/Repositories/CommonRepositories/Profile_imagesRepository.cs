@@ -4,6 +4,7 @@ using BTv6.Repositories.CommonRepositories;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 
 namespace BTv6.Repositories.CommonRepositories
 {
@@ -19,5 +20,10 @@ namespace BTv6.Repositories.CommonRepositories
             this.context.profile_images.Add(p);
             this.context.SaveChanges();
         }
+        /*public void UpdateImage(profile_images images)
+        {
+            this.context.Entry(images).State = EntityState.Modified;
+            this.context.SaveChanges();
+        }*/
     }
 }

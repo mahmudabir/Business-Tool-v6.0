@@ -14,10 +14,7 @@ namespace BTv6.Repositories.AdminRepositories
         }
         public void UpdateUser(customer cusToUpdate)
         {
-            //employee emp = GetByID(empToUpdate.EmpID);
-
-            //emp.E_NAME = empToUpdate.E_NAME;
-
+            
             this.Update(cusToUpdate);
         }
     }

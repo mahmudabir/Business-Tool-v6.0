@@ -38,7 +38,11 @@
     <div class="box">
         <form method="POST">
             <h1>Profile Info <i class="fas fa-users"></i></h1>
-            <img src="@Url.Content(image.IMAGE)" style="height: 50px;width:50px;border-radius:50%">
+            @if ((int)Session["SID"] != 5)
+            {
+                <img src="@Url.Content(image.IMAGE)" style="height: 50px;width:50px;border-radius:50%">
+            }
+            
             <p></p>Username<br>
             <input type="text" name="username" value="@if ((int)Session["SID"] != 5) { @emp.EmpID} else { @cus.cusid} " readonly><br>
             <p>Full Name</p><br>
