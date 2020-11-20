@@ -253,50 +253,6 @@ namespace BTv6.Controllers
             }
         }
 
-        //[HttpPost, ActionName("PendingOrder")]
-        //public ActionResult PendingOrderPost(string id)
-        //{
-        //    if (Session["SID"] != null)
-        //    {
-        //        if (this.CheckCustomer((int)Session["SID"]))
-        //        {
-        //            OrderRepository orderRepository = new OrderRepository();
-
-        //            var orderFromDB = orderRepository.Get(id);
-
-
-        //            if (orderFromDB.stat == "0")
-        //            {
-        //                var quantityToAdd = orderFromDB.quant;
-
-        //                ProductRepository productRepository = new ProductRepository();
-
-        //                var productFromDB = productRepository.Get(orderFromDB.prodid);
-
-
-        //                orderRepository.Delete(id);
-
-        //                TempData["success"] = "Your Order Canceled Successfully!";
-        //                return RedirectToAction("PendingOrder", id);
-
-        //            }
-        //            else
-        //            {
-        //                TempData["error"] = "Your Order Cannot be Cancelled!";
-        //                return RedirectToAction("Index");
-        //            }
-        //        }
-        //        else
-        //        {
-        //            return RedirectToAction("Index", "Login");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return RedirectToAction("Index", "Login");
-        //    }
-        //}
-
         [HttpGet]
         public ActionResult RecievedOrder()
         {
