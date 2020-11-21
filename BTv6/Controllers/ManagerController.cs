@@ -14,18 +14,18 @@ namespace BTv6.Controllers
     public class ManagerController : Controller
     {
         // GET: Manager
-        [HttpGet]       
+        [HttpGet]
         public ActionResult Index()
         {
-            if ((int)Session["SID"]==2)
+            if ((int)Session["SID"] == 2)
             {
                 return View();
             }
             else
             {
-                return RedirectToAction("Index","Login");
+                return RedirectToAction("Index", "Login");
             }
-            
+
         }
         [HttpGet]
         public ActionResult ProductManage(product product)
@@ -47,16 +47,16 @@ namespace BTv6.Controllers
         [HttpPost]
         public ActionResult ProductManage()
         {
-            if ((int)Session["SID"]==2)
+            if ((int)Session["SID"] == 2)
             {
                 if (Request["CREATE"] != null)
                 {
-                    return RedirectToAction("InsertProduct","Manager");
+                    return RedirectToAction("InsertProduct", "Manager");
                 }
 
                 else
                 {
-                    return RedirectToAction("ProductManage","Manager");
+                    return RedirectToAction("ProductManage", "Manager");
                 }
             }
             return View();
@@ -118,7 +118,7 @@ namespace BTv6.Controllers
 
                 products.Update(product);
 
-                return RedirectToAction("ProductManage","Manager");
+                return RedirectToAction("ProductManage", "Manager");
             }
 
             else
@@ -183,12 +183,12 @@ namespace BTv6.Controllers
                     products.InsertByObj(product);
 
 
-                    return RedirectToAction("ProductManage","Manager");
+                    return RedirectToAction("ProductManage", "Manager");
                 }
 
-                
+
                 {
-                    return RedirectToAction("InsertProduct","Manager");
+                    return RedirectToAction("InsertProduct", "Manager");
                 }
 
             }
@@ -201,7 +201,7 @@ namespace BTv6.Controllers
         [HttpGet]
         public ActionResult OrderManage()
         {
-            if ((int)Session["SID"]==2)
+            if ((int)Session["SID"] == 2)
             {
                 OrderRepository order = new OrderRepository();
                 var orderFromDB = order.GetAll();
@@ -211,7 +211,7 @@ namespace BTv6.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-            
+
         }
         [HttpGet]
         public ActionResult Approve(order order)
@@ -235,7 +235,7 @@ namespace BTv6.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Approve(order order,int id)
+        public ActionResult Approve(order order, int id)
         {
             if ((int)Session["SID"] == 2)
             {
@@ -245,27 +245,33 @@ namespace BTv6.Controllers
                 context.Entry(OrderDB).State = EntityState.Modified;
                 context.SaveChanges();
 
-                return RedirectToAction("OrderManage","Manager");
+                return RedirectToAction("OrderManage", "Manager");
             }
             else
             {
                 return RedirectToAction("Index", "Login");
             }
-                
+
         }
         public ActionResult ProductTypeChart(product product)
         {
 
             if (Session["SID"] != null)
             {
-                if ((int)Session["SID"]==2)
+                if ((int)Session["SID"] == 2)
                 {
                     ProductRepository productRepository = new ProductRepository();
 
-                    BusinessToolDBEntities dc = new BusinessToolDBEntities();
-                    
-                    
-                    
+                    var mod1 = productRepository.GetAll().Where(x => x.MOD_BY == "1").Count();
+                    var mod2 = productRepository.GetAll().Where(x => x.MOD_BY == "2").Count();
+                    var mod3 = productRepository.GetAll().Where(x => x.MOD_BY == "3").Count();
+
+                    ViewData["mod1"] = mod1;
+                    ViewData["mod2"] = mod2;
+                    ViewData["mod3"] = mod3;
+
+
+
                     return View();
                 }
                 else

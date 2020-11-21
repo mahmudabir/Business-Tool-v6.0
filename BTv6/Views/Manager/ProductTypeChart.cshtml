@@ -4,7 +4,7 @@
     .AddTitle("Product Chart")
     .AddSeries(
     name: "Procucts",
-    xValue: new[] {  },
-    yValues: new[] { })
+    xValue: new[] { "Admin", "Manager", "Salesman" },
+    yValues: new[] { ViewData["mod1"], ViewData["mod2"], ViewData["mod3"] })
     .Write();
 }
