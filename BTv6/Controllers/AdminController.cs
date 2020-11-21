@@ -587,6 +587,7 @@ namespace BTv6.Controllers
         }
 
         //Customer Management
+        [HttpGet]
         public ActionResult CustomerManagement(customer customer)
         {
             if ((int)Session["SID"] == 1)
@@ -604,5 +605,55 @@ namespace BTv6.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult AcceptCustomerLogin(string id)
+        {
+            if ((int)Session["SID"] == 1)
+            {
+                BusinessToolDBEntities context = new BusinessToolDBEntities();
+
+                var cusLOG = context.log_in.Where(x => x.LID == (string)id).FirstOrDefault();
+                cusLOG.SID = 5;
+                context.Entry(cusLOG).State = EntityState.Modified;
+                context.SaveChanges();
+
+                var cus = context.customers.Where(x => x.cusid == (string)id).FirstOrDefault();
+                cus.status = 1;
+                context.Entry(cus).State = EntityState.Modified;
+                context.SaveChanges();
+
+                return RedirectToAction("CustomerManagement");
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        public ActionResult RejectCustomerLogin(string id)
+        {
+            if ((int)Session["SID"] == 1)
+            {
+                BusinessToolDBEntities context = new BusinessToolDBEntities();
+
+                var cusLOG = context.log_in.Where(x => x.LID == (string)id).FirstOrDefault();
+                cusLOG.SID = 0;
+                context.Entry(cusLOG).State = EntityState.Modified;
+                context.SaveChanges();
+
+                var cus = context.customers.Where(x => x.cusid == (string)id).FirstOrDefault();
+                cus.status = 0;
+                context.Entry(cus).State = EntityState.Modified;
+                context.SaveChanges();
+
+                return RedirectToAction("CustomerManagement");
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
     }
 }
