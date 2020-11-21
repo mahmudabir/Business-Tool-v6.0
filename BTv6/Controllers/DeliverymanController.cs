@@ -12,6 +12,7 @@ namespace BTv6.Controllers
     {
         // GET: Deliveryman
         OrderRepository orderrepo = new OrderRepository();
+        ProductRepository prodrepo = new ProductRepository();
         public ActionResult Index()
         {
             return View();
@@ -20,8 +21,17 @@ namespace BTv6.Controllers
         {
             if (Session["SID"] != null)
             {
-                ViewData["confirmed"] = orderrepo.GetAcceptedList((string)Session["LID"]);
-                return View();
+                if (this.CheckDeliveryman((string)Session["SID"]))
+                {
+
+                    ViewData["confirmed"] = orderrepo.GetAcceptedList((string)Session["LID"]);
+                    return View();
+                }
+                else
+                {
+
+                    return RedirectToAction("Index", "Login");
+                }
             }
             else
             {
@@ -33,8 +43,16 @@ namespace BTv6.Controllers
         {
             if (Session["SID"] != null)
             {
-                ViewData["order"] = orderrepo.GetPendingDeliveryList((string)Session["LID"]);
+                if (this.CheckDeliveryman((string)Session["SID"]))
+                {
+                    ViewData["order"] = orderrepo.GetPendingDeliveryList((string)Session["LID"]);
                 return View();
+                 }
+                else
+                {
+
+                    return RedirectToAction("Index", "Login");
+                }
         }
             else
             {
@@ -49,12 +67,18 @@ namespace BTv6.Controllers
         {
             if (Session["SID"] != null)
             {
-
-                order od = new order();
-                od=orderrepo.GetOrderByID(id);
-                od.stat = "0";
-                orderrepo.Update(od);
-                return RedirectToAction("PendingDeliveryList");
+                if (this.CheckDeliveryman((string)Session["SID"]))
+                {
+                    order od = new order();
+                    od = orderrepo.GetOrderByID(id);
+                    od.stat = "2";
+                    orderrepo.Update(od);
+                    return RedirectToAction("PendingDeliveryList");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
             else
             {
@@ -68,16 +92,42 @@ namespace BTv6.Controllers
         {
             if (Session["SID"] != null)
             {
+                if (this.CheckDeliveryman((string)Session["SID"]))
+                {
+                    order od = new order();
+                    product prod = new product();
+                    od = orderrepo.GetOrderByID(id);
 
-                order od = new order();
-                od = orderrepo.GetOrderByID(id);
-                od.stat = "1";
-                orderrepo.Update(od);
-                return RedirectToAction("PendingDeliveryList");
+                    string prodId = od.prodid;
+                    prod = prodrepo.GetProductByID(prodId);
+
+                    int totalQuant = prod.QUANTITY + od.quant;
+                    prodrepo.UpdateQuantityById(prodId, totalQuant);
+                    orderrepo.DeleteOrderByID(id);
+                    return RedirectToAction("PendingDeliveryList");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
             else
             {
                 return RedirectToAction("Index", "Login");
+            }
+        }
+
+        [NonAction]
+
+        public bool CheckDeliveryman(string SID)
+        {
+            if (SID == "4")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 

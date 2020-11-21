@@ -25,5 +25,12 @@ namespace BTv6.Repositories.CommonRepositories
 
         }
 
+        public void UpdateQuantityById(string PID,int quantity)
+        {
+            prod = GetProductByID(PID);
+            prod.QUANTITY = quantity;
+            this.Update(prod);
+        }
+
     }
 }
