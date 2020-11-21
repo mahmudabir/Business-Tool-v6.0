@@ -53,8 +53,7 @@
                     {
                         foreach (var order in Model)
                         {
-                            if (order.stat == "0")
-                            {
+                            
                                 <tr>
                                     <td>@order.orderid</td>
                                     <td>@order.ord_date</td>
@@ -67,7 +66,7 @@
                                         <a style="margin-left:-40px" href="~/Customer/DeletePendingOrder/@order.orderid"><input type="submit" value="Cancel"></a>
                                     <td>
                                 </tr>
-                            }
+                        
 
                         }
                     }
