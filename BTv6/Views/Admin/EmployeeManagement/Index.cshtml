@@ -11,7 +11,9 @@
     <link rel="stylesheet" type="text/css" href="~/Assets/css/common.css">
     <link rel="stylesheet" type="text/css" href="~/Assets/css/manage.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    
+
+    <script src="~/Assets/js/pdfPrint.js"></script>
+
 </head>
 
 <body>
@@ -19,7 +21,6 @@
         <form method="POST">
             <input type="submit" name="CREATE" id="CREATE" value="CREATE">
             <input type="submit" name="PRINT" id="PRINT" onclick="savePDF()" value="Export PDF">
-            <input type="submit" name="excel" onclick="exportToExcel('tblexportData', 'user-data')" value="Export Excel">
         </form>
         <div align="right" class="table" id="table">
             <table class="content-table" id="tblexportData">

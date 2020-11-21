@@ -655,5 +655,133 @@ namespace BTv6.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
+
+        //Notice Management
+        [HttpGet]
+        public ActionResult NoticeManagement(notice notice)
+        {
+            if ((int)Session["SID"] == 1)
+            {
+                NoticeRepository notices = new NoticeRepository();
+                List <notice> noticeList = notices.GetAll();
+
+                return View("NoticeManagement/Index", noticeList);
+
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        [HttpPost, ActionName("NoticeManagement")]
+        public ActionResult PostNoticeManagement()
+        {
+            if ((int)Session["SID"] == 1)
+            {
+                if (Request["CREATE"] != null)
+                {
+                    return RedirectToAction("CreateNotice");
+                }
+
+                else
+                {
+                    return RedirectToAction("NoticeManagement");
+                }
+
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult CreateNotice()
+        {
+            if ((int)Session["SID"] == 1)
+            {
+                return View("NoticeManagement/Create/Index");
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult CreateNotice(notice notice)
+        {
+            if ((int)Session["SID"] == 1)
+            {
+                NoticeRepository notices = new NoticeRepository();
+
+                notices.Insert(notice);
+
+                return RedirectToAction("NoticeManagement/Index");
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult UpdateNotice(int id)
+        {
+            if ((int)Session["SID"] == 1)
+            {
+                NoticeRepository notices = new NoticeRepository();
+
+                var notice = notices.GetByID(id);
+
+                return View("NoticeManagement/Update/Index", notice);
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult UpdateNotice(notice notice)
+        {
+            if ((int)Session["SID"] == 1)
+            {
+                NoticeRepository notices = new NoticeRepository();
+
+                notices.Update(notice);
+
+                return RedirectToAction("NoticeManagement/Index");
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult DeleteNotice(int id)
+        {
+            if ((int)Session["SID"] == 1)
+            {
+                NoticeRepository notices = new NoticeRepository();
+
+                notices.DeleteNoticeByID(id);
+
+                return RedirectToAction("NoticeManagement/Index");
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
     }
 }

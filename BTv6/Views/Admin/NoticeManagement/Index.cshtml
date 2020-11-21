@@ -1,20 +1,4 @@
-﻿@if ((int)Session["SID"] == 1)
-{
-    @RenderPage("~/Views/Admin/Common.cshtml")
-}
-@if ((int)Session["SID"] == 2)
-{
-    @RenderPage("~/Views/Manager/Common.cshtml")
-}
-@if ((int)Session["SID"] == 3)
-{
-    @RenderPage("~/Views/Salesman/Common.cshtml")
-}
-@if ((int)Session["SID"] == 4)
-{
-    @RenderPage("~/Views/Deliveryman/Common.cshtml")
-}
-
+﻿@RenderPage("~/Views/Admin/Common.cshtml")
 @model List<BTv6.Models.notice>
 
 
@@ -32,12 +16,16 @@
 
 <body>
     <div class="box">
+        <form method="POST">
+            <input type="submit" name="CREATE" id="CREATE" value="CREATE">
+        </form>
         <div align="right" class="table" id="table">
             <table class="content-table" id="tblexportData">
                 <thead>
                     <tr>
                         <th>Notice SL.</th>
                         <th>Subject</th>
+                        <th></th>
                         <th></th>
                     </tr>
                 </thead>
@@ -52,7 +40,11 @@
                                 <td align='center'>@notice.noteSub</td>
 
                                 <td align='center'>
-                                    <button style="width: 50px;height: 20px; font-size:12px;">@Html.ActionLink("Read", "DetailsNotice", new { id = notice.noticeID })</button>
+                                    <button style="width: 50px;height: 20px; font-size:12px;">@Html.ActionLink("Edit", "UpdateNotice", new { id = notice.noticeID })</button>
+                                </td>
+
+                                <td align='center'>
+                                    <button style="width: 50px;height: 20px; font-size:12px;">@Html.ActionLink("Delete", "DeleteNotice", new { id = notice.noticeID })</button>
                                 </td>
                             </tr>
                         }
@@ -61,7 +53,7 @@
                     else
                     {
                         <tr>
-                            <td colspan='3' align='center'><span style="color:red">NO DATA FOUND</span></td>
+                            <td colspan='4' align='center'><span style="color:red">NO DATA FOUND</span></td>
                         </tr>
                     }
 
