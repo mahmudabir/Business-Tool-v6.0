@@ -125,6 +125,7 @@
     <Content Include="Assets\image\reg.jpeg" />
     <Content Include="Assets\image\travel.jpeg" />
     <Content Include="Assets\image\user.png" />
+    <Content Include="Assets\js\excelPrint.js" />
     <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
     <Content Include="Models\BusinessToolDB.Context.tt">
@@ -291,7 +292,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Assets\image\profile\" />
-    <Folder Include="Assets\js\" />
     <Folder Include="Views\Logout\" />
   </ItemGroup>
   <ItemGroup>
