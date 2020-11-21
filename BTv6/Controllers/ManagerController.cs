@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace BTv6.Controllers
 {
@@ -197,13 +198,54 @@ namespace BTv6.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
+        [HttpGet]
         public ActionResult OrderManage()
         {
-            return View();
+            if ((int)Session["SID"]==2)
+            {
+                OrderRepository order = new OrderRepository();
+                var orderFromDB = order.GetAll();
+                return View(orderFromDB);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            
         }
+        [HttpGet]
         public ActionResult Approve()
         {
-            return View();
+            if ((int)Session["SID"] == 2)
+            {
+                /*order order1 = new order();*/
+                OrderRepository order = new OrderRepository();
+                
+                return View(order.GetPendingOrder("0"));
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+        [HttpPost]
+        public ActionResult Approve(order order,int id)
+        {
+            if ((int)Session["SID"] == 2)
+            {
+                BusinessToolDBEntities context = new BusinessToolDBEntities();
+                var OrderDB = context.orders.Where(x => x.orderid == id).FirstOrDefault();
+                OrderDB.stat = "1";
+                context.Entry(OrderDB).State = EntityState.Modified;
+                context.SaveChanges();
+
+                return RedirectToAction("OrderManage","Manager");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+                
         }
     }
 }

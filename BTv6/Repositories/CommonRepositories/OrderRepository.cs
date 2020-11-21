@@ -1,6 +1,7 @@
 ﻿using BTv6.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -29,6 +30,11 @@ namespace BTv6.Repositories.CommonRepositories
             return recievedOrderList;
         }
 
+        public List<order>GetPendingOrder(string stat)
+        {
+            return context.orders.Where(o => o.stat == stat).ToList();
+            
+        }
 
         public order GetOrderByID(int ID)
         {
@@ -36,8 +42,7 @@ namespace BTv6.Repositories.CommonRepositories
 
             return ordr;
         }
-
-
+        
         public void DeleteOrderByID(int id)
         {
             this.context.orders.Remove(GetOrderByID(id));
@@ -57,5 +62,11 @@ namespace BTv6.Repositories.CommonRepositories
 
             return acceptedList;
         }
+        public void UpdateOrderByID(order order)
+        {
+            this.context.Entry(order).State = EntityState.Modified;
+            this.context.SaveChanges();
+        }
+        
     }
 }

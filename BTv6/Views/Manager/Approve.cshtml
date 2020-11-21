@@ -1,4 +1,4 @@
-﻿
+﻿@model BTv6.Models.order
 @RenderPage("~/Views/Manager/Common.cshtml")
 <html lang="en">
 <head>
@@ -13,17 +13,17 @@
             <h1>Confirm Order</h1>
             <hr>
             <p>Order ID</p>
-            <input type="text" name="a" value="" readonly>
+            <input type="text" name="orderid" value="@Model.orderid" readonly>
             <p>Product ID</p>
-            <input type="text" name="n" value="" readonly>
+            <input type="text" name="proid" value="@Model.prodid" readonly>
             <p>Quantity</p>
-            <input type="text" name="t" value="" readonly>
+            <input type="text" name="quant" value="@Model.quant" readonly>
             <p>Cash</p>
-            <input type="text" name="am" value="" readonly>
+            <input type="text" name="ammount" value="@Model.ammout" readonly>
             <p>Order Date</p>
-            <input type="text" name="od" value="" readonly>
+            <input type="text" name="ord_date" value="@Model.ord_date" readonly>
             <p>Delivery By</p>
-            <input type="text" placeholder="Enter Delivery Man ID." name="db"><br>
+            <input type="text" placeholder="Enter Delivery Man ID." value="@Model.deliveryby" name="deliveryby"><br>
             <input type="submit" value="CONFIRM">
         </div>
     </form>

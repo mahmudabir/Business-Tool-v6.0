@@ -1,5 +1,6 @@
 ﻿
 @RenderPage("~/Views/Manager/Common.cshtml")
+@model List<BTv6.Models.order>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +12,8 @@
 </head>
 <body>
     <div align="center" class="table">
+        <h1 style="color:wheat;">Order Manage</h1>
+        <hr />
         <table class="content-table">
             <thead>
                 <tr>
@@ -25,23 +28,32 @@
                 </tr>
             </thead>
             <tbody>
-               @* @for ($i = 0; $i != count($info); $i++)
-    <tr>
-        <td>{{$info[$i]->orderid}}</td>
-        <td>{{$info[$i]->prodid}}</td>
-        <td>{{$info[$i]->quant}}</td>
-        <td>{{$info[$i]->ammout}}</td>
-        <td>{{$info[$i]->ord_date}}</td>
-        <td>{{$info[$i]->orderby}}</td>
-        <td><a href="{{url('managerDash/orderManageManager/approve/'.$info[$i]->orderid.'/')}}"><input type="submit" value="Approve"></a>
-        <td>
-    </tr>
-                @endfor
-                @if (count($info) == 0)
+                @if (Model.Count > 0)
+
+                {
+                    foreach (var order in Model)
+                    {
+                        <tr>
+                            <td>@order.orderid</td>
+                            <td>@order.prodid</td>
+                            <td>@order.quant</td>
+                            <td>@order.ammout</td>
+                            <td>@order.ord_date</td>
+                            <td>@order.orderby</td>
+                            <td>
+                                <button class="a">@Html.ActionLink("Approve", "Approve", new { id = order.orderid })</button>
+                            
+                            </td>
+
+                        </tr>
+                    }
+                }
+                else
+                {
                     <tr>
-                        <td colspan="7" align="center">NO DATA</td>
+                        <td colspan="9" align="center">NO DATA</td>
                     </tr>
-                @endif*@
+                }
             </tbody>
         </table>
     </div>
