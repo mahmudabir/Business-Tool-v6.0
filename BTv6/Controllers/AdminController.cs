@@ -429,14 +429,33 @@ namespace BTv6.Controllers
                     ProductRepository prodIMG = new ProductRepository();
                     var img = prodIMG.GetProductByID(product.PID);
                     string image = (string)img.P_IMG;
-                    if (image != "~/Assets/image/product/default.png")
+
+                    if(Path.GetFileName(file.FileName).Length>0)
                     {
-                        System.IO.File.Delete(Server.MapPath(image));
+                        string fullPath = Path.Combine(path, Path.GetFileName(file.FileName));
+
+                        if (image != "~/Assets/image/product/default.png")
+                        {
+                            System.IO.File.Delete(Server.MapPath(image));
+                        }
+
+                        avatar.SaveAs(fullPath);
+                        product.P_IMG = "~/Assets/image/product/" + Path.GetFileName(file.FileName);
                     }
 
-                    string fullPath = Path.Combine(path, Path.GetFileName(file.FileName));
-                    avatar.SaveAs(fullPath);
-                    product.P_IMG = "~/Assets/image/product/" + Path.GetFileName(file.FileName);
+                    else
+                    {
+                        product.P_IMG = image;
+                    }                   
+                }
+
+                else
+                {
+                    ProductRepository prodIMG = new ProductRepository();
+                    var img = prodIMG.GetProductByID(product.PID);
+                    string image = (string)img.P_IMG;
+
+                    product.P_IMG = image;
                 }
 
                 products.Update(product);
