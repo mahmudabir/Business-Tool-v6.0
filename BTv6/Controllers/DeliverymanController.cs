@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BTv6.Repositories.CommonRepositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,17 +10,34 @@ namespace BTv6.Controllers
     public class DeliverymanController : Controller
     {
         // GET: Deliveryman
+        OrderRepository orderrepo = new OrderRepository();
         public ActionResult Index()
         {
             return View();
         }
         public ActionResult DeliveryRecords()
         {
-            return View();
+            if (Session["SID"] != null)
+            {
+                ViewData["confirmed"] = orderrepo.GetAcceptedList((string)Session["LID"]);
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
         }
         public ActionResult PendingDeliveryList()
         {
-            return View();
+            if (Session["SID"] != null)
+            {
+                ViewData["order"] = orderrepo.GetPendingDeliveryList((string)Session["LID"]);
+                return View();
         }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+}
     }
 }

@@ -42,7 +42,7 @@ body {
 }
 
 .table {
-    width: 770px;
+    width: 1020px;
     height: 570px;
     top: 48%;
     left: 57%;
@@ -87,7 +87,7 @@ body {
     border-bottom: 1px solid #dddddd;
     color:#ffffff;
 }
-
+/*
 .content-table tbody tr:nth-last-of-type(even) {
     background-color: #f3f3f3;
     color: #000;
@@ -97,3 +97,4 @@ body {
 .content-table tbody tr:last-of-type {
     border-bottom: 2px solid #009879;
 }
+    */

@@ -280,7 +280,7 @@
     <Content Include="Views\Admin\ProductManagement\Index.cshtml" />
     <Content Include="Views\Admin\ProductManagement\Update\Index.cshtml" />
     <Content Include="Views\Admin\ProductManagement\Create\Index.cshtml" />
-    <Content Include="Views\Chat\View.cshtml" />
+    <Content Include="Views\Chat\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
