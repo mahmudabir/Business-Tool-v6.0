@@ -15,14 +15,7 @@ namespace BTv6.Controllers
     {
         // GET: RecoverPassword
 
-        /*public bool IsEmailExist(string emailID)
-        {
-            using (BusinessToolDBEntities dc = new BusinessToolDBEntities())
-            {
-                var v = dc.employees.Where(a => a.E_MAIL == emailID).FirstOrDefault();
-                return v != null;
-            }
-        }*/
+        
 
         [NonAction]
         public void SendVerificationLinkEmail(string emailID, string emailFor = "ResetPassword")

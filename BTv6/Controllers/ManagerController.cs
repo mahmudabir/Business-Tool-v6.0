@@ -253,5 +253,30 @@ namespace BTv6.Controllers
             }
                 
         }
+        public ActionResult ProductTypeChart(product product)
+        {
+
+            if (Session["SID"] != null)
+            {
+                if ((int)Session["SID"]==2)
+                {
+                    ProductRepository productRepository = new ProductRepository();
+
+                    BusinessToolDBEntities dc = new BusinessToolDBEntities();
+                    
+                    
+                    
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
     }
 }
