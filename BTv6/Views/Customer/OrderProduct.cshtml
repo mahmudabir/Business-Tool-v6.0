@@ -29,7 +29,7 @@
                     {
                         <form method="post">
                             <div class="cart" style="margin-left: 25px;">
-                                <p><img src="~/Assets/image/product/default.png" alt="@product.PID" height="45" width="45" /></p>
+                                <p><img src="@Url.Content(product.P_IMG)" alt="@product.PID" height="45" width="45" /></p>
                                 @*<p><img src="@product.P_IMG" alt="@product.PID" height="45" width="45" /></p>*@
                                 <p>Product ID: @product.PID</p>
                                 <p>Product Name: @product.P_NAME</p>
