@@ -301,7 +301,8 @@
     <Content Include="Views\Admin\CustomerComplains\Index.cshtml" />
     <Content Include="Views\Admin\CustomerComplains\ComplainDetails\Index.cshtml" />
     <Content Include="Views\RecoverPassword\ResetPassword.cshtml" />
-    <Content Include="Views\Manager\ProductTypeChart.cshtml" />
+    <Content Include="Views\Manager\ProductChart.cshtml" />
+    <Content Include="Views\Manager\OrderPendingChart.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

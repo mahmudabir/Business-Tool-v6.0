@@ -347,7 +347,7 @@ namespace BTv6.Controllers
             
 
         }
-        public ActionResult ProductTypeChart(product product)
+        public ActionResult ProductChart(product product)
         {
 
             if (Session["SID"] != null)
@@ -363,6 +363,37 @@ namespace BTv6.Controllers
                     ViewData["mod1"] = mod1;
                     ViewData["mod2"] = mod2;
                     ViewData["mod3"] = mod3;
+
+
+
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+        public ActionResult OrderPendingChart(order order)
+        {
+
+            if (Session["SID"] != null)
+            {
+                if ((int)Session["SID"] == 2)
+                {
+                    OrderRepository orderRepository = new OrderRepository();
+
+                    var pending = orderRepository.GetAll().Where(x => x.stat == "0").Count();
+                    var approved = orderRepository.GetAll().Where(x => x.stat == "1").Count();
+                    var deliver = orderRepository.GetAll().Where(x => x.stat == "2").Count();
+
+                    ViewData["p"] = pending;
+                    ViewData["a"] = approved;
+                    ViewData["d"] = deliver;
 
 
 
