@@ -20,7 +20,29 @@ namespace BTv6.Controllers
             {
                 if (this.CheckCustomer((int)Session["SID"]))
                 {
+
                     return View();
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Index(int id)
+        {
+            if (Session["SID"] != null)
+            {
+                if (this.CheckCustomer((int)Session["SID"]))
+                {
+                    TempData["q"] = id;
+                    return RedirectToAction("LastOrderChart", "Customer");
                 }
                 else
                 {
@@ -357,6 +379,7 @@ namespace BTv6.Controllers
                     else
                     {
                         //Here the logic for updating order & product will reside
+
                         TempData["success"] = "Your Order Updated Successfully!";
                         return RedirectToAction("Index");
                     }
@@ -459,9 +482,8 @@ namespace BTv6.Controllers
 
 
         [HttpGet]
-        public ActionResult OrderItemTypeChart()
+        public ActionResult LastOrderChart(int id = 5)
         {
-
             if (Session["SID"] != null)
             {
                 if (this.CheckCustomer((int)Session["SID"]))
@@ -469,40 +491,80 @@ namespace BTv6.Controllers
                     OrderRepository orderRepository = new OrderRepository();
                     ProductRepository productRepository = new ProductRepository();
 
-
-                    var orderListFromDB = orderRepository.GetOrderByUser((string)Session["LID"]);
-                    var productListFromDB = productRepository.GetAll();
-
-
-                    List<string> oList = new List<string>();
-                    List<string> pList = new List<string>();
-
-                    foreach (var item in orderListFromDB)
+                    if (TempData["q"] != null)
                     {
-                        oList.Add(item.quant.ToString());
+                        id = (int)TempData["q"];
+                        var orderListFromDB = orderRepository.GetOrderByUser((string)Session["LID"]).OrderByDescending(x => x.orderid).Take(id);
+                        var productListFromDB = productRepository.GetAll();
 
-                        pList.Add(productRepository.GetProductByID(item.prodid).P_NAME);
+
+                        List<string> oList = new List<string>();
+                        List<string> pList = new List<string>();
+
+                        foreach (var item in orderListFromDB)
+                        {
+                            oList.Add(item.quant.ToString());
+
+                            pList.Add(productRepository.GetProductByID(item.prodid).P_NAME);
+                        }
+
+                        var oArray = oList.ToArray();
+                        var pArray = pList.ToArray();
+
+
+                        ViewData["olist"] = oArray;
+                        ViewData["plist"] = pArray;
+
+
+                        var orderItemTypeChart = new Chart(width: 600, height: 400)
+                        .AddTitle("Ordered Item Chart")
+                        .AddSeries(
+                        name: "Orders",
+                        xValue: pArray,
+                        yValues: oArray)
+                        .Write();
+
+                        ViewData["orderChart"] = orderItemTypeChart;
+
+                        return View();
+                    }
+                    else
+                    {
+                        var orderListFromDB = orderRepository.GetOrderByUser((string)Session["LID"]).OrderByDescending(x => x.orderid).Take(id);
+                        var productListFromDB = productRepository.GetAll();
+
+
+                        List<string> oList = new List<string>();
+                        List<string> pList = new List<string>();
+
+                        foreach (var item in orderListFromDB)
+                        {
+                            oList.Add(item.quant.ToString());
+
+                            pList.Add(productRepository.GetProductByID(item.prodid).P_NAME);
+                        }
+
+                        var oArray = oList.ToArray();
+                        var pArray = pList.ToArray();
+
+
+                        ViewData["olist"] = oArray;
+                        ViewData["plist"] = pArray;
+
+
+                        var orderItemTypeChart = new Chart(width: 600, height: 400)
+                        .AddTitle("Ordered Item Chart")
+                        .AddSeries(
+                        name: "Orders",
+                        xValue: pArray,
+                        yValues: oArray)
+                        .Write();
+
+                        ViewData["orderChart"] = orderItemTypeChart;
+
+                        return View();
                     }
 
-                    var oArray = oList.ToArray();
-                    var pArray = pList.ToArray();
-
-
-                    ViewData["olist"] = oArray;
-                    ViewData["plist"] = pArray;
-
-
-                    var orderItemTypeChart = new Chart(width: 600, height: 400)
-                    .AddTitle("Ordered Item Type Chart")
-                    .AddSeries(
-                    name: "Orders",
-                    xValue: pArray,
-                    yValues: oArray)
-                    .Write();
-
-                    ViewData["orderChart"] = orderItemTypeChart;
-
-                    return View();
                 }
                 else
                 {
