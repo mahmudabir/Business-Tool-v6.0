@@ -44,5 +44,18 @@ namespace BTv6.Repositories.CommonRepositories
             this.context.SaveChanges();
         }
 
+        public List<order> GetPendingDeliveryList(string LID)
+        {
+            List<order> pendingList = this.GetAll().Where(x => x.deliveryby == LID && x.stat == "2").ToList();
+
+            return pendingList;
+        }
+
+        public List<order> GetAcceptedList(string LID)
+        {
+            List<order> acceptedList = this.GetAll().Where(x => x.deliveryby == LID && x.stat == "0").ToList();
+
+            return acceptedList;
+        }
     }
 }

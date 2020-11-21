@@ -14,8 +14,8 @@
                 <tr>
                     <th>Order#</th>
                     <th>Date</th>
-                    <th>Ship to</th>
                     <th>Product ID</th>
+                    <th>Ammount</th>
                     <th>Quantity</th>
                     <th>Order Total</th>
                     <th>Status</th>
@@ -23,17 +23,19 @@
             </thead>
 
             <tbody id='tab'>
-                @*@foreach ($table as $content)
+                @foreach (var item in ViewData["confirmed"] as List<BTv6.Models.order>)
+                {
                     <tr>
-                        <td align='middle'>{{$content->orderid }}</td>
-                        <td align='middle'>{{$content->ord_date}}</td>
-                        <td align='middle'>{{$content->orderby}}</td>
-                        <td align='middle'>{{$content->prodid}}</td>
-                        <td align='middle'>{{$content->quant}}</td>
-                        <td align='middle'>{{$content->ammout}}</td>
+                        <td align='middle'>@item.orderid</td>
+                        <td align='middle'>@item.ord_date</td>
+                        <td align='middle'>@item.prodid</td>
+                        <td align='middle'>@item.ammout</td>
+                        <td align='middle'>@item.quant</td>
+                        <td align='middle'>@(@item.quant * @item.ammout)</td>
                         <td align='middle'>Delivered</td>
+                        
                     </tr>
-                                @endforeach*@
+                }
             </tbody>
         </table>
 
