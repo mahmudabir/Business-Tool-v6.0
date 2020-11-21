@@ -214,7 +214,7 @@ namespace BTv6.Controllers
             
         }
         [HttpGet]
-        public ActionResult Approve()
+        public ActionResult Approve(order order)
         {
             if ((int)Session["SID"] == 2)
             {
@@ -222,9 +222,10 @@ namespace BTv6.Controllers
                 //OrderRepository order = new OrderRepository();
 
                 //return View(order.GetPendingOrder("0"));
-                BusinessToolDBEntities context = new BusinessToolDBEntities();
-
-                List<order> list = context.orders.Where(x => x.stat == "0").ToList();
+                //BusinessToolDBEntities db = new BusinessToolDBEntities();
+                //List<order> list = db.orders.Where(x => x.stat == "0").ToList();
+                OrderRepository orders = new OrderRepository();
+                List<order> list = orders.GetAll().ToList();
 
                 return View(list);
             }
