@@ -46,7 +46,6 @@
                         <th>Prod. ID</th>
                         <th>Prod. Name</th>
                         <th>Type</th>
-                        <th>Availability</th>
                         <th>Quantity</th>
                         <th>Buy Price</th>
                         <th>Sell Price</th>
@@ -57,17 +56,16 @@
                 <tbody>
                     @foreach (var item in  ViewData["products"] as List<BTv6.Models.product>) {
                     <tr>
-                        @if(@item.AVAILABILITY.ToUpper()=="AVAILABLE"){
+                       
                         <td>@item.PID </td>
                         <td>@item.P_NAME</td>
                         <td>@item.TYPE</td>
-                        <td>@item.AVAILABILITY.ToUpper()</td>
                         <td>@item.QUANTITY</td>
                         <td>@item.BUY_PRICE</td>
                         <td>@item.SELL_PRICE</td>
                         <td>@item.MOD_BY</td>
                         <td>@item.Add_PDate</td>
-                        }
+                       
                     </tr>
                     }
                 </tbody>

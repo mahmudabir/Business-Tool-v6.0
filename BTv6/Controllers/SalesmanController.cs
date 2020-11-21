@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace BTv6.Controllers
@@ -24,7 +25,7 @@ namespace BTv6.Controllers
             {
                 if (this.checkSalesman((int)Session["SID"]))
                 {
-                    ViewData["products"] = prodrepo.GetAll();
+                    ViewData["products"] = prodrepo.GetAvailableProduct();
                     return View();
                 }
 
@@ -85,7 +86,7 @@ namespace BTv6.Controllers
                             saleToInsert.C_NAME = sl.C_NAME;
                             saleToInsert.C_MOB = sl.C_MOB;
                             saleToInsert.SOLD_BY = (string)Session["LID"];
-                            saleToInsert.Sell_SDate = sl.Sell_SDate;
+                            saleToInsert.Sell_SDate = DateTime.Now;
 
 
 
@@ -103,7 +104,7 @@ namespace BTv6.Controllers
 
                             if (saleToInsert.QUANT != null && saleToInsert.QUANT > 0 && saleToInsert.C_NAME != null && saleToInsert.C_MOB != null)
                             {
-                                if (prod.QUANTITY > 0)
+                                if (prod.QUANTITY >= 0)
                                 {
                                     prodrepo.UpdateQuantity(prod, prod.PID);
                                     salerepo.Insert(saleToInsert);
@@ -171,7 +172,51 @@ namespace BTv6.Controllers
             }
 
         }
-        
+
+
+
+        //[HttpGet]
+        //public ActionResult OrderTypeChart()
+        //{
+
+        //    if (Session["SID"] != null)
+        //    {
+        //        if (this.checkSalesman((int)Session["SID"]))
+        //        {
+                    
+
+        //            var recievedOrderCount = orderRepository.GetRecievedOrderByUser((string)Session["LID"]).Count();
+        //            var pendingOrderCount = orderRepository.GetPendingOrderByUser((string)Session["LID"]).Count();
+        //            var confirmedOrderCount = orderRepository.GetConfirmedOrderByUser((string)Session["LID"]).Count();
+
+        //            ViewData["rOrder"] = recievedOrderCount;
+        //            ViewData["pOrder"] = pendingOrderCount;
+        //            ViewData["cOrder"] = confirmedOrderCount;
+
+        //            var orderTypeChart = new Chart(width: 1200, height: 800)
+        //            .AddTitle("Order Chart")
+        //            .AddSeries(
+        //            name: "Orders",
+        //            xValue: new[] { "Recived", "Confirmed", "Pending" },
+        //            yValues: new[] { ViewData["rOrder"], ViewData["cOrder"], ViewData["pOrder"] })
+        //            .Write();
+
+        //            ViewData["orderChart"] = orderTypeChart;
+
+        //            return View();
+        //        }
+        //        else
+        //        {
+        //            return RedirectToAction("Index", "Login");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("Index", "Login");
+        //    }
+        //}
+
+
         [NonAction]
         public bool checkSalesman(int id)
         {

@@ -57,5 +57,9 @@ namespace BTv6.Repositories.CommonRepositories
             this.Update(prod);
         }
 
+        public List<product> GetAvailableProduct()
+        {
+            return this.context.Set<product>().Where(x=>x.QUANTITY>0).ToList();
+        }
     }
 }
