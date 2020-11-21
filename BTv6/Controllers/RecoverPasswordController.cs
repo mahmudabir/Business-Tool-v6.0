@@ -69,8 +69,12 @@ namespace BTv6.Controllers
             //bool status = false;
             using (BusinessToolDBEntities dc = new BusinessToolDBEntities())
             {
+                
                 var account = dc.employees.Where(a => a.E_MAIL == EmailID).FirstOrDefault();
-                if(account.DID!=5)
+                var account12 = dc.customers.Where(a => a.email == EmailID).FirstOrDefault(); 
+                var userFromDB12 = dc.log_in.Where(a => a.LID == account12.cusid).FirstOrDefault();
+
+                if (userFromDB12.SID!=5)
                 {
                     if (account != null)
                     {
@@ -123,28 +127,60 @@ namespace BTv6.Controllers
             using (BusinessToolDBEntities dc = new BusinessToolDBEntities())
             {
                 var v = dc.employees.Where(a => a.E_MAIL == EmailID).FirstOrDefault();
-                if(v.E_MAIL==Request["EmailID"])
+                var account12 = dc.customers.Where(a => a.email == EmailID).FirstOrDefault();
+                var userFromDB12 = dc.log_in.Where(a => a.LID == account12.cusid).FirstOrDefault();
+                if (userFromDB12.SID != 5)
                 {
-                    if(Request["newpass"]==Request["connewpass"])
+                    if (v.E_MAIL == Request["EmailID"])
                     {
-                        var userFromDB = dc.log_in.Where(a => a.LID == v.EmpID).FirstOrDefault();
-                        userFromDB.PASS = Request["connewpass"];
-                        dc.Entry(userFromDB).State = EntityState.Modified;
-                        dc.SaveChanges();
-                        Session.Clear();
+                        if (Request["newpass"] == Request["connewpass"])
+                        {
+                            var userFromDB = dc.log_in.Where(a => a.LID == v.EmpID).FirstOrDefault();
+                            userFromDB.PASS = Request["connewpass"];
+                            dc.Entry(userFromDB).State = EntityState.Modified;
+                            dc.SaveChanges();
+                            Session.Clear();
+                        }
+                        else
+                        {
+                            TempData["error"] = "Password Doesn't Match";
+                            return RedirectToAction("ResetPassword", "RecoverPassword");
+                        }
+                        TempData["suc"] = "Password Recovered";
+                        return RedirectToAction("Index", "Login");
                     }
                     else
                     {
-                        TempData["error"] = "Password Doesn't Match";
-                        return RedirectToAction("ResetPassword", "RecoverPassword");
+                        return RedirectToAction("Index", "Login");
                     }
-                    TempData["suc"] = "Password Recovered";
-                    return RedirectToAction("Index", "Login");
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Login");
+                    var v1 = dc.customers.Where(a => a.email == EmailID).FirstOrDefault();
+                    if (v1.email == Request["EmailID"])
+                    {
+                        if (Request["newpass"] == Request["connewpass"])
+                        {
+                            var userFromDB = dc.log_in.Where(a => a.LID == v1.cusid).FirstOrDefault();
+                            userFromDB.PASS = Request["connewpass"];
+                            dc.Entry(userFromDB).State = EntityState.Modified;
+                            dc.SaveChanges();
+                            Session.Clear();
+                        }
+                        else
+                        {
+                            TempData["error"] = "Password Doesn't Match";
+                            return RedirectToAction("ResetPassword", "RecoverPassword");
+                        }
+                        TempData["suc"] = "Password Recovered";
+                        return RedirectToAction("Index", "Login");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Login");
+                    }
                 }
+                
                 
             }
             
