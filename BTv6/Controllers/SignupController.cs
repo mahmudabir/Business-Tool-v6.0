@@ -30,7 +30,7 @@ namespace BTv6.Controllers
             customerToInsert.email = c.email;
             customerToInsert.mobile = c.mobile;
             customerToInsert.reg_date = DateTime.Now;
-            customerToInsert.status = 0;
+            customerToInsert.status = 2;
 
             loginToIntert.LID = c.cusid;
             loginToIntert.SID = 0;

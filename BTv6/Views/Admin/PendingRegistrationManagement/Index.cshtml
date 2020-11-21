@@ -1,0 +1,82 @@
+﻿@RenderPage("~/Views/Admin/Common.cshtml")
+
+@model List<BTv6.Models.customer>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Pending Registrations</title>
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/common.css">
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/pendingReg.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+    <div align="center" class="table">
+        <h1>Pending Registrations</h1>
+        <form method="POST">
+        </form>
+
+        <table class="content-table">
+            <thead>
+            <thead>
+                <tr>
+                    <th>NAME</th>
+                    <th>DESIGN</th>
+                    <th>CONTACT</th>
+                    <th>EMAIL</th>
+                    <th>REG. DATE</th>
+                    <th>STATUS</th>
+                    <th>ACCEPT</th>
+                    <th>REJECT</th>
+                </tr>
+            </thead>
+            <tbody id='tab'>
+                @if (Model != null)
+                {
+
+                        foreach (var customer in Model)
+                        {
+                            <tr>
+                                <td align='center'>@customer.name</td>
+                                <td align='center'>@customer.design</td>
+                                <td align='center'>@customer.mobile</td>
+                                <td align='center'>@customer.email</td>
+                                <td align='center'>@customer.reg_date</td>
+                                <td align='center'>
+                                    @if (customer.status == 2)
+                                    {
+                                        <span>PENDING</span>
+                                    }
+
+                                    else
+                                    {
+                                        <span>ACCEPTED</span>
+                                    }
+                                </td>
+                                <td align='center'>
+                                    <button style="width: 50px;height: 20px; font-size:12px;">@Html.ActionLink("Accept", "AcceptCustomer", new { id = customer.cusid })</button>
+                                </td>
+                                <td>
+                                    <button style="width: 50px;height: 20px; font-size:12px;">@Html.ActionLink("Reject", "RejectCustomer", new { id = customer.cusid })</button>
+                                </td>
+                            </tr>
+                        }
+                   
+                }
+
+                else
+                {
+                    <tr>
+                        <td colspan='8' align='center'><span style="color:red">NO DATA FOUND</span></td>
+                    </tr>
+                }
+
+
+            </tbody>
+
+        </table>
+    </div>
+</body>
+</html>

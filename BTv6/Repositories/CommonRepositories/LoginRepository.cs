@@ -18,5 +18,11 @@ namespace BTv6.Repositories.CommonRepositories
             this.context.log_in.Add(l);
             this.context.SaveChanges();
         }
+
+        public void DeleteLoginByID(string id)
+        {
+            this.context.log_in.Remove(GetByID(id));
+            this.context.SaveChanges();
+        }
     }
 }

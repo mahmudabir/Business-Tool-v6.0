@@ -350,14 +350,23 @@ namespace BTv6.Controllers
                     }
 
                     string path = HttpContext.Server.MapPath("~/Assets/image/product");
-                    //string fileName = Path.GetFileName(avatar.FileName);
+
                     HttpPostedFileBase file = Request.Files["avatar"];
 
                     if (file != null)
                     {
-                        string fullPath = Path.Combine(path, Path.GetFileName(file.FileName));
-                        avatar.SaveAs(fullPath);
-                        product.P_IMG = "~/Assets/image/product/" + Path.GetFileName(file.FileName);
+                        if(Path.GetFileName(file.FileName).Length > 0)
+                        {
+                            string fullPath = Path.Combine(path, Path.GetFileName(file.FileName));
+                            avatar.SaveAs(fullPath);
+                            product.P_IMG = "~/Assets/image/product/" + Path.GetFileName(file.FileName);
+                        }
+
+                        else
+                        {
+                            product.P_IMG = "~/Assets/image/product/default.png";
+                        }
+
                     }
 
                     else
@@ -421,7 +430,7 @@ namespace BTv6.Controllers
                 }
 
                 string path = HttpContext.Server.MapPath("~/Assets/image/product");
-                //string fileName = Path.GetFileName(avatar.FileName);
+                
                 HttpPostedFileBase file = Request.Files["avatar"];
 
                 if (file != null)
@@ -510,5 +519,90 @@ namespace BTv6.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
+
+        //Pending Registration Management
+        [HttpGet]
+        public ActionResult PendingRegistrationManagement(customer customer)
+        {
+            if ((int)Session["SID"] == 1)
+            {
+                CustomerRepository customers = new CustomerRepository();
+                var pendingRegistrationList = customers.GetByStatus(2);
+
+                return View("PendingRegistrationManagement/Index", pendingRegistrationList);
+
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult AcceptCustomer(string id)
+        {
+            if ((int)Session["SID"] == 1)
+            {
+                BusinessToolDBEntities context = new BusinessToolDBEntities();
+
+                var cusLOG = context.log_in.Where(x => x.LID == (string)id).FirstOrDefault();
+                cusLOG.SID = 5;
+                context.Entry(cusLOG).State = EntityState.Modified;
+                context.SaveChanges();
+
+                var cus = context.customers.Where(x => x.cusid == (string)id).FirstOrDefault();
+                cus.status = 1;
+                context.Entry(cus).State = EntityState.Modified;
+                context.SaveChanges();
+
+                return RedirectToAction("PendingRegistrationManagement");
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult RejectCustomer(string id)
+        {
+            if ((int)Session["SID"] == 1)
+            {
+                BusinessToolDBEntities db = new BusinessToolDBEntities();
+                LoginRepository log = new LoginRepository();
+                CustomerRepository cus = new CustomerRepository();
+
+                cus.DeleteCustomerByID(id);
+                log.DeleteLoginByID(id);
+
+                return RedirectToAction("PendingRegistrationManagement");
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        //Customer Management
+        public ActionResult CustomerManagement(customer customer)
+        {
+            if ((int)Session["SID"] == 1)
+            {
+                CustomerRepository customers = new CustomerRepository();
+                var pendingRegistrationList = customers.GetByNotStatus(2);
+
+                return View("CustomerManagement/Index", pendingRegistrationList);
+
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
     }
 }
