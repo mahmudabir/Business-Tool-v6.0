@@ -144,6 +144,7 @@
     <Compile Include="Controllers\AboutUserController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ChangePasswordController.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DeliverymanController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -217,6 +218,7 @@
     <Compile Include="Repositories\AdminRepositories\CustomerRepository.cs" />
     <Compile Include="Repositories\AdminRepositories\EmployeeRepository.cs" />
     <Compile Include="Repositories\AdminRepositories\StatusRepository.cs" />
+    <Compile Include="Repositories\CommonRepositories\ChatRepository.cs" />
     <Compile Include="Repositories\CommonRepositories\LoginRepository.cs" />
     <Compile Include="Repositories\CommonRepositories\NotesRepository.cs" />
     <Compile Include="Repositories\CommonRepositories\OrderRepository.cs" />
@@ -278,6 +280,7 @@
     <Content Include="Views\Admin\ProductManagement\Index.cshtml" />
     <Content Include="Views\Admin\ProductManagement\Update\Index.cshtml" />
     <Content Include="Views\Admin\ProductManagement\Create\Index.cshtml" />
+    <Content Include="Views\Chat\View.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
