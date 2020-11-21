@@ -209,9 +209,22 @@ namespace BTv6.Controllers
                         orderRepository.Insert(orderToInsert);
 
                         //Update product quantity
-                        productFromDB.QUANTITY = productFromDB.QUANTITY - orderQuantity;
-                        productRepository.Update(productFromDB);
-                        return RedirectToAction("OrderProduct");
+                        if (productFromDB.QUANTITY == orderQuantity)
+                        {
+                            productFromDB.QUANTITY = productFromDB.QUANTITY - orderQuantity;
+                            productFromDB.AVAILABILITY = "UNAVILABLE";
+
+                            productRepository.Update(productFromDB);
+                            return RedirectToAction("OrderProduct");
+                        }
+                        else
+                        {
+                            productFromDB.QUANTITY = productFromDB.QUANTITY - orderQuantity;
+
+                            productRepository.Update(productFromDB);
+                            return RedirectToAction("OrderProduct");
+                        }
+
                     }
                 }
                 else
