@@ -34,20 +34,24 @@
                 {
                     foreach (var order in Model)
                     {
-                        <tr>
-                            <td>@order.orderid</td>
-                            <td>@order.prodid</td>
-                            <td>@order.quant</td>
-                            <td>@order.ammout</td>
-                            <td>@order.stat</td>
-                            <td>@order.ord_date</td>
-                            <td>@order.orderby</td>
-                            <td>
-                                <button class="a">@Html.ActionLink("Approve", "Approve", new { id = order.orderid })</button>
-                            
-                            </td>
+                        if (order.stat == "0")
+                        {
+                            <tr>
+                                <td>@order.orderid</td>
+                                <td>@order.prodid</td>
+                                <td>@order.quant</td>
+                                <td>@order.ammout</td>
+                                <td>@order.stat</td>
+                                <td>@order.ord_date</td>
+                                <td>@order.orderby</td>
+                                <td>
+                                    <button class="a">@Html.ActionLink("Approve", "Approve", new { id = order.orderid })</button>
 
-                        </tr>
+                                </td>
+
+                            </tr>
+                        }
+
                     }
                 }
                 else
