@@ -285,6 +285,8 @@
     <Content Include="Views\Manager\ProductManage.cshtml" />
     <Content Include="Views\Manager\EditProduct.cshtml" />
     <Content Include="Views\Manager\InsertProduct.cshtml" />
+    <Content Include="Views\Chat\send.cshtml" />
+    <Content Include="Views\Chat\seen.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

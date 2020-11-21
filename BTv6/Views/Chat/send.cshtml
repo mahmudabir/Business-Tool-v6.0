@@ -1,0 +1,60 @@
+﻿@if ((int)Session["SID"] == 1)
+{
+    @RenderPage("~/Views/Admin/Common.cshtml")
+}
+@if ((int)Session["SID"] == 2)
+{
+    @RenderPage("~/Views/Manager/Common.cshtml")
+}
+@if ((int)Session["SID"] == 3)
+{
+    @RenderPage("~/Views/Salesman/Common.cshtml")
+}
+@if ((int)Session["SID"] == 4)
+{
+    @RenderPage("~/Views/Deliveryman/Common.cshtml")
+
+}
+@if ((int)Session["SID"] == 5)
+{
+    @RenderPage("~/Views/Customer/Common.cshtml")
+
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Chat Box</title>
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/common.css">
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/chatBox.css">
+</head>
+<body>
+    <form method="post">
+        <br><br>
+        <h2 style="color:White">
+            <center>
+                Chat Box
+
+            </center>
+
+        </h2>
+        <br><br>
+
+        <center>
+            <input style="color:white;" type="text" placeholder="Enter valid user Id" name="RECEIVER" id=""><br>
+        </center>
+
+        <center>
+            <input style="color:white;" type="text" placeholder="Enter your message Subject" name="SUB">
+        </center>  <br>
+
+        <center>
+            <textarea name="TEXT" id="" cols="42" rows="20" placeholder="Write your message here...."></textarea><br>
+            <div class="send"><input style="margin-left: 7px;" type="submit" name="SEND" value="SEND"></div>
+        </center>
+    </form>
+    <
+</body>
+</html>

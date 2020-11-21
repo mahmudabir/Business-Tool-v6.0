@@ -21,7 +21,7 @@ namespace BTv6.Controllers
         {
             if (Session["SID"] != null)
             {
-                if (this.CheckDeliveryman((string)Session["SID"]))
+                if (this.CheckDeliveryman((int)Session["SID"]))
                 {
 
                     ViewData["confirmed"] = orderrepo.GetAcceptedList((string)Session["LID"]);
@@ -43,7 +43,7 @@ namespace BTv6.Controllers
         {
             if (Session["SID"] != null)
             {
-                if (this.CheckDeliveryman((string)Session["SID"]))
+                if (this.CheckDeliveryman((int)Session["SID"]))
                 {
                     ViewData["order"] = orderrepo.GetPendingDeliveryList((string)Session["LID"]);
                 return View();
@@ -67,7 +67,7 @@ namespace BTv6.Controllers
         {
             if (Session["SID"] != null)
             {
-                if (this.CheckDeliveryman((string)Session["SID"]))
+                if (this.CheckDeliveryman((int)Session["SID"]))
                 {
                     order od = new order();
                     od = orderrepo.GetOrderByID(id);
@@ -92,7 +92,7 @@ namespace BTv6.Controllers
         {
             if (Session["SID"] != null)
             {
-                if (this.CheckDeliveryman((string)Session["SID"]))
+                if (this.CheckDeliveryman((int)Session["SID"]))
                 {
                     order od = new order();
                     product prod = new product();
@@ -119,9 +119,9 @@ namespace BTv6.Controllers
 
         [NonAction]
 
-        public bool CheckDeliveryman(string SID)
+        public bool CheckDeliveryman(int SID)
         {
-            if (SID == "4")
+            if (SID == 4)
             {
                 return true;
             }
