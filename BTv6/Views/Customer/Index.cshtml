@@ -16,17 +16,30 @@
         <span style="color: lawngreen; padding-left:200px;">@TempData["success"]</span>
         <span style="color: red; padding-left:200px;">@TempData["error"]</span>
 
-        <form method="post">
-            <input type="number" value="" name="id" placeholder="Enter numeber to show in chart" min="1" />
-            <input type="submit" value="Submit" />
-        </form>
+        @*<div>
+                <form method="post">
+                    <input type="number" value="" name="id" placeholder="Enter numeber to show in chart" min="1" />
+                    <input type="submit" value="Submit" />
+                </form>
+            </div>*@
 
 
         <div>
             <div style="margin-left: 130px"><h2>Report Analysis</h2></div>
-            <iframe src="~/Customer/OrderTypeChart/" width="600" height="400"></iframe>
+            <br />
 
-            <iframe src="~/Customer/LastOrderChart/5" width="600" height="400"></iframe>
+            <h4>Differnt Order's Status</h4>
+            <iframe src="~/Customer/OrderTypeChart/" width="600" height="400"></iframe>
+            <br /><br />
+
+            <div>
+                <h4>Recent Order's Item Quantity</h4>
+                <iframe src="~/Customer/LastOrderChart/5" width="600" height="400"></iframe>
+                <form method="post" style="margin-left: 150px;">
+                    <input type="number" value="" name="id" placeholder="Enter numeber to show in chart" min="1" />
+                    <input type="submit" value="Submit" />
+                </form>
+            </div>
         </div>
 
 

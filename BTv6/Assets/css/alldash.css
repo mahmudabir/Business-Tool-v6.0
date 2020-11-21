@@ -1,8 +1,50 @@
-body{
+body {
     background-color: rgb(20, 20, 20);
 }
-.pro{
-    margin-left:27%;
+
+.pro {
+    margin-left: 27%;
     color: #ffffff;
     font-size: 30px;
+}
+
+
+input[type="number"] {
+    width: 28%;
+    margin-bottom: 20px;
+}
+
+input[type="number"] {
+    background: transparent;
+    height: 30px;
+    color: #fff;
+    font-size: 16px;
+}
+
+input[type="button"] {
+    border: none;
+    outline: none;
+    height: 40px;
+    width: 150px;
+    background: #fb2525;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 20px;
+}
+
+input[type="submit"]:hover {
+    cursor: pointer;
+    background: #ffc107;
+    color: #000;
+}
+
+input[type="submit"] {
+    border: none;
+    outline: none;
+    height: 40px;
+    width: 80px;
+    background: #fb2525;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 20px;
 }
