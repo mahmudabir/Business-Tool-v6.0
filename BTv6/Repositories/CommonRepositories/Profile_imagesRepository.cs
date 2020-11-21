@@ -20,10 +20,10 @@ namespace BTv6.Repositories.CommonRepositories
             this.context.profile_images.Add(p);
             this.context.SaveChanges();
         }
-        /*public void UpdateImage(profile_images images)
+        public void UpdateImage(profile_images images)
         {
             this.context.Entry(images).State = EntityState.Modified;
             this.context.SaveChanges();
-        }*/
+        }
     }
 }
