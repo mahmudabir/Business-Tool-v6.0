@@ -136,13 +136,16 @@ namespace BTv6.Controllers
                     images.IMAGE = "~/Assets/image/profile/" + fileName;
                     Profile_imagesRepository profile_Images = new Profile_imagesRepository();
                     var img = profile_Images.GetByID((string)Session["LID"]);
-                    string image = img.IMAGE;
+                    string image = (string)img.IMAGE;
                     if (image != "~/Assets/image/profile/default.png")
                     {
                         System.IO.File.Delete(Server.MapPath(image));
                     }
-          
-                    
+
+                    Profile_imagesRepository Update_profile_Images = new Profile_imagesRepository();
+                    Update_profile_Images.UpdateImage(images);
+
+
                 }
                 else
                 {
