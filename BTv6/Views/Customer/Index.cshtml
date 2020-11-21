@@ -13,11 +13,20 @@
         <h1>Welcome to Customer Homepage</h1>
         <br />
         <br />
-        <a href="~/Customer/OrderTypeChart/" target="_blank"><input type="submit" name="OrderTypeChart" value="Report of Order Status" /></a>
-        <a href="~/Customer/OrderItemTypeChart/" target="_blank"><input type="submit" name="OrderTypeChart" value="Report of Ordered Item Type" /></a>
-
         <span style="color: lawngreen; padding-left:200px;">@TempData["success"]</span>
         <span style="color: red; padding-left:200px;">@TempData["error"]</span>
+
+
+
+        <div>
+            <div style="margin-left: 130px"><h2>Report Analysis</h2></div>
+
+            <iframe src="~/Customer/OrderTypeChart/" width="600" height="400"></iframe>
+            <iframe src="~/Customer/OrderItemTypeChart/" width="600" height="400"></iframe>
+        </div>
+
+
+
     </div>
 </body>
 </html>
