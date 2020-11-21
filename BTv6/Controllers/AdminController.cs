@@ -4,6 +4,7 @@ using BTv6.Repositories.CommonRepositories;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -324,6 +325,65 @@ namespace BTv6.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult CreateProduct(product product, HttpPostedFileBase avatar)
+        {
+            if ((int)Session["SID"] == 1)
+            {
+                ProductRepository products = new ProductRepository();
+
+                var av = products.CheckProduct(product);
+
+                if (!av)
+                {
+                    product.MOD_BY = (string)Session["LID"];
+                    product.Add_PDate = DateTime.Now;
+
+                    if(product.QUANTITY > 0)
+                    {
+                        product.AVAILABILITY = "AVAILABLE";
+                    }
+
+                    else
+                    {
+                        product.AVAILABILITY = "UNAVAILABLE";
+                    }
+
+                    string path = HttpContext.Server.MapPath("~/Assets/image/product");
+                    //string fileName = Path.GetFileName(avatar.FileName);
+                    HttpPostedFileBase file = Request.Files["avatar"];
+
+                    if (file != null)
+                    {
+                        string fullPath = Path.Combine(path, Path.GetFileName(file.FileName));
+                        avatar.SaveAs(fullPath);
+                        product.P_IMG = "~/Assets/image/product/" + Path.GetFileName(file.FileName);
+                    }
+
+                    else
+                    {
+                        product.P_IMG = "~/Assets/image/product/default.png";
+                    }
+
+                    products.InsertByObj(product);
+
+
+                    return RedirectToAction("ProductManagement");
+                }
+
+                else
+                {
+                    return RedirectToAction("CreateProduct");
+                }
+
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
         [HttpGet]
         public ActionResult UpdateProduct(string id)
         {
@@ -342,13 +402,43 @@ namespace BTv6.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateProduct(product product)
+        public ActionResult UpdateProduct(product product, HttpPostedFileBase avatar)
         {
             if ((int)Session["SID"] == 1)
             {
                 ProductRepository products = new ProductRepository();
                 product.MOD_BY = (string)Session["LID"];
                 product.Add_PDate = DateTime.Now;
+
+                if (product.QUANTITY > 0)
+                {
+                    product.AVAILABILITY = "AVAILABLE";
+                }
+
+                else
+                {
+                    product.AVAILABILITY = "UNAVAILABLE";
+                }
+
+                string path = HttpContext.Server.MapPath("~/Assets/image/product");
+                //string fileName = Path.GetFileName(avatar.FileName);
+                HttpPostedFileBase file = Request.Files["avatar"];
+
+                if (file != null)
+                {
+                    ProductRepository prodIMG = new ProductRepository();
+                    var img = prodIMG.GetProductByID(product.PID);
+                    string image = (string)img.P_IMG;
+                    if (image != "~/Assets/image/product/default.png")
+                    {
+                        System.IO.File.Delete(Server.MapPath(image));
+                    }
+
+                    string fullPath = Path.Combine(path, Path.GetFileName(file.FileName));
+                    avatar.SaveAs(fullPath);
+                    product.P_IMG = "~/Assets/image/product/" + Path.GetFileName(file.FileName);
+                }
+
                 products.Update(product);
 
                 return RedirectToAction("ProductManagement");

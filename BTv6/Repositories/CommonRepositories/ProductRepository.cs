@@ -21,8 +21,33 @@ namespace BTv6.Repositories.CommonRepositories
 
             prod.QUANTITY = p.QUANTITY;
             this.Update(prod);
+        }
 
+        public bool CheckProduct(product c)
+        {
+            product prod = context.products.Where(x => x.PID == c.PID).FirstOrDefault();
 
+            if (prod == null)
+            {
+                return false;
+            }
+            else
+            {
+                if (prod.PID == c.PID)
+                {
+                    return true;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+
+        public void InsertByObj(product p)
+        {
+            this.context.products.Add(p);
+            this.context.SaveChanges();
         }
 
     }

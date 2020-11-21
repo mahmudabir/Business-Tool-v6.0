@@ -15,14 +15,12 @@
 <body>
     <div class="box">
 
-        @using (Html.BeginForm())
-        {
+        <form method="POST" autocomplete="off" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
-                    @Html.LabelFor(model => model.PID, htmlAttributes: new { @class = "control-label col-md-2" })
+                    ID.
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.PID, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.PID, "", new { @class = "text-danger" })
@@ -30,7 +28,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.P_NAME, htmlAttributes: new { @class = "control-label col-md-2" })
+                    Name
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.P_NAME, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.P_NAME, "", new { @class = "text-danger" })
@@ -38,15 +36,15 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.P_IMG, htmlAttributes: new { @class = "control-label col-md-2" })
+                    Chose Image File
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.P_IMG, new { htmlAttributes = new { @class = "form-control" } })
+                        <input style="margin-top: 5px" type="file" name="avatar" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
                         @Html.ValidationMessageFor(model => model.P_IMG, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.TYPE, htmlAttributes: new { @class = "control-label col-md-2" })
+                    Type
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.TYPE, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.TYPE, "", new { @class = "text-danger" })
@@ -54,15 +52,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.AVAILABILITY, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.AVAILABILITY, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.AVAILABILITY, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.QUANTITY, htmlAttributes: new { @class = "control-label col-md-2" })
+                    Quantity
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.QUANTITY, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.QUANTITY, "", new { @class = "text-danger" })
@@ -70,7 +60,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.BUY_PRICE, htmlAttributes: new { @class = "control-label col-md-2" })
+                    Buy Price
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.BUY_PRICE, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.BUY_PRICE, "", new { @class = "text-danger" })
@@ -78,7 +68,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.SELL_PRICE, htmlAttributes: new { @class = "control-label col-md-2" })
+                    Sell Price
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.SELL_PRICE, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.SELL_PRICE, "", new { @class = "text-danger" })
@@ -91,8 +81,8 @@
                     </div>
                 </div>
             </div>
-        }
-    </div>
+           </form>
+</div>
 </body>
 </html>
 
