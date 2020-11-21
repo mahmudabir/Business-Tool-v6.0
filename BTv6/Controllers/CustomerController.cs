@@ -430,6 +430,16 @@ namespace BTv6.Controllers
                     ViewData["pOrder"] = pendingOrderCount;
                     ViewData["cOrder"] = confirmedOrderCount;
 
+                    var orderTypeChart = new Chart(width: 600, height: 400)
+                    .AddTitle("Order Chart")
+                    .AddSeries(
+                    name: "Orders",
+                    xValue: new[] { "Recived", "Confirmed", "Pending" },
+                    yValues: new[] { ViewData["rOrder"], ViewData["cOrder"], ViewData["pOrder"] })
+                    .Write();
+
+                    ViewData["orderChart"] = orderTypeChart;
+
                     return View();
                 }
                 else
@@ -456,17 +466,16 @@ namespace BTv6.Controllers
                 if (this.CheckCustomer((int)Session["SID"]))
                 {
                     OrderRepository orderRepository = new OrderRepository();
+                    ProductRepository productRepository = new ProductRepository();
 
                     var recievedOrderCount = orderRepository.GetRecievedOrderByUser((string)Session["LID"]).Count();
                     var pendingOrderCount = orderRepository.GetPendingOrderByUser((string)Session["LID"]).Count();
                     var confirmedOrderCount = orderRepository.GetConfirmedOrderByUser((string)Session["LID"]).Count();
 
-                    ViewData["rOrder"] = recievedOrderCount;
-                    ViewData["pOrder"] = pendingOrderCount;
-                    ViewData["cOrder"] = confirmedOrderCount;
 
 
-                    var orderChart = new Chart(width: 600, height: 400)
+
+                    var orderItemTypeChart = new Chart(width: 600, height: 400)
                     .AddTitle("Order Chart")
                     .AddSeries(
                     name: "Orders",
@@ -474,7 +483,7 @@ namespace BTv6.Controllers
                     yValues: new[] { ViewData["rOrder"], ViewData["cOrder"], ViewData["pOrder"] })
                     .Write();
 
-                    ViewData["orderChart"] = orderChart;
+                    ViewData["orderChart"] = orderItemTypeChart;
 
                     return View();
                 }
