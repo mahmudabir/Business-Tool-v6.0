@@ -15,48 +15,49 @@
 </head>
 <body>
     
-    <div align="center" id="table" class="table">
+    <div align="center" class="table">
         <form method="POST">
 
             <input type="submit" name="PRINT" id="PRINT" onclick="savePDF()" value="Export PDF">
         </form>
-        <table class="content-table">
-            <thead>
-                <tr>
-                    <th>Order#</th>
-                    <th>Date</th>
-                    <th>Paid Ammount</th>
-                    <th>Delivered By</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-
-            <tbody>
-
-
-                @if (Model.Count() <= 0)
-                {
+        <div id="table">
+            <table class="content-table">
+                <thead>
                     <tr>
-                        <td colspan="5" align="center">NO DATA</td>
+                        <th>Order#</th>
+                        <th>Date</th>
+                        <th>Paid Ammount</th>
+                        <th>Delivered By</th>
+                        <th>Status</th>
                     </tr>
-                }
-                else
-                {
-                    foreach (var order in Model)
+                </thead>
+
+                <tbody>
+
+
+                    @if (Model.Count() <= 0)
                     {
                         <tr>
-                            <td>@order.orderid</td>
-                            <td>@order.ord_date</td>
-                            <td>@order.ammout</td>
-                            <td>@order.deliveryby</td>
-                            <td>Recieved</td>
+                            <td colspan="5" align="center">NO DATA</td>
                         </tr>
                     }
-                }
+                    else
+                    {
+                        foreach (var order in Model)
+                        {
+                            <tr>
+                                <td>@order.orderid</td>
+                                <td>@order.ord_date</td>
+                                <td>@order.ammout</td>
+                                <td>@order.deliveryby</td>
+                                <td>Recieved</td>
+                            </tr>
+                        }
+                    }
 
-            </tbody>
-        </table><hr>
-
+                </tbody>
+            </table><hr>
+        </div>
     </div>
 </body>
 </html>
