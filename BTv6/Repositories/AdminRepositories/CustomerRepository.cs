@@ -20,7 +20,7 @@ namespace BTv6.Repositories.AdminRepositories
 
         public List<customer> GetByNotStatus(int status)
         {
-            return context.customers.Where(x => x.status != status).ToList();
+            return context.customers.Where(x => x.status == 0 || x.status == 1).ToList();
         }
         public void UpdateUser(customer cusToUpdate)
         {
