@@ -28,15 +28,20 @@
             <div style="margin-left: 130px"><h2>Report Analysis</h2></div>
             <br />
 
-            <h4>Differnt Order's Status</h4>
+            <h3>Differnt Order's Status</h3>
             <iframe src="~/Customer/OrderTypeChart/" width="600" height="400"></iframe>
             <br /><br />
 
             <div>
-                <h4>Recent Order's Item Quantity</h4>
-                <form method="post" style="margin-left: 150px;">
-                    <input type="number" value="" name="id" placeholder="Enter numeber to show in chart" min="1" />
-                    <input type="submit" value="Submit" />
+
+                <form method="post">
+
+                    <div>
+                        <label align="left">Recent Order's Item Quantity</label>
+                        <input type="number" name="id" style="width:13%" placeholder="Items in chart" min="1" />
+                        <input type="submit" value="Submit" />
+                    </div>
+
                 </form>
                 <iframe src="~/Customer/LastOrderChart/5" width="600" height="400"></iframe>
 
