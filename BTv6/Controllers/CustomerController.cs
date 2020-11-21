@@ -309,6 +309,26 @@ namespace BTv6.Controllers
             }
         }
 
+        [HttpPost, ActionName("RecievedOrder")]
+        public ActionResult PostRecievedOrder()
+        {
+            if (Session["SID"] != null)
+            {
+                if (this.CheckCustomer((int)Session["SID"]))
+                {
+                    return RedirectToAction("RecievedOrder");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
 
         [HttpGet]
         public ActionResult EditPendingOrder(int id)
@@ -379,6 +399,41 @@ namespace BTv6.Controllers
                     else
                     {
                         //Here the logic for updating order & product will reside
+                        if ((quant - orderFromDB.quant) > 0)
+                        {
+
+                        }
+                        else
+                        {
+                            //add product
+                            //Change "Available"
+                        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                         TempData["success"] = "Your Order Updated Successfully!";
                         return RedirectToAction("Index");
