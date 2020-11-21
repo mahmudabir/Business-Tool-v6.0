@@ -281,7 +281,7 @@
     <Content Include="Views\Admin\ProductManagement\Update\Index.cshtml" />
     <Content Include="Views\Admin\ProductManagement\Create\Index.cshtml" />
     <Content Include="Views\Chat\Index.cshtml" />
-    <Content Include="Views\Customer\SalesChart.cshtml" />
+    <Content Include="Views\Customer\OrderTypeChart.cshtml" />
     <Content Include="Views\Manager\ProductManage.cshtml" />
     <Content Include="Views\Manager\EditProduct.cshtml" />
     <Content Include="Views\Manager\InsertProduct.cshtml" />

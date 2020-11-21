@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace BTv6.Controllers
@@ -412,12 +413,89 @@ namespace BTv6.Controllers
 
 
         [HttpGet]
-        public ActionResult SalesChart()
+        public ActionResult OrderTypeChart()
         {
 
-            return View();
+            if (Session["SID"] != null)
+            {
+                if (this.CheckCustomer((int)Session["SID"]))
+                {
+                    OrderRepository orderRepository = new OrderRepository();
+
+                    var recievedOrderCount = orderRepository.GetRecievedOrderByUser((string)Session["LID"]).Count();
+                    var pendingOrderCount = orderRepository.GetPendingOrderByUser((string)Session["LID"]).Count();
+                    var confirmedOrderCount = orderRepository.GetConfirmedOrderByUser((string)Session["LID"]).Count();
+
+                    ViewData["rOrder"] = recievedOrderCount;
+                    ViewData["pOrder"] = pendingOrderCount;
+                    ViewData["cOrder"] = confirmedOrderCount;
+
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
         }
 
+
+
+
+
+        [HttpGet]
+        public ActionResult OrderItemTypeChart()
+        {
+
+            if (Session["SID"] != null)
+            {
+                if (this.CheckCustomer((int)Session["SID"]))
+                {
+                    OrderRepository orderRepository = new OrderRepository();
+
+                    var recievedOrderCount = orderRepository.GetRecievedOrderByUser((string)Session["LID"]).Count();
+                    var pendingOrderCount = orderRepository.GetPendingOrderByUser((string)Session["LID"]).Count();
+                    var confirmedOrderCount = orderRepository.GetConfirmedOrderByUser((string)Session["LID"]).Count();
+
+                    ViewData["rOrder"] = recievedOrderCount;
+                    ViewData["pOrder"] = pendingOrderCount;
+                    ViewData["cOrder"] = confirmedOrderCount;
+
+
+                    var orderChart = new Chart(width: 600, height: 400)
+                    .AddTitle("Order Chart")
+                    .AddSeries(
+                    name: "Orders",
+                    xValue: new[] { "Recived", "Confirmed", "Pending" },
+                    yValues: new[] { ViewData["rOrder"], ViewData["cOrder"], ViewData["pOrder"] })
+                    .Write();
+
+                    ViewData["orderChart"] = orderChart;
+
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+
+
+
+
+
+
+        // Non Action Methods
         [NonAction]
         public bool CheckCustomer(int SID)
         {
