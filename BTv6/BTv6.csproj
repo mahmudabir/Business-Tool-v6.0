@@ -154,6 +154,7 @@
     <Compile Include="Controllers\ManagerController.cs" />
     <Compile Include="Controllers\NotesController.cs" />
     <Compile Include="Controllers\NoticeController.cs" />
+    <Compile Include="Controllers\RecoverPasswordController.cs" />
     <Compile Include="Controllers\SalesHistoryController.cs" />
     <Compile Include="Controllers\SalesmanController.cs" />
     <Compile Include="Controllers\SignupController.cs" />
@@ -290,6 +291,7 @@
     <Content Include="Views\Chat\seen.cshtml" />
     <Content Include="Views\Admin\PendingRegistrationManagement\Index.cshtml" />
     <Content Include="Views\Admin\CustomerManagement\Index.cshtml" />
+    <Content Include="Views\RecoverPassword\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
