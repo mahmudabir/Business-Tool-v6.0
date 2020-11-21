@@ -721,7 +721,7 @@ namespace BTv6.Controllers
 
                 notices.Insert(notice);
 
-                return View("NoticeManagement/Index");
+                return RedirectToAction("NoticeManagement/Index");
             }
 
             else

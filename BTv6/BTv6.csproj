@@ -296,6 +296,7 @@
     <Content Include="Views\Admin\NoticeManagement\Index.cshtml" />
     <Content Include="Views\Admin\NoticeManagement\Create\Index.cshtml" />
     <Content Include="Views\Admin\NoticeManagement\Update\Index.cshtml" />
+    <Content Include="Views\Notice\Details\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -28,5 +28,24 @@ namespace BTv6.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
+
+        [HttpGet]
+        public ActionResult DetailsNotice(int id)
+        {
+            if ((int)Session["SID"] == 1 || (int)Session["SID"] == 2 || (int)Session["SID"] == 3 || (int)Session["SID"] == 4)
+            {
+                NoticeRepository notices = new NoticeRepository();
+
+                var notice = notices.GetByID(id);
+
+                return View("Details/Index", notice);
+
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
     }
 }
