@@ -430,7 +430,7 @@ namespace BTv6.Controllers
                     ViewData["pOrder"] = pendingOrderCount;
                     ViewData["cOrder"] = confirmedOrderCount;
 
-                    var orderTypeChart = new Chart(width: 600, height: 400)
+                    var orderTypeChart = new Chart(width: 1200, height: 800)
                     .AddTitle("Order Chart")
                     .AddSeries(
                     name: "Orders",
@@ -473,7 +473,9 @@ namespace BTv6.Controllers
                     var confirmedOrderCount = orderRepository.GetConfirmedOrderByUser((string)Session["LID"]).Count();
 
 
-
+                    ViewData["rOrder"] = recievedOrderCount;
+                    ViewData["pOrder"] = pendingOrderCount;
+                    ViewData["cOrder"] = confirmedOrderCount;
 
                     var orderItemTypeChart = new Chart(width: 600, height: 400)
                     .AddTitle("Order Chart")

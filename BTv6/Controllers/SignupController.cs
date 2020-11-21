@@ -24,13 +24,9 @@ namespace BTv6.Controllers
             customer customerToInsert = new customer();
             log_in loginToIntert = new log_in();
 
-            customerToInsert.cusid = c.cusid;
-            customerToInsert.name = c.name;
-            customerToInsert.design = c.design;
-            customerToInsert.email = c.email;
-            customerToInsert.mobile = c.mobile;
+            customerToInsert = c;
             customerToInsert.reg_date = DateTime.Now;
-            customerToInsert.status = 0;
+            customerToInsert.status = 2;
 
             loginToIntert.LID = c.cusid;
             loginToIntert.SID = 0;
@@ -63,7 +59,9 @@ namespace BTv6.Controllers
                 Session.Clear();
                 Session.Abandon();
 
-                return RedirectToAction("Index", "Login");
+                TempData["success"] = "You can Login after admin approval";
+
+                return RedirectToAction("Index", "Signup");
             }
             else
             {

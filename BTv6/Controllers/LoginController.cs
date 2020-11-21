@@ -87,14 +87,14 @@ namespace BTv6.Controllers
                 }
                 else
                 {
-                    TempData["Error"] = "Restricted!";
+                    TempData["error"] = "Restricted!";
                     return RedirectToAction("Index", "Login");
                 }
 
             }
             else
             {
-                TempData["Error"] = "Invalid Login!";
+                TempData["error"] = "Invalid Login!";
                 return RedirectToAction("Index", "Login");
             }
         }

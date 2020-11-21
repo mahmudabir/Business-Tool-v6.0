@@ -14,18 +14,17 @@
         <img src="~/Assets/image/user.png" class="avatar">
         <h1>Login Here</h1>
         <form method="post">
-            <span style="color:red;">@TempData["Error2"]</span>
             <p>Username</p>
             <input type="text" name="LID" id="LID" placeholder="Enter Username" required><br>
             <p>Password</p>
             <input type="password" name="PASS" id="PASS" placeholder="Enter Password" required><br>
 
-            <span style="color:red;">@TempData["Error"]</span>
+            <span style="color:red;">@TempData["error"]</span>
 
             <input type="submit" name="submit" value="Login">
         </form>
         <a href="#" target="_blank">Forget password?</a><br>
-        <a href="#">Don't have an account?</a>
+        <a href="~/Signup/Index/">Don't have an account?</a>
     </div>
 </body>
 
