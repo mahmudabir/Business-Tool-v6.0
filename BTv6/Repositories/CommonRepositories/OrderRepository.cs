@@ -42,7 +42,7 @@ namespace BTv6.Repositories.CommonRepositories
 
         public List<order> GetPendingOrder(string stat)
         {
-            return context.orders.Where(o => o.stat == stat).ToList();
+            return context.orders.Where(x => x.stat == stat).ToList();
 
         }
 
