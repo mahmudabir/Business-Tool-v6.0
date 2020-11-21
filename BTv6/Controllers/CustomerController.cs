@@ -379,6 +379,41 @@ namespace BTv6.Controllers
                     else
                     {
                         //Here the logic for updating order & product will reside
+                        if ((quant - orderFromDB.quant) > 0)
+                        {
+
+                        }
+                        else
+                        {
+                            //add product
+                            //Change "Available"
+                        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                         TempData["success"] = "Your Order Updated Successfully!";
                         return RedirectToAction("Index");
