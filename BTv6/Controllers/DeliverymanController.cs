@@ -1,4 +1,5 @@
-﻿using BTv6.Repositories.CommonRepositories;
+﻿using BTv6.Models;
+using BTv6.Repositories.CommonRepositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,8 @@ namespace BTv6.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
-        public ActionResult PendingDeliveryList()
+        [HttpGet]
+        public ActionResult PendingDeliveryList(string id)
         {
             if (Session["SID"] != null)
             {
@@ -38,6 +40,49 @@ namespace BTv6.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-}
+        }
+
+
+        [HttpGet]
+
+        public ActionResult Accepted(int id)
+        {
+            if (Session["SID"] != null)
+            {
+
+                order od = new order();
+                od=orderrepo.GetOrderByID(id);
+                od.stat = "0";
+                orderrepo.Update(od);
+                return RedirectToAction("PendingDeliveryList");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        [HttpGet]
+
+        public ActionResult Returned(int id)
+        {
+            if (Session["SID"] != null)
+            {
+
+                order od = new order();
+                od = orderrepo.GetOrderByID(id);
+                od.stat = "1";
+                orderrepo.Update(od);
+                return RedirectToAction("PendingDeliveryList");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
     }
+
+    
+
 }
