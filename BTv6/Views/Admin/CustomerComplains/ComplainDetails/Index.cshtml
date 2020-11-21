@@ -1,0 +1,44 @@
+﻿@RenderPage("~/Views/Admin/Common.cshtml")
+@model BTv6.Models.complain
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Notice</title>
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/common.css">
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/manage.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+</head>
+
+<body>
+    <div class="box">
+        <h4>Complain Details</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Sent By: @Html.DisplayFor(model => model.customer.name) (Username: @Html.DisplayFor(model => model.OwnerID))
+            </dt>
+
+            <br />
+
+            <dd>
+                Subject: @Html.DisplayFor(model => model.sub)
+            </dd>
+
+            <br />
+            <br />
+
+            <dt>
+                Content:
+            </dt>
+
+            <dd>
+                <h3>@Html.DisplayFor(model => model.Text)</h3>
+            </dd>
+        </dl>
+    </div>
+</body>
+</html>

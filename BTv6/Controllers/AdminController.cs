@@ -1,6 +1,7 @@
 ﻿using BTv6.Models;
 using BTv6.Repositories.AdminRepositories;
 using BTv6.Repositories.CommonRepositories;
+using BTv6.Repositories.CustomerRepositories;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -776,6 +777,44 @@ namespace BTv6.Controllers
                 notices.DeleteNoticeByID(id);
 
                 return RedirectToAction("NoticeManagement/Index");
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        //Customer Complains
+        [HttpGet]
+        public ActionResult CustomerComplains(complain complain)
+        {
+            if ((int)Session["SID"] == 1)
+            {
+                ComplainRepository complains = new ComplainRepository();
+                List<complain> complainList = complains.GetAll();
+
+                return View("CustomerComplains/Index", complainList);
+
+            }
+
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ComplainDetails(int id)
+        {
+            if ((int)Session["SID"] == 1)
+            {
+                ComplainRepository complains = new ComplainRepository();
+
+                var complain = complains.GetByID(id);
+
+                return View("CustomerComplains/ComplainDetails/Index", complain);
+
             }
 
             else
