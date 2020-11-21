@@ -443,16 +443,6 @@ namespace BTv6.Controllers
                     ViewData["pOrder"] = pendingOrderCount;
                     ViewData["cOrder"] = confirmedOrderCount;
 
-                    //var orderTypeChart = new Chart(width: 1200, height: 800)
-                    //.AddTitle("Order Chart")
-                    //.AddSeries(
-                    //name: "Orders",
-                    //xValue: new[] { "Recived", "Confirmed", "Pending" },
-                    //yValues: new[] { ViewData["rOrder"], ViewData["cOrder"], ViewData["pOrder"] })
-                    //.Write();
-
-                    //ViewData["orderChart"] = orderTypeChart;
-
                     return View();
                 }
                 else
@@ -498,10 +488,8 @@ namespace BTv6.Controllers
                     var pArray = pList.ToArray();
 
 
-
                     ViewData["olist"] = oArray;
                     ViewData["plist"] = pArray;
-
 
 
                     var orderItemTypeChart = new Chart(width: 600, height: 400)
