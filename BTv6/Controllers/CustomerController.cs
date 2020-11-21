@@ -309,6 +309,26 @@ namespace BTv6.Controllers
             }
         }
 
+        [HttpPost, ActionName("RecievedOrder")]
+        public ActionResult PostRecievedOrder()
+        {
+            if (Session["SID"] != null)
+            {
+                if (this.CheckCustomer((int)Session["SID"]))
+                {
+                    return RedirectToAction("RecievedOrder");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
 
         [HttpGet]
         public ActionResult EditPendingOrder(int id)
