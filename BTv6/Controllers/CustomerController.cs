@@ -410,6 +410,14 @@ namespace BTv6.Controllers
             }
         }
 
+
+        [HttpGet]
+        public ActionResult SalesChart()
+        {
+
+            return View();
+        }
+
         [NonAction]
         public bool CheckCustomer(int SID)
         {

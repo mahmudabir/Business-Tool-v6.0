@@ -282,6 +282,7 @@
     <Content Include="Views\Admin\ProductManagement\Update\Index.cshtml" />
     <Content Include="Views\Admin\ProductManagement\Create\Index.cshtml" />
     <Content Include="Views\Chat\Index.cshtml" />
+    <Content Include="Views\Customer\SalesChart.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
