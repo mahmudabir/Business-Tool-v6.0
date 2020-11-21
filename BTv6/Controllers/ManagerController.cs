@@ -219,9 +219,14 @@ namespace BTv6.Controllers
             if ((int)Session["SID"] == 2)
             {
                 /*order order1 = new order();*/
-                OrderRepository order = new OrderRepository();
-                
-                return View(order.GetPendingOrder("0"));
+                //OrderRepository order = new OrderRepository();
+
+                //return View(order.GetPendingOrder("0"));
+                BusinessToolDBEntities context = new BusinessToolDBEntities();
+
+                List<order> list = context.orders.Where(x => x.stat == "0").ToList();
+
+                return View(list);
             }
             else
             {
