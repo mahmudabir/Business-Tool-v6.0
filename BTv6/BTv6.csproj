@@ -126,6 +126,7 @@
     <Content Include="Assets\image\travel.jpeg" />
     <Content Include="Assets\image\user.png" />
     <Content Include="Assets\js\excelPrint.js" />
+    <Content Include="Assets\js\pdfPrint.js" />
     <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
     <Content Include="Models\BusinessToolDB.Context.tt">
