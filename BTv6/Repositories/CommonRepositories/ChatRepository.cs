@@ -10,12 +10,17 @@ namespace BTv6.Repositories.CommonRepositories
     {
         public List<chat> GetAllByReceiverId(string id)
         {
-            return this.context.Set<chat>().Where(x => x.RECEIVER == id).ToList();
+            return this.context.Set<chat>().OrderByDescending(y=>y.MSG_ID).Where(x => x.RECEIVER == id && x.STATUS == 0).ToList();
         }
 
-        public List<chat> GetAllBySenderId(string id)
+        public chat GetChatByID(int id)
         {
-            return this.context.Set<chat>().Where(x => x.SENDER == id).ToList();
+            return this.GetAll().Where(x => x.MSG_ID == id).FirstOrDefault();
+        }
+        
+       public List<chat> GetAllSeenById(string id)
+        {
+            return this.context.Set<chat>().OrderByDescending(y => y.MSG_ID).Where(x => x.RECEIVER == id && x.STATUS == 1).ToList();
         }
     }
 }

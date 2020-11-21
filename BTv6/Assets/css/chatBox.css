@@ -133,7 +133,8 @@ input[type="text"] {
     color: rgb(10, 8, 8);
     font-size: 16px;
 }
-input[type="submit"] {
+
+.send input[type="submit"] {
     border: none;
     outline: none;
     height: 40px;
@@ -148,6 +149,7 @@ input[type="submit"]:hover {
     background: #ffc107;
     color: #000;
 }
+   
 caption{
     color: #009879;
     font-size: 20px;
