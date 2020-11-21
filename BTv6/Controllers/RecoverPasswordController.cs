@@ -30,7 +30,7 @@ namespace BTv6.Controllers
             var verifyUrl = "/RecoverPassword/" + emailFor + "/";
             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
 
-            var fromEmail = new MailAddress("businesstoolsv5@gmail.com", "Dotnet Awesome");
+            var fromEmail = new MailAddress("businesstoolsv5@gmail.com", "BusinessTools");
             var toEmail = new MailAddress(emailID);
             var fromEmailPassword = "business@tools";
             string subject = "Reset Password";
@@ -69,40 +69,54 @@ namespace BTv6.Controllers
             //bool status = false;
             using (BusinessToolDBEntities dc = new BusinessToolDBEntities())
             {
-                
+                //employe info
                 var account = dc.employees.Where(a => a.E_MAIL == EmailID).FirstOrDefault();
+                //customer info
                 var account12 = dc.customers.Where(a => a.email == EmailID).FirstOrDefault(); 
-                var userFromDB12 = dc.log_in.Where(a => a.LID == account12.cusid).FirstOrDefault();
-
-                if (userFromDB12.SID!=5)
+                
+                
+                if (account12 != null)
                 {
-                    if (account != null)
+                    //login info
+                    var userFromDB12 = dc.log_in.Where(a => a.LID == account12.cusid).FirstOrDefault();
+                    if (userFromDB12.SID != 5)
                     {
-                        //Send Mail
-                        Session["email"] = account.E_MAIL;
-                        SendVerificationLinkEmail(account.E_MAIL, "ResetPassword");
+                        if (account != null)
+                        {
+                            //Send Mail
+                            Session["email"] = account.E_MAIL;
+                            //send verification mail employee
+                            SendVerificationLinkEmail(account.E_MAIL, "ResetPassword");
 
+                        }
+                        else
+                        {
+                            TempData["message"] = "Account Not Found";
+                            return View();
+                        }
                     }
                     else
                     {
-                        TempData["message"] = "Account Not Found";
-                        return View();
+                        var account1 = dc.customers.Where(a => a.email == EmailID).FirstOrDefault();
+                        if (account1 != null)
+                        {
+                            Session["email"] = account1.email;
+                            //send mail customer
+                            SendVerificationLinkEmail(account1.email, "ResetPassword");
+                        }
+                        else
+                        {
+                            TempData["message"] = "Account Not Found";
+                            return View();
+                        }
                     }
                 }
                 else
                 {
-                    var account1 = dc.customers.Where(a => a.email == EmailID).FirstOrDefault();
-                    if(account1!=null)
-                    {
-                        Session["email"] = account1.email;
-                        SendVerificationLinkEmail(account1.email, "ResetPassword");
-                    }
-                    else
-                    {
-                        TempData["message"] = "Account Not Found";
-                        return View();
-                    }
+                    TempData["message"] = "Account Not Found";
+                    return View();
                 }
+                
                 
             }
             return RedirectToAction("Index","Login");
