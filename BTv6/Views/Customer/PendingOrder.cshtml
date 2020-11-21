@@ -53,18 +53,22 @@
                     {
                         foreach (var order in Model)
                         {
-                            <tr>
-                                <td>@order.orderid</td>
-                                <td>@order.ord_date</td>
-                                <td>@order.ammout</td>
-                                <td>Pending</td>
-                                <td>
-                                    <a href="~/Customer/EditPendingOrder/@order.orderid"><input type="submit" value="Edit"></a>
-                                <td>
-                                <td>
-                                    <a style="margin-left:-40px" href="~/Customer/DeletePendingOrder/@order.orderid"><input type="submit" value="Cancel"></a>
-                                <td>
-                            </tr>
+                            if (order.stat == "0")
+                            {
+                                <tr>
+                                    <td>@order.orderid</td>
+                                    <td>@order.ord_date</td>
+                                    <td>@order.ammout</td>
+                                    <td>Pending</td>
+                                    <td>
+                                        <a href="~/Customer/EditPendingOrder/@order.orderid"><input type="submit" value="Edit"></a>
+                                    <td>
+                                    <td>
+                                        <a style="margin-left:-40px" href="~/Customer/DeletePendingOrder/@order.orderid"><input type="submit" value="Cancel"></a>
+                                    <td>
+                                </tr>
+                            }
+
                         }
                     }
                 </tbody>
