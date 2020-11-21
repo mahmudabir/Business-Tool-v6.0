@@ -424,7 +424,7 @@ namespace BTv6.Controllers
             }
         }
 
-
+        // Chart Action methods
         [HttpGet]
         public ActionResult OrderTypeChart()
         {
@@ -468,8 +468,6 @@ namespace BTv6.Controllers
 
 
 
-
-
         [HttpGet]
         public ActionResult OrderItemTypeChart()
         {
@@ -481,21 +479,37 @@ namespace BTv6.Controllers
                     OrderRepository orderRepository = new OrderRepository();
                     ProductRepository productRepository = new ProductRepository();
 
-                    var recievedOrderCount = orderRepository.GetRecievedOrderByUser((string)Session["LID"]).Count();
-                    var pendingOrderCount = orderRepository.GetPendingOrderByUser((string)Session["LID"]).Count();
-                    var confirmedOrderCount = orderRepository.GetConfirmedOrderByUser((string)Session["LID"]).Count();
+
+                    var orderListFromDB = orderRepository.GetOrderByUser((string)Session["LID"]);
+                    var productListFromDB = productRepository.GetAll();
 
 
-                    ViewData["rOrder"] = recievedOrderCount;
-                    ViewData["pOrder"] = pendingOrderCount;
-                    ViewData["cOrder"] = confirmedOrderCount;
+                    List<string> oList = new List<string>();
+                    List<string> pList = new List<string>();
 
-                    var orderItemTypeChart = new Chart(width: 600, height: 400)
-                    .AddTitle("Order Chart")
+                    foreach (var item in orderListFromDB)
+                    {
+                        oList.Add(item.quant.ToString());
+
+                        pList.Add(productRepository.GetProductByID(item.prodid).P_NAME);
+                    }
+
+                    var oArray = oList.ToArray();
+                    var pArray = pList.ToArray();
+
+
+
+                    ViewData["olist"] = oArray;
+                    ViewData["plist"] = pArray;
+
+
+
+                    var orderItemTypeChart = new Chart(width: 1200, height: 800)
+                    .AddTitle("Ordered Item Type Chart")
                     .AddSeries(
                     name: "Orders",
-                    xValue: new[] { "Recived", "Confirmed", "Pending" },
-                    yValues: new[] { ViewData["rOrder"], ViewData["cOrder"], ViewData["pOrder"] })
+                    xValue: pArray,
+                    yValues: oArray)
                     .Write();
 
                     ViewData["orderChart"] = orderItemTypeChart;

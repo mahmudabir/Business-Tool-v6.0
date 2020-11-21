@@ -50,7 +50,7 @@ namespace BTv6.Repositories.CommonRepositories
             this.context.SaveChanges();
         }
 
-        public void UpdateQuantityById(string PID,int quantity)
+        public void UpdateQuantityById(string PID, int quantity)
         {
             prod = GetProductByID(PID);
             prod.QUANTITY = quantity;

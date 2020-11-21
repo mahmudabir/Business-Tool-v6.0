@@ -9,6 +9,8 @@ namespace BTv6.Repositories.CommonRepositories
 {
     public class OrderRepository : Repository<order>
     {
+
+        //ABIR start
         public List<order> GetConfirmedOrderByUser(string LID)
         {
             List<order> confirmedOrderList = this.GetAll().Where(x => x.orderby == LID && x.stat == "1").ToList();
@@ -30,10 +32,18 @@ namespace BTv6.Repositories.CommonRepositories
             return recievedOrderList;
         }
 
-        public List<order>GetPendingOrder(string stat)
+        public List<order> GetOrderByUser(string orderby)
+        {
+            List<order> OrderListByUser = this.GetAll().Where(x => x.orderby == orderby).ToList();
+
+            return OrderListByUser;
+        }
+        //ABIR end
+
+        public List<order> GetPendingOrder(string stat)
         {
             return context.orders.Where(o => o.stat == stat).ToList();
-            
+
         }
 
         public order GetOrderByID(int ID)
@@ -42,7 +52,7 @@ namespace BTv6.Repositories.CommonRepositories
 
             return ordr;
         }
-        
+
         public void DeleteOrderByID(int id)
         {
             this.context.orders.Remove(GetOrderByID(id));
@@ -67,6 +77,6 @@ namespace BTv6.Repositories.CommonRepositories
             this.context.Entry(order).State = EntityState.Modified;
             this.context.SaveChanges();
         }
-        
+
     }
 }

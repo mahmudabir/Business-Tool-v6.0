@@ -1,9 +1,9 @@
-﻿@{
-    var myChart = new Chart(width: 600, height: 400)
+﻿@*@{
+    var myChart = new Chart(width: 1200, height: 800)
     .AddTitle("Ordered Item Type Chart")
     .AddSeries(
     name: "Orders",
-    xValue: new[] { "Recived", "Confirmed", "Pending" },
-    yValues: new[] { ViewData["rOrder"], ViewData["cOrder"], ViewData["pOrder"] })
-    .Write();
-}
+    xValue: ViewData["oList"],
+    yValues: ViewData["pList"])
+.Write();
+}*@
