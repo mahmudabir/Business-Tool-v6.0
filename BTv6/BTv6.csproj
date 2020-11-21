@@ -288,7 +288,7 @@
     <Content Include="Views\Manager\ProductManage.cshtml" />
     <Content Include="Views\Manager\EditProduct.cshtml" />
     <Content Include="Views\Manager\InsertProduct.cshtml" />
-    <Content Include="Views\Customer\OrderItemTypeChart.cshtml" />
+    <Content Include="Views\Customer\LastOrderChart.cshtml" />
     <Content Include="Views\Chat\send.cshtml" />
     <Content Include="Views\Chat\seen.cshtml" />
     <Content Include="Views\Admin\PendingRegistrationManagement\Index.cshtml" />
