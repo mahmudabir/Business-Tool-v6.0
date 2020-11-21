@@ -12,7 +12,8 @@
     <div class="wrap">
         <h2>Reset Password</h2>
         <form method="post" name="myForm">
-            <input type="email" name="email" placeholder="Enter your Email" value="" required>
+            <span style="color:red;">@TempData["message"]</span>
+            <input type="email" name="EmailID" placeholder="Enter your Email" value="" required>
             <input type="submit" value="SUBMIT">
         </form>
     </div>

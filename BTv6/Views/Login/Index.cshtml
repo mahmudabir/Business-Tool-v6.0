@@ -12,6 +12,9 @@
     <div class="loginbox">
 
         <img src="~/Assets/image/user.png" class="avatar">
+        <span style="color:green;">@TempData["suc"]</span>
+        <span style="color:red;">@TempData["Error1"]</span>
+        <span style="color:red;">@TempData["Error2"]</span>
         <h1>Login Here</h1>
         <form method="post">
             <p>Username</p>
@@ -23,7 +26,7 @@
 
             <input type="submit" name="submit" value="Login">
         </form>
-        <a href="/RecoverPassword/Index" target="_blank">Forget password?</a><br>
+        <a href="/RecoverPassword/Index">Forget password?</a><br>
         <a href="~/Signup/Index/">Don't have an account?</a>
     </div>
 </body>

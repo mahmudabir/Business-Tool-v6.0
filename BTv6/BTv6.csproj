@@ -294,12 +294,16 @@
     <Content Include="Views\Admin\PendingRegistrationManagement\Index.cshtml" />
     <Content Include="Views\Admin\CustomerManagement\Index.cshtml" />
     <Content Include="Views\RecoverPassword\Index.cshtml" />
+<<<<<<< Updated upstream
     <Content Include="Views\Admin\NoticeManagement\Index.cshtml" />
     <Content Include="Views\Admin\NoticeManagement\Create\Index.cshtml" />
     <Content Include="Views\Admin\NoticeManagement\Update\Index.cshtml" />
     <Content Include="Views\Notice\Details\Index.cshtml" />
     <Content Include="Views\Admin\CustomerComplains\Index.cshtml" />
     <Content Include="Views\Admin\CustomerComplains\ComplainDetails\Index.cshtml" />
+=======
+    <Content Include="Views\RecoverPassword\ResetPassword.cshtml" />
+>>>>>>> Stashed changes
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
