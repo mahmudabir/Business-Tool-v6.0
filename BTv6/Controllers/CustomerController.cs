@@ -401,42 +401,97 @@ namespace BTv6.Controllers
                         //Here the logic for updating order & product will reside
                         if ((quant - orderFromDB.quant) > 0)
                         {
+                            if (productFromDB.QUANTITY < (quant - orderFromDB.quant))
+                            {
+                                TempData["error"] = "Quantity you selected is not available now!";
+                                return RedirectToAction("Index");
+                            }
+                            else
+                            {
+                                int productToSubtract = quant - orderFromDB.quant;
 
+                                //subtract product
+                                order orderToUpdate = new order();
+                                product productToUpdate = new product();
+
+                                productToUpdate = productFromDB;
+                                orderToUpdate = orderFromDB;
+
+                                productToUpdate.QUANTITY = productFromDB.QUANTITY - productToSubtract;
+
+                                // if product 0 then change to Unavailable
+                                if (productToUpdate.QUANTITY == 0)
+                                {
+                                    //update product
+                                    productToUpdate.AVAILABILITY = "UNAVAILABLE";
+                                    productRepository.Update(productToUpdate);
+
+                                    //update order quant
+                                    orderToUpdate.quant = quant;
+                                    orderToUpdate.ammout = quant * productFromDB.SELL_PRICE;
+                                    orderRepository.Update(orderToUpdate);
+                                    TempData["success"] = "Your Order Updated Successfully!";
+                                    return RedirectToAction("Index");
+                                }
+                                else
+                                {
+                                    productRepository.Update(productToUpdate);
+
+                                    //update order quant
+                                    orderToUpdate.quant = quant;
+                                    orderToUpdate.ammout = quant * productFromDB.SELL_PRICE;
+                                    orderRepository.Update(orderToUpdate);
+
+                                    TempData["success"] = "Your Order Updated Successfully!";
+                                    return RedirectToAction("Index");
+                                }
+                            }
                         }
                         else
                         {
+                            order orderToUpdate = new order();
+                            product productToUpdate = new product();
+
+                            productToUpdate = productFromDB;
+                            orderToUpdate = orderFromDB;
+
+                            int productToAdd = orderFromDB.quant - quant;
+
+
+
                             //add product
+                            productToUpdate.QUANTITY = productFromDB.QUANTITY + productToAdd;
+
+
                             //Change "Available"
+                            if (productToUpdate.QUANTITY > 0)
+                            {
+                                productToUpdate.AVAILABILITY = "AVAILABLE";
+                                productRepository.Update(productToUpdate);
+
+
+                                orderToUpdate.quant = quant;
+                                orderToUpdate.ammout = quant * productFromDB.SELL_PRICE;
+                                orderRepository.Update(orderToUpdate);
+
+                                TempData["success"] = "Your Order Updated Successfully!";
+                                return RedirectToAction("Index");
+
+                            }
+                            else
+                            {
+                                productRepository.Update(productToUpdate);
+
+                                orderToUpdate.quant = quant;
+                                orderToUpdate.ammout = quant * productFromDB.SELL_PRICE;
+                                orderRepository.Update(orderToUpdate);
+
+                                TempData["success"] = "Your Order Updated Successfully!";
+                                return RedirectToAction("Index");
+                            }
+
                         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        TempData["success"] = "Your Order Updated Successfully!";
-                        return RedirectToAction("Index");
                     }
                 }
                 else
