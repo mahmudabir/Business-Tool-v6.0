@@ -36,7 +36,8 @@
                     Name
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.P_NAME, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.P_NAME, "", new { @class = "text-danger" })
+                        
+                        <span style="color:red">@Html.ValidationMessageFor(model => model.P_NAME, "", new { @class = "text-danger" })</span>
                     </div>
                 </div>
 
@@ -44,7 +45,7 @@
                     Type
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.TYPE, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.TYPE, "", new { @class = "text-danger" })
+                        <span style="color:red">@Html.ValidationMessageFor(model => model.TYPE, "", new { @class = "text-danger" })</span>
                     </div>
                 </div>
 
@@ -52,7 +53,7 @@
                     Quantity
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.QUANTITY, new { htmlAttributes = new { @class = "form-control", min = 1 } })
-                        @Html.ValidationMessageFor(model => model.QUANTITY, "", new { @class = "text-danger" })
+                        <span style="color:red">@Html.ValidationMessageFor(model => model.QUANTITY, "", new { @class = "text-danger" })</span>
                     </div>
                 </div>
 
@@ -60,7 +61,7 @@
                     Buy Price
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.BUY_PRICE, new { htmlAttributes = new { @class = "form-control", min = 1 } })
-                        @Html.ValidationMessageFor(model => model.BUY_PRICE, "", new { @class = "text-danger" })
+                        <span style="color:red">@Html.ValidationMessageFor(model => model.BUY_PRICE, "", new { @class = "text-danger" })</span> 
                     </div>
                 </div>
 
@@ -68,7 +69,8 @@
                     Sell Price
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.SELL_PRICE, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.SELL_PRICE, "", new { @class = "text-danger" })
+                        <span style="color:red">@Html.ValidationMessageFor(model => model.SELL_PRICE, "", new { @class = "text-danger" })</span>
+                        @TempData["err2"]
                     </div>
                 </div>
 
