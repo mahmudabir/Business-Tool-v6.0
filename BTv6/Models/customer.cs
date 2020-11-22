@@ -11,6 +11,7 @@ namespace BTv6.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
     public partial class customer
@@ -22,12 +23,14 @@ namespace BTv6.Models
             this.orders = new HashSet<order>();
         }
 
-        [Required]
+        [Required, DisplayName("Username")]
         public string cusid { get; set; }
+        [Required, DisplayName("Full Name")]
         public string name { get; set; }
         public string design { get; set; }
-        [Required]
+        [Required, DisplayName("Email")]
         public string email { get; set; }
+        [Required, DisplayName("Mobile")]
         public string mobile { get; set; }
         public Nullable<System.DateTime> reg_date { get; set; }
         public int status { get; set; }

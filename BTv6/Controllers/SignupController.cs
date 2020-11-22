@@ -21,53 +21,73 @@ namespace BTv6.Controllers
         [HttpPost]
         public ActionResult Index(customer c, string password, string confirmpassword)
         {
-            customer customerToInsert = new customer();
-            log_in loginToIntert = new log_in();
-
-            customerToInsert = c;
-            customerToInsert.reg_date = DateTime.Now;
-            customerToInsert.status = 2;
-
-            loginToIntert.LID = c.cusid;
-            loginToIntert.SID = 0;
-            if (password == confirmpassword)
+            if (password == "" || confirmpassword == "")
             {
-                loginToIntert.PASS = password;
+                TempData["Error"] = "Password field is required.";
+
+                return View();
             }
             else
             {
-                TempData["Error"] = "Passworrd does not match!";
-                TempData["cusid"] = c.cusid;
-                TempData["name"] = c.name;
-                TempData["design"] = c.design;
-                TempData["email"] = c.email;
-                TempData["mobile"] = c.mobile;
-                return RedirectToAction("Index", "Signup");
-            }
+                customer customerToInsert = new customer();
+                log_in loginToIntert = new log_in();
 
+                customerToInsert = c;
+                customerToInsert.reg_date = DateTime.Now;
+                customerToInsert.status = 2;
 
-            var available = signupRepository.CheckUser(c);
-
-            if (!available)
-            {
-
-                if (ModelState.IsValid)
+                loginToIntert.LID = c.cusid;
+                loginToIntert.SID = 0;
+                if (password == confirmpassword)
                 {
-                    LoginRepository loginRepository = new LoginRepository();
-                    loginRepository.Insert(loginToIntert);
-
-
-                    signupRepository.Insert(customerToInsert);
-
-                    Session.Clear();
-                    Session.Abandon();
-
-                    TempData["success"] = "You can Login after admin approval";
-
-                    return RedirectToAction("Index", "Signup");
+                    loginToIntert.PASS = password;
                 }
                 else
                 {
+                    TempData["Error"] = "Passworrd does not match!";
+                    TempData["cusid"] = c.cusid;
+                    TempData["name"] = c.name;
+                    TempData["design"] = c.design;
+                    TempData["email"] = c.email;
+                    TempData["mobile"] = c.mobile;
+                    return RedirectToAction("Index", "Signup");
+                }
+
+
+                var available = signupRepository.CheckUser(c);
+
+                if (!available)
+                {
+
+                    if (ModelState.IsValid)
+                    {
+                        LoginRepository loginRepository = new LoginRepository();
+                        loginRepository.Insert(loginToIntert);
+
+
+                        signupRepository.Insert(customerToInsert);
+
+                        Session.Clear();
+                        Session.Abandon();
+
+                        TempData["success"] = "Success! Wait for admin approval";
+
+                        return RedirectToAction("Index", "Signup");
+                    }
+                    else
+                    {
+                        TempData["cusid"] = c.cusid;
+                        TempData["name"] = c.name;
+                        TempData["design"] = c.design;
+                        TempData["email"] = c.email;
+                        TempData["mobile"] = c.mobile;
+                        return View();
+                    }
+
+                }
+                else
+                {
+                    TempData["Error"] = "Username already taken";
                     TempData["cusid"] = c.cusid;
                     TempData["name"] = c.name;
                     TempData["design"] = c.design;
@@ -75,18 +95,11 @@ namespace BTv6.Controllers
                     TempData["mobile"] = c.mobile;
                     return View();
                 }
+            }
 
-            }
-            else
-            {
-                TempData["Error"] = "Username already taken";
-                TempData["cusid"] = c.cusid;
-                TempData["name"] = c.name;
-                TempData["design"] = c.design;
-                TempData["email"] = c.email;
-                TempData["mobile"] = c.mobile;
-                return View();
-            }
+
+
+
         }
     }
 }

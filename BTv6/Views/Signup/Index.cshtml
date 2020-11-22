@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model BTv6.Models.customer
+
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -12,18 +14,29 @@
         <form method="post">
 
             <input type="text" name="cusid" id="cusid" placeholder="Username" value="@TempData["cusid"]">
+            <span style="color:red;">@Html.ValidationMessageFor(model => model.cusid)</span>
 
             <input type="Password" name="password" id="password" placeholder="Password"><br>
+
+
 
             <input type="Password" name="confirmpassword" id="confirmpassword" placeholder="Confirm Password"><br>
 
             <input type="text" name="name" id="name" placeholder="Full Name" value="@TempData["name"]">
+            <span style="color:red;">@Html.ValidationMessageFor(model => model.name)</span>
+
 
             <input type="text" name="design" id="design" placeholder="Designation" value="@TempData["design"]">
+            <span style="color:red;">@Html.ValidationMessageFor(model => model.design)</span>
+
 
             <input type="email" name="email" id="email" placeholder="Email" value="@TempData["email"]">
+            <span style="color:red;">@Html.ValidationMessageFor(model => model.email)</span>
+
 
             <input type="text" name="mobile" id="mobile" placeholder="Mobile Number" value="@TempData["mobile"]">
+            <span style="color:red;">@Html.ValidationMessageFor(model => model.mobile)</span>
+
 
             <span style="color:red;">@TempData["Error"]</span>
             <span style="color:lawngreen;">@TempData["success"]</span>
