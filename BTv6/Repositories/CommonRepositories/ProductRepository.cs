@@ -71,7 +71,7 @@ namespace BTv6.Repositories.CommonRepositories
         public List<product> SearchProduct(string search)
         {
 
-            return this.GetAll().Where(x => x.AVAILABILITY == "AVAILABLE" && x.QUANTITY > 0 && (x.P_NAME.ToLower().Contains(search) || (x.TYPE.ToLower().Contains(search)))).ToList();
+            return this.GetAll().Where(x => x.AVAILABILITY == "AVAILABLE" && x.QUANTITY > 0 && (x.P_NAME.ToLower().Contains(search.ToLower()) || (x.TYPE.ToLower().Contains(search.ToLower())))).ToList();
         }
 
 
