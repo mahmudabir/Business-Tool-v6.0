@@ -1,16 +1,16 @@
 ﻿using BTv6.Models;
+using BTv6.Repositories.AdminRepositories;
 using BTv6.Repositories.CommonRepositories;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace BTv6.Controllers
 {
     public class SignupController : Controller
     {
-        SignupRepository signupRepository = new SignupRepository();
+        private SignupRepository signupRepository = new SignupRepository();
+
         // GET: Signup
         [HttpGet]
         public ActionResult Index()
@@ -53,26 +53,76 @@ namespace BTv6.Controllers
                     return RedirectToAction("Index", "Signup");
                 }
 
-
                 var available = signupRepository.CheckUser(c);
 
                 if (!available)
                 {
-
                     if (ModelState.IsValid)
                     {
                         LoginRepository loginRepository = new LoginRepository();
-                        loginRepository.Insert(loginToIntert);
+                        CustomerRepository customerRepository = new CustomerRepository();
+                        EmployeeRepository employeeRepository = new EmployeeRepository();
 
+                        var loginFromDB = loginRepository.GetAll().Where(x => x.LID == loginToIntert.LID).Count();
 
-                        signupRepository.Insert(customerToInsert);
+                        var customerEmailFromDB = customerRepository.GetAll().Where(x => x.email == customerToInsert.email).Count();
 
-                        Session.Clear();
-                        Session.Abandon();
+                        var employeeEmailFromDB = employeeRepository.GetAll().Where(x => x.E_MAIL == customerToInsert.email).Count();
 
-                        TempData["success"] = "Success! Wait for admin approval";
+                        if (loginFromDB <= 0)
+                        {
+                            bool check = true;
 
-                        return RedirectToAction("Index", "Signup");
+                            if (employeeEmailFromDB > 0)
+                            {
+                                check = false;
+                            }
+                            else
+                            {
+                            }
+
+                            if (customerEmailFromDB > 0)
+                            {
+                                check = false;
+                            }
+                            else
+                            {
+                            }
+
+                            if (check)
+                            {
+                                loginRepository.Insert(loginToIntert);
+
+                                signupRepository.Insert(customerToInsert);
+
+                                Session.Clear();
+                                Session.Abandon();
+
+                                TempData["success"] = "Success! Wait for admin approval";
+
+                                return RedirectToAction("Index", "Signup");
+                            }
+                            else
+                            {
+                                TempData["Error"] = "Email already taken";
+                                TempData["cusid"] = c.cusid;
+                                TempData["name"] = c.name;
+                                TempData["design"] = c.design;
+                                TempData["email"] = c.email;
+                                TempData["mobile"] = c.mobile;
+                                return View();
+                            }
+                        }
+                        else
+                        {
+                            TempData["Error"] = "Username already taken";
+                            TempData["cusid"] = c.cusid;
+                            TempData["name"] = c.name;
+                            TempData["design"] = c.design;
+                            TempData["email"] = c.email;
+                            TempData["mobile"] = c.mobile;
+                            return View();
+                        }
                     }
                     else
                     {
@@ -83,7 +133,6 @@ namespace BTv6.Controllers
                         TempData["mobile"] = c.mobile;
                         return View();
                     }
-
                 }
                 else
                 {
@@ -96,10 +145,6 @@ namespace BTv6.Controllers
                     return View();
                 }
             }
-
-
-
-
         }
     }
 }
