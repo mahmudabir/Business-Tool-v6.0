@@ -178,19 +178,13 @@ namespace BTv6.Controllers
         [HttpGet]
         public ActionResult SaleTypeChart()
         {
-
             if (Session["SID"] != null)
             {
                 if (this.checkSalesman((int)Session["SID"]))
                 {
-                   
-
-                    var saleCount = salerepo.GetSaleProductByUser((string)Session["LID"]).Count();
-                    
-
-                    ViewData["sale"] = saleCount;
-                   
-                    return View();
+                   var saleCount = salerepo.GetSaleProductByUser((string)Session["LID"]).Count();
+                   ViewData["sale"] = saleCount;
+                   return View();
                 }
                 else
                 {
@@ -202,6 +196,7 @@ namespace BTv6.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
+
 
         [HttpGet]
         public ActionResult NoteChart()

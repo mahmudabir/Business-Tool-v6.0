@@ -117,8 +117,31 @@ namespace BTv6.Controllers
             }
         }
 
-        [NonAction]
 
+        [HttpGet]
+        public ActionResult deliveryChart()
+        {
+            if (Session["SID"] != null)
+            {
+                if (this.CheckDeliveryman((int)Session["SID"]))
+                {
+                    var deliveryCount = orderrepo.GetAcceptedList((string)Session["LID"]).Count();
+                    ViewData["delivery"] = deliveryCount;
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+
+        [NonAction]
         public bool CheckDeliveryman(int SID)
         {
             if (SID == 4)
