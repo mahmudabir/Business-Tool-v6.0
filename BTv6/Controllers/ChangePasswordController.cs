@@ -1,11 +1,8 @@
-﻿using System;
-using BTv6.Models;
+﻿using BTv6.Models;
 using BTv6.Repositories.CommonRepositories;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 using System.Data.Entity;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace BTv6.Controllers
 {
@@ -24,6 +21,7 @@ namespace BTv6.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
+
         [HttpPost]
         public ActionResult Index(log_in l, string newpassword, string confirmnewpassword)
         {
@@ -33,24 +31,32 @@ namespace BTv6.Controllers
                 {
                     LoginRepository login = new LoginRepository();
                     var lo = login.GetByID((string)Session["LID"]);
-                    if (lo.PASS == l.PASS)
+
+                    var LID = (string)Session["LID"];
+
+                    if (ModelState.IsValid)
                     {
-                        BusinessToolDBEntities context = new BusinessToolDBEntities();
+                        if (lo.PASS == l.PASS)
+                        {
+                            BusinessToolDBEntities context = new BusinessToolDBEntities();
 
-                        var LID = (string)Session["LID"];
-                        var userFromDB = context.log_in.Where(x => x.LID == LID).FirstOrDefault();
+                            var userFromDB = context.log_in.Where(x => x.LID == LID).FirstOrDefault();
 
-                        userFromDB.PASS = (string)confirmnewpassword;
+                            userFromDB.PASS = (string)confirmnewpassword;
 
-                        context.Entry(userFromDB).State = EntityState.Modified;
-                        context.SaveChanges();
-                        Session.Clear();
-                        
+                            context.Entry(userFromDB).State = EntityState.Modified;
+                            context.SaveChanges();
+                            Session.Clear();
+                        }
+                        else
+                        {
+                            TempData["Error"] = "Wrong Old Password";
+                            return RedirectToAction("Index", "ChangePassword");
+                        }
                     }
                     else
                     {
-                        TempData["Error"] = "Wrong Old Password";
-                        return RedirectToAction("Index", "ChangePassword");
+                        return View();
                     }
                 }
                 else
