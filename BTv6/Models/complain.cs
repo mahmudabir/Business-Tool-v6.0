@@ -11,14 +11,18 @@ namespace BTv6.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class complain
     {
+        [Key]
         public int cID { get; set; }
+        [Required]
         public string sub { get; set; }
         public string OwnerID { get; set; }
+        [Required]
         public string Text { get; set; }
-    
+
         public virtual customer customer { get; set; }
     }
 }
