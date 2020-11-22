@@ -237,14 +237,59 @@ namespace BTv6.Controllers
                     }
                     else
                     {
+
                         var productsToView = productRepository.GetAll().Where(x => x.AVAILABILITY == "AVAILABLE" && x.QUANTITY > 0).ToList();
 
-                        ViewBag.result = productsToView;
 
-                        return View(productsToView);
+                        if (sortby == "aprice")
+                        {
+                            productsToView = productRepository.GetAll().Where(x => x.AVAILABILITY == "AVAILABLE" && x.QUANTITY > 0).OrderBy(x => x.SELL_PRICE).ToList();
+
+                            ViewBag.result = productsToView;
+
+                            TempData["aprice"] = "selected";
+
+                            return View(productsToView);
+                        }
+                        else if (sortby == "dprice")
+                        {
+                            productsToView = productRepository.GetAll().Where(x => x.AVAILABILITY == "AVAILABLE" && x.QUANTITY > 0).OrderByDescending(x => x.SELL_PRICE).ToList();
+
+                            ViewBag.result = productsToView;
+
+                            TempData["dprice"] = "selected";
+
+                            return View(productsToView);
+                        }
+                        else if (sortby == "adate")
+                        {
+                            productsToView = productRepository.GetAll().Where(x => x.AVAILABILITY == "AVAILABLE" && x.QUANTITY > 0).OrderBy(x => x.TYPE).ToList();
+
+                            ViewBag.result = productsToView;
+
+                            TempData["adate"] = "selected";
+
+                            return View(productsToView);
+                        }
+                        else if (sortby == "ddate")
+                        {
+                            productsToView = productRepository.GetAll().Where(x => x.AVAILABILITY == "AVAILABLE" && x.QUANTITY > 0).OrderByDescending(x => x.TYPE).ToList();
+
+                            ViewBag.result = productsToView;
+
+                            TempData["ddate"] = "selected";
+
+                            return View(productsToView);
+                        }
+                        else
+                        {
+                            productsToView = productRepository.SearchProduct(search);
+
+                            ViewBag.result = productsToView;
+
+                            return View(productsToView);
+                        }
                     }
-
-
                 }
                 else
                 {
