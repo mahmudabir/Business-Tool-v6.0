@@ -150,37 +150,41 @@ namespace BTv6.Controllers
                             TempData["err"] = "User Exists";
                             return RedirectToAction("CreateEmployee");
                         }
-                        EmployeeRepository employees = new EmployeeRepository();
-                        LoginRepository logins = new LoginRepository();
-                        Profile_imagesRepository profile_Images = new Profile_imagesRepository();
-
-                        log_in l = new log_in();
-                        l.LID = (string)employee.EmpID;
-                        l.SID = (int)employee.DID;
-                        l.PASS = "12345";
-
-                        profile_images images = new profile_images();
-                        images.UID = (string)employee.EmpID;
-                        images.IMAGE = "~/Assets/image/profile/default.png";
-
-                        var av = employees.CheckUser(employee);
-
-                        if (!av)
-                        {
-                            logins.InsertByObj(l);
-
-                            employee.ADDED_BY = (string)Session["LID"];
-                            employee.JOIN_DATE = DateTime.Now;
-                            employees.InsertByObj(employee);
-
-                            profile_Images.InsertByObj(images);
-
-                            return RedirectToAction("EmployeeManagement");
-                        }
-
+                        
                         else
                         {
-                            return RedirectToAction("CreateEmployee");
+                            EmployeeRepository employees = new EmployeeRepository();
+                            LoginRepository logins = new LoginRepository();
+                            Profile_imagesRepository profile_Images = new Profile_imagesRepository();
+
+                            log_in l = new log_in();
+                            l.LID = (string)employee.EmpID;
+                            l.SID = (int)employee.DID;
+                            l.PASS = "12345";
+
+                            profile_images images = new profile_images();
+                            images.UID = (string)employee.EmpID;
+                            images.IMAGE = "~/Assets/image/profile/default.png";
+
+                            var av = employees.CheckUser(employee);
+
+                            if (!av)
+                            {
+                                logins.InsertByObj(l);
+
+                                employee.ADDED_BY = (string)Session["LID"];
+                                employee.JOIN_DATE = DateTime.Now;
+                                employees.InsertByObj(employee);
+
+                                profile_Images.InsertByObj(images);
+
+                                return RedirectToAction("EmployeeManagement");
+                            }
+
+                            else
+                            {
+                                return RedirectToAction("CreateEmployee");
+                            }
                         }
                     }
 
