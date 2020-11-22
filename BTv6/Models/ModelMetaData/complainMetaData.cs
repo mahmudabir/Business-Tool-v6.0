@@ -8,6 +8,7 @@ namespace BTv6.Models.ModelMetaData
 {
     public class complainMetaData
     {
+        [Key]
         public int cID { get; set; }
         [Required]
         public string sub { get; set; }
