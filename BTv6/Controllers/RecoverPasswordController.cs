@@ -77,6 +77,7 @@ namespace BTv6.Controllers
                         if (account != null)
                         {
                             //Send Mail
+                            
                             Session["email"] = account.E_MAIL;
                             //send verification mail employee
                             SendVerificationLinkEmail(account.E_MAIL, "ResetPassword");
