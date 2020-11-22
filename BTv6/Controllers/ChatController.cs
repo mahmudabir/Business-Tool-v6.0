@@ -78,7 +78,7 @@ namespace BTv6.Controllers
                 {
                     chat chatToInsert = new chat();
                     chatToInsert.RECEIVER = ct.RECEIVER;
-                    if (chatToInsert.RECEIVER == "3" || chatToInsert.RECEIVER == "4" || chatToInsert.RECEIVER == "5")
+                    if (chatToInsert.RECEIVER == "1" || chatToInsert.RECEIVER == "2" || chatToInsert.RECEIVER == "3" || chatToInsert.RECEIVER == "4" || chatToInsert.RECEIVER == "5")
                     {
 
                         chatToInsert.SENDER = (string)Session["LID"];
@@ -90,18 +90,18 @@ namespace BTv6.Controllers
                             {
                                 chatrepo.Insert(chatToInsert);
                                 TempData["message"] = "Message Sent";
-                                return RedirectToAction("send");
+                                return RedirectToAction("Index");
                             }
                             else
                             {
                                 TempData["message"] = "You are not allowed to send message to yourself";
-                                return RedirectToAction("send");
+                                return RedirectToAction("Index");
                             }
                         }
                         else
                         {
                             TempData["message"] = "Message Can't Send";
-                            return RedirectToAction("send");
+                            return RedirectToAction("Index");
                         }
                     }
 
