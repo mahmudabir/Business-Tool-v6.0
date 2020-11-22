@@ -85,16 +85,6 @@ namespace BTv6.Controllers
 
                     if (!ModelState.IsValid)
                     {
-                        ComplainRepository complainRepository = new ComplainRepository();
-
-                        complain complainToInsert = new complain();
-
-                        complainToInsert.OwnerID = (string)Session["LID"];
-                        complainToInsert.sub = (string)cmpln.sub;
-                        complainToInsert.Text = (string)cmpln.Text;
-
-                        complainRepository.Insert(complainToInsert);
-
                         TempData["error"] = "Your complain was not submitted!";
 
                         return RedirectToAction("Index", "Complain");
