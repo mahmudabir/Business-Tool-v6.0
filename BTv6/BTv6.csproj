@@ -307,6 +307,11 @@
     <Content Include="Views\Salesman\SaleTypeChart.cshtml" />
     <Content Include="Views\Salesman\NoteChart.cshtml" />
     <Content Include="Views\Deliveryman\deliveryChart.cshtml" />
+    <Content Include="Views\Admin\Charts\SalaryChart.cshtml" />
+    <Content Include="Views\Admin\EmployeeReports\Index.cshtml" />
+    <Content Include="Views\Admin\Charts\EmpTypeChart.cshtml" />
+    <Content Include="Views\Admin\CustomerReports\Index.cshtml" />
+    <Content Include="Views\Admin\Charts\RegistrationChart.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

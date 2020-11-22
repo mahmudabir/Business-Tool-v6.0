@@ -1,0 +1,11 @@
+﻿
+@{
+    var myChart = new Chart(width: 350, height: 250)
+    .AddTitle("Salary Chart")
+    .AddSeries(
+    name: "Employee",
+    xValue: new[] { "Sal>=50000", "Sal<50000" },
+    yValues: new[] { ViewData["h"], ViewData["l"]})
+    .Write();
+}
+
