@@ -1078,5 +1078,142 @@ namespace BTv6.Controllers
                 }
             }
         }
+
+        [HttpGet]
+        public ActionResult SalaryChart(employee employee)
+        {
+
+            if (Session["SID"] != null)
+            {
+                if ((int)Session["SID"] == 1)
+                {
+                    EmployeeRepository emp = new EmployeeRepository();
+                    var high = emp.GetAll().Where(x => x.SAL >= 50000).Count();
+                    var low = emp.GetAll().Where(x => x.SAL <= 49999).Count();
+                   
+
+                    ViewData["h"] = high;
+                    ViewData["l"] = low;
+
+                    return View("Charts/SalaryChart");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult EmpTypeChart(employee employee)
+        {
+
+            if (Session["SID"] != null)
+            {
+                if ((int)Session["SID"] == 1)
+                {
+                    EmployeeRepository emp = new EmployeeRepository();
+                    var admin = emp.GetAll().Where(x => x.DID == 1).Count();
+                    var manager = emp.GetAll().Where(x => x.DID == 2).Count();
+                    var salesman = emp.GetAll().Where(x => x.DID == 3).Count();
+                    var deliveryman = emp.GetAll().Where(x => x.DID == 4).Count();
+
+
+                    ViewData["a"] = admin;
+                    ViewData["m"] = manager;
+                    ViewData["s"] = salesman;
+                    ViewData["d"] = deliveryman;
+
+
+                    return View("Charts/EmpTypeChart");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult EmployeeReports()
+        {
+            if (Session["LID"] == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            else
+            {
+                if ((int)Session["SID"] == 1)
+                {
+                    return View("EmployeeReports/Index");
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }
+        }
+
+        [HttpGet]
+        public ActionResult CustomerReports()
+        {
+            if (Session["LID"] == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            else
+            {
+                if ((int)Session["SID"] == 1)
+                {
+                    return View("CustomerReports/Index");
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }
+        }
+
+        [HttpGet]
+        public ActionResult RegistrationChart(customer customer)
+        {
+
+            if (Session["SID"] != null)
+            {
+                if ((int)Session["SID"] == 1)
+                {
+                    CustomerRepository cus = new CustomerRepository();
+                    var active = cus.GetAll().Where(x => x.status == 1).Count();
+                    var blocked = cus.GetAll().Where(x => x.status == 0).Count();
+                    var pending = cus.GetAll().Where(x => x.status == 2).Count();
+
+                    ViewData["a"] = active;
+                    ViewData["b"] = blocked;
+                    ViewData["p"] = pending;
+
+                    return View("Charts/RegistrationChart");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
     }
 }
