@@ -18,7 +18,7 @@
 {
     @RenderPage("~/Views/Customer/Common.cshtml")
 }
-
+@model BTv6.Models.log_in
 <!DOCTYPE html>
 <html>
 
@@ -35,6 +35,7 @@
         <form method="POST">
             <p>Old Password</p>
             <input type="password" name="PASS" placeholder="Enter Old Password" value=""><br>
+            <span style="color:red;">@Html.ValidationMessageFor(model => model.PASS)</span>
             <p>New Password</p>
             <input type="password" name="newpassword" placeholder="Enter New password" value=""><br>
             <span id="err"></span>
