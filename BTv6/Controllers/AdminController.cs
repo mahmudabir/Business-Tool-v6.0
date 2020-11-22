@@ -20,253 +20,333 @@ namespace BTv6.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            if ((int)Session["SID"] == 1)
+            if(Session["LID"] == null)
             {
-                return View();
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
-            }
+                if ((int)Session["SID"] == 1)
+                {
+                    return View();
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }     
         }
 
         [HttpGet]
         public ActionResult EmployeeManagement(employee employee)
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                EmployeeRepository employees = new EmployeeRepository();
-                var employeesList = employees.GetAll();
-
-                return View("EmployeeManagement/Index", employeesList);
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
-            }
+                if ((int)Session["SID"] == 1)
+                {
+                    EmployeeRepository employees = new EmployeeRepository();
+                    var employeesList = employees.GetAll();
+
+                    return View("EmployeeManagement/Index", employeesList);
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }     
         }
 
         [HttpPost, ActionName("EmployeeManagement")]
         public ActionResult PostEmployeeManagement()
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                if (Request["CREATE"] != null)
-                {
-                    return RedirectToAction("CreateEmployee");
-                }
-
-                else
-                {
-                    return RedirectToAction("EmployeeManagement");
-                }
-
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
-            }
+                if ((int)Session["SID"] == 1)
+                {
+                    if (Request["CREATE"] != null)
+                    {
+                        return RedirectToAction("CreateEmployee");
+                    }
+
+                    else
+                    {
+                        return RedirectToAction("EmployeeManagement");
+                    }
+
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }    
         }
 
         [HttpGet]
         public ActionResult CreateEmployee()
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                StatusRepository status = new StatusRepository();
-                ViewData["design"] = status.GetAll();
-
-                return View("EmployeeManagement/Create/Index");
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
+                if ((int)Session["SID"] == 1)
+                {
+                    StatusRepository status = new StatusRepository();
+                    ViewData["design"] = status.GetAll();
+
+                    return View("EmployeeManagement/Create/Index");
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
         }
 
         [HttpPost]
         public ActionResult CreateEmployee(employee employee)
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                EmployeeRepository employees = new EmployeeRepository();
-                LoginRepository logins = new LoginRepository();
-                Profile_imagesRepository profile_Images = new Profile_imagesRepository();
-
-                log_in l = new log_in();
-                l.LID = (string)employee.EmpID;
-                l.SID = (int)employee.DID;
-                l.PASS = "12345";
-
-                profile_images images = new profile_images();
-                images.UID = (string)employee.EmpID;
-                images.IMAGE = "~/Assets/image/profile/default.png";
-
-                var av = employees.CheckUser(employee);
-
-                if (!av)
-                {
-                    logins.InsertByObj(l);
-
-                    employee.ADDED_BY = (string)Session["LID"];
-                    employee.JOIN_DATE = DateTime.Now;
-                    employees.InsertByObj(employee);
-
-                    profile_Images.InsertByObj(images);
-
-                    return RedirectToAction("EmployeeManagement");
-                }
-
-                else
-                {
-                    return RedirectToAction("CreateEmployee");
-                }
-
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
-            }
+                if ((int)Session["SID"] == 1)
+                {
+                    EmployeeRepository employees = new EmployeeRepository();
+                    LoginRepository logins = new LoginRepository();
+                    Profile_imagesRepository profile_Images = new Profile_imagesRepository();
+
+                    log_in l = new log_in();
+                    l.LID = (string)employee.EmpID;
+                    l.SID = (int)employee.DID;
+                    l.PASS = "12345";
+
+                    profile_images images = new profile_images();
+                    images.UID = (string)employee.EmpID;
+                    images.IMAGE = "~/Assets/image/profile/default.png";
+
+                    var av = employees.CheckUser(employee);
+
+                    if (!av)
+                    {
+                        logins.InsertByObj(l);
+
+                        employee.ADDED_BY = (string)Session["LID"];
+                        employee.JOIN_DATE = DateTime.Now;
+                        employees.InsertByObj(employee);
+
+                        profile_Images.InsertByObj(images);
+
+                        return RedirectToAction("EmployeeManagement");
+                    }
+
+                    else
+                    {
+                        return RedirectToAction("CreateEmployee");
+                    }
+
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }  
         }
 
         [HttpGet]
         public ActionResult UpdateEmployee(string id)
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                EmployeeRepository employees = new EmployeeRepository();
-                StatusRepository status = new StatusRepository();
-                ViewData["design"] = status.GetAll();
-                var employee = employees.Get(id);
-
-                return View("EmployeeManagement/Update/Index", employee);
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
+                if ((int)Session["SID"] == 1)
+                {
+                    EmployeeRepository employees = new EmployeeRepository();
+                    StatusRepository status = new StatusRepository();
+                    ViewData["design"] = status.GetAll();
+                    var employee = employees.Get(id);
+
+                    return View("EmployeeManagement/Update/Index", employee);
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
         }
 
         [HttpPost]
         public ActionResult UpdateEmployee(employee employee)
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                EmployeeRepository employees = new EmployeeRepository();
-                BusinessToolDBEntities context = new BusinessToolDBEntities();
-
-                var empLOG = context.log_in.Where(x => x.LID == (string)employee.EmpID).FirstOrDefault();
-                empLOG.SID = (int)employee.DID;
-                context.Entry(empLOG).State = EntityState.Modified;
-                context.SaveChanges();
-
-                employees.Update(employee);
-
-                if (Session["LID"].Equals((string)employee.EmpID) || (string)Session["LID"] == (string)employee.EmpID)
-                {
-                    return RedirectToAction("Index", "Logout");
-                }
-
-                else
-                {
-                    return RedirectToAction("EmployeeManagement");
-                }
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
-            }
+                if ((int)Session["SID"] == 1)
+                {
+                    EmployeeRepository employees = new EmployeeRepository();
+                    BusinessToolDBEntities context = new BusinessToolDBEntities();
+
+                    var empLOG = context.log_in.Where(x => x.LID == (string)employee.EmpID).FirstOrDefault();
+                    empLOG.SID = (int)employee.DID;
+                    context.Entry(empLOG).State = EntityState.Modified;
+                    context.SaveChanges();
+
+                    employees.Update(employee);
+
+                    if (Session["LID"].Equals((string)employee.EmpID) || (string)Session["LID"] == (string)employee.EmpID)
+                    {
+                        return RedirectToAction("Index", "Logout");
+                    }
+
+                    else
+                    {
+                        return RedirectToAction("EmployeeManagement");
+                    }
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }   
         }
 
         [HttpGet]
         public ActionResult RestrictEmployeeLogin(string id)
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                BusinessToolDBEntities context = new BusinessToolDBEntities();
-
-                var empLOG = context.log_in.Where(x => x.LID == (string)id).FirstOrDefault();
-                empLOG.SID = 0;
-                context.Entry(empLOG).State = EntityState.Modified;
-                context.SaveChanges();
-
-                var emp = context.employees.Where(x => x.EmpID == (string)id).FirstOrDefault();
-                emp.DID = 0;
-                context.Entry(emp).State = EntityState.Modified;
-                context.SaveChanges();
-
-                if (Session["LID"].Equals((string)id) || (string)Session["LID"] == (string)id)
-                {
-                    return RedirectToAction("Index", "Logout");
-                }
-
-                else
-                {
-                    return RedirectToAction("EmployeeManagement");
-                }
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
-            }
+                if ((int)Session["SID"] == 1)
+                {
+                    BusinessToolDBEntities context = new BusinessToolDBEntities();
+
+                    var empLOG = context.log_in.Where(x => x.LID == (string)id).FirstOrDefault();
+                    empLOG.SID = 0;
+                    context.Entry(empLOG).State = EntityState.Modified;
+                    context.SaveChanges();
+
+                    var emp = context.employees.Where(x => x.EmpID == (string)id).FirstOrDefault();
+                    emp.DID = 0;
+                    context.Entry(emp).State = EntityState.Modified;
+                    context.SaveChanges();
+
+                    if (Session["LID"].Equals((string)id) || (string)Session["LID"] == (string)id)
+                    {
+                        return RedirectToAction("Index", "Logout");
+                    }
+
+                    else
+                    {
+                        return RedirectToAction("EmployeeManagement");
+                    }
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }   
         }
 
         [HttpGet]
         public ActionResult AllowEmployeeLogin(string id)
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                EmployeeRepository employees = new EmployeeRepository();
-                StatusRepository status = new StatusRepository();
-                ViewData["design"] = status.GetAll();
-                var employee = employees.Get(id);
-
-                return View("EmployeeManagement/LoginAllow/Index", employee);
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
+                if ((int)Session["SID"] == 1)
+                {
+                    EmployeeRepository employees = new EmployeeRepository();
+                    StatusRepository status = new StatusRepository();
+                    ViewData["design"] = status.GetAll();
+                    var employee = employees.Get(id);
+
+                    return View("EmployeeManagement/LoginAllow/Index", employee);
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
         }
 
         [HttpPost]
         public ActionResult AllowEmployeeLogin(employee employee)
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                EmployeeRepository employees = new EmployeeRepository();
-                BusinessToolDBEntities context = new BusinessToolDBEntities();
-
-                var empLOG = context.log_in.Where(x => x.LID == (string)employee.EmpID).FirstOrDefault();
-                empLOG.SID = (int)employee.DID;
-                context.Entry(empLOG).State = EntityState.Modified;
-                context.SaveChanges();
-
-                employees.Update(employee);
-
-                if (Session["LID"].Equals((string)employee.EmpID) || (string)Session["LID"] == (string)employee.EmpID)
-                {
-                    return RedirectToAction("Index", "Logout");
-                }
-
-                else
-                {
-                    return RedirectToAction("EmployeeManagement");
-                }
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
+                if ((int)Session["SID"] == 1)
+                {
+                    EmployeeRepository employees = new EmployeeRepository();
+                    BusinessToolDBEntities context = new BusinessToolDBEntities();
+
+                    var empLOG = context.log_in.Where(x => x.LID == (string)employee.EmpID).FirstOrDefault();
+                    empLOG.SID = (int)employee.DID;
+                    context.Entry(empLOG).State = EntityState.Modified;
+                    context.SaveChanges();
+
+                    employees.Update(employee);
+
+                    if (Session["LID"].Equals((string)employee.EmpID) || (string)Session["LID"] == (string)employee.EmpID)
+                    {
+                        return RedirectToAction("Index", "Logout");
+                    }
+
+                    else
+                    {
+                        return RedirectToAction("EmployeeManagement");
+                    }
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
         }
 
@@ -274,73 +354,200 @@ namespace BTv6.Controllers
         [HttpGet]
         public ActionResult ProductManagement(product product)
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                ProductRepository products = new ProductRepository();
-                var productsList = products.GetAll();
-
-                return View("ProductManagement/Index", productsList);
-
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
+                if ((int)Session["SID"] == 1)
+                {
+                    ProductRepository products = new ProductRepository();
+                    var productsList = products.GetAll();
+
+                    return View("ProductManagement/Index", productsList);
+
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
         }
 
         [HttpPost, ActionName("ProductManagement")]
         public ActionResult PostProductManagement()
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                if (Request["CREATE"] != null)
-                {
-                    return RedirectToAction("CreateProduct");
-                }
-
-                else
-                {
-                    return RedirectToAction("ProductManagement");
-                }
-
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
+                if ((int)Session["SID"] == 1)
+                {
+                    if (Request["CREATE"] != null)
+                    {
+                        return RedirectToAction("CreateProduct");
+                    }
+
+                    else
+                    {
+                        return RedirectToAction("ProductManagement");
+                    }
+
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
         }
 
         [HttpGet]
         public ActionResult CreateProduct()
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                return View("ProductManagement/Create/Index");
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
+                if ((int)Session["SID"] == 1)
+                {
+                    return View("ProductManagement/Create/Index");
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
         }
 
         [HttpPost]
         public ActionResult CreateProduct(product product, HttpPostedFileBase avatar)
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                ProductRepository products = new ProductRepository();
+                return RedirectToAction("Index", "Login");
+            }
 
-                var av = products.CheckProduct(product);
-
-                if (!av)
+            else
+            {
+                if ((int)Session["SID"] == 1)
                 {
+                    ProductRepository products = new ProductRepository();
+
+                    var av = products.CheckProduct(product);
+
+                    if (!av)
+                    {
+                        product.MOD_BY = (string)Session["LID"];
+                        product.Add_PDate = DateTime.Now;
+
+                        if (product.QUANTITY > 0)
+                        {
+                            product.AVAILABILITY = "AVAILABLE";
+                        }
+
+                        else
+                        {
+                            product.AVAILABILITY = "UNAVAILABLE";
+                        }
+
+                        string path = HttpContext.Server.MapPath("~/Assets/image/product");
+
+                        HttpPostedFileBase file = Request.Files["avatar"];
+
+                        if (file != null)
+                        {
+                            if (Path.GetFileName(file.FileName).Length > 0)
+                            {
+                                string fullPath = Path.Combine(path, Path.GetFileName(file.FileName));
+                                avatar.SaveAs(fullPath);
+                                product.P_IMG = "~/Assets/image/product/" + Path.GetFileName(file.FileName);
+                            }
+
+                            else
+                            {
+                                product.P_IMG = "~/Assets/image/product/default.png";
+                            }
+
+                        }
+
+                        else
+                        {
+                            product.P_IMG = "~/Assets/image/product/default.png";
+                        }
+
+                        products.InsertByObj(product);
+
+
+                        return RedirectToAction("ProductManagement");
+                    }
+
+                    else
+                    {
+                        return RedirectToAction("CreateProduct");
+                    }
+
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }
+        }
+
+        [HttpGet]
+        public ActionResult UpdateProduct(string id)
+        {
+            if (Session["LID"] == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            else
+            {
+                if ((int)Session["SID"] == 1)
+                {
+                    ProductRepository products = new ProductRepository();
+                    var prod = products.Get(id);
+
+                    return View("ProductManagement/Update/Index", prod);
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }          
+        }
+
+        [HttpPost]
+        public ActionResult UpdateProduct(product product, HttpPostedFileBase avatar)
+        {
+            if (Session["LID"] == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            else
+            {
+                if ((int)Session["SID"] == 1)
+                {
+                    ProductRepository products = new ProductRepository();
                     product.MOD_BY = (string)Session["LID"];
                     product.Add_PDate = DateTime.Now;
 
-                    if(product.QUANTITY > 0)
+                    if (product.QUANTITY > 0)
                     {
                         product.AVAILABILITY = "AVAILABLE";
                     }
@@ -356,148 +563,77 @@ namespace BTv6.Controllers
 
                     if (file != null)
                     {
-                        if(Path.GetFileName(file.FileName).Length > 0)
+                        ProductRepository prodIMG = new ProductRepository();
+                        var img = prodIMG.GetProductByID(product.PID);
+                        string image = (string)img.P_IMG;
+
+                        if (Path.GetFileName(file.FileName).Length > 0)
                         {
                             string fullPath = Path.Combine(path, Path.GetFileName(file.FileName));
+
+                            if (image != "~/Assets/image/product/default.png")
+                            {
+                                System.IO.File.Delete(Server.MapPath(image));
+                            }
+
                             avatar.SaveAs(fullPath);
                             product.P_IMG = "~/Assets/image/product/" + Path.GetFileName(file.FileName);
                         }
 
                         else
                         {
-                            product.P_IMG = "~/Assets/image/product/default.png";
+                            product.P_IMG = image;
                         }
-
                     }
 
                     else
                     {
-                        product.P_IMG = "~/Assets/image/product/default.png";
+                        ProductRepository prodIMG = new ProductRepository();
+                        var img = prodIMG.GetProductByID(product.PID);
+                        string image = (string)img.P_IMG;
+
+                        product.P_IMG = image;
                     }
 
-                    products.InsertByObj(product);
-
+                    products.Update(product);
 
                     return RedirectToAction("ProductManagement");
                 }
 
                 else
                 {
-                    return RedirectToAction("CreateProduct");
+                    return RedirectToAction("Index", "Login");
                 }
-
-            }
-
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
-        }
-
-        [HttpGet]
-        public ActionResult UpdateProduct(string id)
-        {
-            if ((int)Session["SID"] == 1)
-            {
-                ProductRepository products = new ProductRepository();
-                var prod = products.Get(id);
-
-                return View("ProductManagement/Update/Index", prod);
-            }
-
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
-        }
-
-        [HttpPost]
-        public ActionResult UpdateProduct(product product, HttpPostedFileBase avatar)
-        {
-            if ((int)Session["SID"] == 1)
-            {
-                ProductRepository products = new ProductRepository();
-                product.MOD_BY = (string)Session["LID"];
-                product.Add_PDate = DateTime.Now;
-
-                if (product.QUANTITY > 0)
-                {
-                    product.AVAILABILITY = "AVAILABLE";
-                }
-
-                else
-                {
-                    product.AVAILABILITY = "UNAVAILABLE";
-                }
-
-                string path = HttpContext.Server.MapPath("~/Assets/image/product");
-                
-                HttpPostedFileBase file = Request.Files["avatar"];
-
-                if (file != null)
-                {
-                    ProductRepository prodIMG = new ProductRepository();
-                    var img = prodIMG.GetProductByID(product.PID);
-                    string image = (string)img.P_IMG;
-
-                    if(Path.GetFileName(file.FileName).Length>0)
-                    {
-                        string fullPath = Path.Combine(path, Path.GetFileName(file.FileName));
-
-                        if (image != "~/Assets/image/product/default.png")
-                        {
-                            System.IO.File.Delete(Server.MapPath(image));
-                        }
-
-                        avatar.SaveAs(fullPath);
-                        product.P_IMG = "~/Assets/image/product/" + Path.GetFileName(file.FileName);
-                    }
-
-                    else
-                    {
-                        product.P_IMG = image;
-                    }                   
-                }
-
-                else
-                {
-                    ProductRepository prodIMG = new ProductRepository();
-                    var img = prodIMG.GetProductByID(product.PID);
-                    string image = (string)img.P_IMG;
-
-                    product.P_IMG = image;
-                }
-
-                products.Update(product);
-
-                return RedirectToAction("ProductManagement");
-            }
-
-            else
-            {
-                return RedirectToAction("Index", "Login");
             }
         }
 
         [HttpGet]
         public ActionResult RestrictProdutSell(string id)
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                BusinessToolDBEntities context = new BusinessToolDBEntities();
-
-                var prod = context.products.Where(x => x.PID == (string)id).FirstOrDefault();
-                prod.AVAILABILITY = "UNAVAILABLE";
-                context.Entry(prod).State = EntityState.Modified;
-                context.SaveChanges();
-
-                return RedirectToAction("ProductManagement");
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
-            }
+                if ((int)Session["SID"] == 1)
+                {
+                    BusinessToolDBEntities context = new BusinessToolDBEntities();
+
+                    var prod = context.products.Where(x => x.PID == (string)id).FirstOrDefault();
+                    prod.AVAILABILITY = "UNAVAILABLE";
+                    context.Entry(prod).State = EntityState.Modified;
+                    context.SaveChanges();
+
+                    return RedirectToAction("ProductManagement");
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }          
         }
 
         [HttpGet]
@@ -525,65 +661,89 @@ namespace BTv6.Controllers
         [HttpGet]
         public ActionResult PendingRegistrationManagement(customer customer)
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                CustomerRepository customers = new CustomerRepository();
-                var pendingRegistrationList = customers.GetByStatus(2);
-
-                return View("PendingRegistrationManagement/Index", pendingRegistrationList);
-
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
+                if ((int)Session["SID"] == 1)
+                {
+                    CustomerRepository customers = new CustomerRepository();
+                    var pendingRegistrationList = customers.GetByStatus(2);
+
+                    return View("PendingRegistrationManagement/Index", pendingRegistrationList);
+
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
         }
 
         [HttpGet]
         public ActionResult AcceptCustomer(string id)
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                BusinessToolDBEntities context = new BusinessToolDBEntities();
-
-                var cusLOG = context.log_in.Where(x => x.LID == (string)id).FirstOrDefault();
-                cusLOG.SID = 5;
-                context.Entry(cusLOG).State = EntityState.Modified;
-                context.SaveChanges();
-
-                var cus = context.customers.Where(x => x.cusid == (string)id).FirstOrDefault();
-                cus.status = 1;
-                context.Entry(cus).State = EntityState.Modified;
-                context.SaveChanges();
-
-                return RedirectToAction("PendingRegistrationManagement");
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
+                if ((int)Session["SID"] == 1)
+                {
+                    BusinessToolDBEntities context = new BusinessToolDBEntities();
+
+                    var cusLOG = context.log_in.Where(x => x.LID == (string)id).FirstOrDefault();
+                    cusLOG.SID = 5;
+                    context.Entry(cusLOG).State = EntityState.Modified;
+                    context.SaveChanges();
+
+                    var cus = context.customers.Where(x => x.cusid == (string)id).FirstOrDefault();
+                    cus.status = 1;
+                    context.Entry(cus).State = EntityState.Modified;
+                    context.SaveChanges();
+
+                    return RedirectToAction("PendingRegistrationManagement");
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
         }
 
         [HttpGet]
         public ActionResult RejectCustomer(string id)
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                BusinessToolDBEntities db = new BusinessToolDBEntities();
-                LoginRepository log = new LoginRepository();
-                CustomerRepository cus = new CustomerRepository();
-
-                cus.DeleteCustomerByID(id);
-                log.DeleteLoginByID(id);
-
-                return RedirectToAction("PendingRegistrationManagement");
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
+                if ((int)Session["SID"] == 1)
+                {
+                    BusinessToolDBEntities db = new BusinessToolDBEntities();
+                    LoginRepository log = new LoginRepository();
+                    CustomerRepository cus = new CustomerRepository();
+
+                    cus.DeleteCustomerByID(id);
+                    log.DeleteLoginByID(id);
+
+                    return RedirectToAction("PendingRegistrationManagement");
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
         }
 
@@ -591,69 +751,93 @@ namespace BTv6.Controllers
         [HttpGet]
         public ActionResult CustomerManagement(customer customer)
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                CustomerRepository customers = new CustomerRepository();
-                var pendingRegistrationList = customers.GetByNotStatus(2);
-
-                return View("CustomerManagement/Index", pendingRegistrationList);
-
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
+                if ((int)Session["SID"] == 1)
+                {
+                    CustomerRepository customers = new CustomerRepository();
+                    var pendingRegistrationList = customers.GetByNotStatus(2);
+
+                    return View("CustomerManagement/Index", pendingRegistrationList);
+
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
         }
 
         [HttpGet]
         public ActionResult AcceptCustomerLogin(string id)
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                BusinessToolDBEntities context = new BusinessToolDBEntities();
-
-                var cusLOG = context.log_in.Where(x => x.LID == (string)id).FirstOrDefault();
-                cusLOG.SID = 5;
-                context.Entry(cusLOG).State = EntityState.Modified;
-                context.SaveChanges();
-
-                var cus = context.customers.Where(x => x.cusid == (string)id).FirstOrDefault();
-                cus.status = 1;
-                context.Entry(cus).State = EntityState.Modified;
-                context.SaveChanges();
-
-                return RedirectToAction("CustomerManagement");
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
+                if ((int)Session["SID"] == 1)
+                {
+                    BusinessToolDBEntities context = new BusinessToolDBEntities();
+
+                    var cusLOG = context.log_in.Where(x => x.LID == (string)id).FirstOrDefault();
+                    cusLOG.SID = 5;
+                    context.Entry(cusLOG).State = EntityState.Modified;
+                    context.SaveChanges();
+
+                    var cus = context.customers.Where(x => x.cusid == (string)id).FirstOrDefault();
+                    cus.status = 1;
+                    context.Entry(cus).State = EntityState.Modified;
+                    context.SaveChanges();
+
+                    return RedirectToAction("CustomerManagement");
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
         }
 
         public ActionResult RejectCustomerLogin(string id)
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                BusinessToolDBEntities context = new BusinessToolDBEntities();
-
-                var cusLOG = context.log_in.Where(x => x.LID == (string)id).FirstOrDefault();
-                cusLOG.SID = 0;
-                context.Entry(cusLOG).State = EntityState.Modified;
-                context.SaveChanges();
-
-                var cus = context.customers.Where(x => x.cusid == (string)id).FirstOrDefault();
-                cus.status = 0;
-                context.Entry(cus).State = EntityState.Modified;
-                context.SaveChanges();
-
-                return RedirectToAction("CustomerManagement");
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
+                if ((int)Session["SID"] == 1)
+                {
+                    BusinessToolDBEntities context = new BusinessToolDBEntities();
+
+                    var cusLOG = context.log_in.Where(x => x.LID == (string)id).FirstOrDefault();
+                    cusLOG.SID = 0;
+                    context.Entry(cusLOG).State = EntityState.Modified;
+                    context.SaveChanges();
+
+                    var cus = context.customers.Where(x => x.cusid == (string)id).FirstOrDefault();
+                    cus.status = 0;
+                    context.Entry(cus).State = EntityState.Modified;
+                    context.SaveChanges();
+
+                    return RedirectToAction("CustomerManagement");
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
         }
 
@@ -661,127 +845,183 @@ namespace BTv6.Controllers
         [HttpGet]
         public ActionResult NoticeManagement(notice notice)
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                NoticeRepository notices = new NoticeRepository();
-                List <notice> noticeList = notices.GetAll();
-
-                return View("NoticeManagement/Index", noticeList);
-
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
+                if ((int)Session["SID"] == 1)
+                {
+                    NoticeRepository notices = new NoticeRepository();
+                    List<notice> noticeList = notices.GetAll();
+
+                    return View("NoticeManagement/Index", noticeList);
+
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
         }
 
         [HttpPost, ActionName("NoticeManagement")]
         public ActionResult PostNoticeManagement()
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                if (Request["CREATE"] != null)
-                {
-                    return RedirectToAction("CreateNotice");
-                }
-
-                else
-                {
-                    return RedirectToAction("NoticeManagement");
-                }
-
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
+                if ((int)Session["SID"] == 1)
+                {
+                    if (Request["CREATE"] != null)
+                    {
+                        return RedirectToAction("CreateNotice");
+                    }
+
+                    else
+                    {
+                        return RedirectToAction("NoticeManagement");
+                    }
+
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
         }
 
         [HttpGet]
         public ActionResult CreateNotice()
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                return View("NoticeManagement/Create/Index");
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
+                if ((int)Session["SID"] == 1)
+                {
+                    return View("NoticeManagement/Create/Index");
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
         }
 
         [HttpPost]
         public ActionResult CreateNotice(notice notice)
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                NoticeRepository notices = new NoticeRepository();
-
-                notices.Insert(notice);
-
-                return RedirectToAction("NoticeManagement/Index");
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
+                if ((int)Session["SID"] == 1)
+                {
+                    NoticeRepository notices = new NoticeRepository();
+
+                    notices.Insert(notice);
+
+                    return RedirectToAction("NoticeManagement/Index");
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
         }
 
         [HttpGet]
         public ActionResult UpdateNotice(int id)
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                NoticeRepository notices = new NoticeRepository();
-
-                var notice = notices.GetByID(id);
-
-                return View("NoticeManagement/Update/Index", notice);
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
+                if ((int)Session["SID"] == 1)
+                {
+                    NoticeRepository notices = new NoticeRepository();
+
+                    var notice = notices.GetByID(id);
+
+                    return View("NoticeManagement/Update/Index", notice);
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
         }
 
         [HttpPost]
         public ActionResult UpdateNotice(notice notice)
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                NoticeRepository notices = new NoticeRepository();
-
-                notices.Update(notice);
-
-                return RedirectToAction("NoticeManagement/Index");
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
+                if ((int)Session["SID"] == 1)
+                {
+                    NoticeRepository notices = new NoticeRepository();
+
+                    notices.Update(notice);
+
+                    return RedirectToAction("NoticeManagement/Index");
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
         }
 
         [HttpGet]
         public ActionResult DeleteNotice(int id)
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                NoticeRepository notices = new NoticeRepository();
-
-                notices.DeleteNoticeByID(id);
-
-                return RedirectToAction("NoticeManagement/Index");
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
+                if ((int)Session["SID"] == 1)
+                {
+                    NoticeRepository notices = new NoticeRepository();
+
+                    notices.DeleteNoticeByID(id);
+
+                    return RedirectToAction("NoticeManagement/Index");
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
         }
 
@@ -789,37 +1029,53 @@ namespace BTv6.Controllers
         [HttpGet]
         public ActionResult CustomerComplains(complain complain)
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                ComplainRepository complains = new ComplainRepository();
-                List<complain> complainList = complains.GetAll();
-
-                return View("CustomerComplains/Index", complainList);
-
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
+                if ((int)Session["SID"] == 1)
+                {
+                    ComplainRepository complains = new ComplainRepository();
+                    List<complain> complainList = complains.GetAll();
+
+                    return View("CustomerComplains/Index", complainList);
+
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
         }
 
         [HttpGet]
         public ActionResult ComplainDetails(int id)
         {
-            if ((int)Session["SID"] == 1)
+            if (Session["LID"] == null)
             {
-                ComplainRepository complains = new ComplainRepository();
-
-                var complain = complains.GetByID(id);
-
-                return View("CustomerComplains/ComplainDetails/Index", complain);
-
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
+                if ((int)Session["SID"] == 1)
+                {
+                    ComplainRepository complains = new ComplainRepository();
+
+                    var complain = complains.GetByID(id);
+
+                    return View("CustomerComplains/ComplainDetails/Index", complain);
+
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
         }
     }
