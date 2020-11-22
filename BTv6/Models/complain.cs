@@ -17,10 +17,10 @@ namespace BTv6.Models
     {
         [Key]
         public int cID { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Subject can not be empty."),]
         public string sub { get; set; }
         public string OwnerID { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Complain can not be empty.")]
         public string Text { get; set; }
 
         public virtual customer customer { get; set; }

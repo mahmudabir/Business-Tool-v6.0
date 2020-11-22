@@ -102,9 +102,7 @@ namespace BTv6.Controllers
                     }
                     else
                     {
-                        //TempData["error"] = "Your complain was not submitted!";
-
-                        return RedirectToAction("Complain", "Customer");
+                        return View();
                     }
                 }
                 else
