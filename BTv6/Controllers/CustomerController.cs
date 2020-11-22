@@ -697,6 +697,19 @@ namespace BTv6.Controllers
         }
 
 
+        //AJAX Action Methods
+        [HttpGet]
+        public JsonResult SearchProductByName(string P_NAME)
+        {
+            ProductRepository productRepository = new ProductRepository();
+            List<product> productFromDB = new List<product>();
+
+            productFromDB = productRepository.GetAllProductsByName(P_NAME);
+
+            return Json(productFromDB, JsonRequestBehavior.AllowGet);
+        }
+
+
         // Non Action Methods
         [NonAction]
         public bool CheckCustomer(int SID)

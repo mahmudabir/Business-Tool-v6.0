@@ -13,11 +13,17 @@ namespace BTv6.Repositories.CommonRepositories
         {
             return this.GetAll().Where(x => x.PID == PID).FirstOrDefault();
         }
+
+        public List<product> GetAllProductsByName(string P_NAME)
+        {
+            return this.GetAll().Where(x => x.P_NAME == P_NAME).ToList();
+        }
+
+
         public void UpdateQuantity(product p, string PID)
         {
 
             prod = GetProductByID(PID);
-
 
             prod.QUANTITY = p.QUANTITY;
             this.Update(prod);
@@ -59,7 +65,7 @@ namespace BTv6.Repositories.CommonRepositories
 
         public List<product> GetAvailableProduct()
         {
-            return this.context.Set<product>().Where(x=>x.QUANTITY>0).ToList();
+            return this.context.Set<product>().Where(x => x.QUANTITY > 0).ToList();
         }
 
 
