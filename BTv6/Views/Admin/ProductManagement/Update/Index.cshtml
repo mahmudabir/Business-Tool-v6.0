@@ -21,14 +21,20 @@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 @Html.HiddenFor(model => model.PID)
                 <div class="img">
-                    <img src="@Url.Content(Model.P_IMG)" style="height: 250px;width:250px;border-radius:50%">
-
-                    <div class="form-group">
-                        Chose Image File
-                        <div class="col-md-10">
-                            <input style="margin-top: 5px" type="file" name="avatar" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
-                            @Html.ValidationMessageFor(model => model.P_IMG, "", new { @class = "text-danger" })
-                        </div>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <div align="center">Previous Image</div>
+                    <br />
+                    <br />
+                    <img src="@Url.Content(Model.P_IMG)" style="height: 200px;width:200px;border-radius:50%">
+                </div>
+                <div class="form-group">
+                    Chose Image File
+                    <div class="col-md-10">
+                        <input style="margin-top: 5px" type="file" name="avatar" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
+                        @Html.ValidationMessageFor(model => model.P_IMG, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
