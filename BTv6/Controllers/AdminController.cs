@@ -170,15 +170,47 @@ namespace BTv6.Controllers
 
                             if (!av)
                             {
-                                logins.InsertByObj(l);
+                                CustomerRepository customerRepository = new CustomerRepository();
+                                EmployeeRepository employeeRepository = new EmployeeRepository();
 
-                                employee.ADDED_BY = (string)Session["LID"];
-                                employee.JOIN_DATE = DateTime.Now;
-                                employees.InsertByObj(employee);
+                                var customerEmailFromDB = customerRepository.GetAll().Where(x => x.email == employee.E_MAIL).Count();
+                                var employeeEmailFromDB = employeeRepository.GetAll().Where(x => x.E_MAIL == employee.E_MAIL).Count();
 
-                                profile_Images.InsertByObj(images);
 
-                                return RedirectToAction("EmployeeManagement");
+                                bool checkMail = true;
+
+                                if (employeeEmailFromDB > 0)
+                                {
+                                    checkMail = false;
+                                }
+                                else { }
+                                
+
+                                if (customerEmailFromDB > 0)
+                                {
+                                    checkMail = false;
+                                }
+                                else { }
+
+                                if(checkMail)
+                                {
+                                    logins.InsertByObj(l);
+
+                                    employee.ADDED_BY = (string)Session["LID"];
+                                    employee.JOIN_DATE = DateTime.Now;
+                                    employees.InsertByObj(employee);
+
+                                    profile_Images.InsertByObj(images);
+
+                                    return RedirectToAction("EmployeeManagement");
+                                }
+                                
+                                else
+                                {
+                                    TempData["err2"] = "Email Taken";
+                                    return RedirectToAction("CreateEmployee");
+                                }
+                                
                             }
 
                             else
@@ -255,26 +287,70 @@ namespace BTv6.Controllers
             {
                 if ((int)Session["SID"] == 1)
                 {
+                    CustomerRepository customerRepository = new CustomerRepository();
+                    EmployeeRepository employeeRepository = new EmployeeRepository();
 
-                    EmployeeRepository employees = new EmployeeRepository();
-                    BusinessToolDBEntities context = new BusinessToolDBEntities();
+                    var customerEmailFromDB = customerRepository.GetAll().Where(x => x.email == employee.E_MAIL).Count();
+                    var employeeEmailFromDB = employeeRepository.GetAll().Where(x => x.E_MAIL == employee.E_MAIL).Count();
 
-                    var empLOG = context.log_in.Where(x => x.LID == (string)employee.EmpID).FirstOrDefault();
-                    empLOG.SID = (int)employee.DID;
-                    context.Entry(empLOG).State = EntityState.Modified;
-                    context.SaveChanges();
 
-                    employees.Update(employee);
+                    bool checkMail = true;
 
-                    if (Session["LID"].Equals((string)employee.EmpID) || (string)Session["LID"] == (string)employee.EmpID)
+                    if (employeeEmailFromDB > 0)
                     {
-                        return RedirectToAction("Index", "Logout");
+                        checkMail = false;
+                    }
+                    else { }
+
+
+                    if (customerEmailFromDB > 0)
+                    {
+                        checkMail = false;
+                    }
+                    else { }
+
+                    if(checkMail)
+                    {
+                        EmployeeRepository employees = new EmployeeRepository();
+                        BusinessToolDBEntities context = new BusinessToolDBEntities();
+
+                        var empLOG = context.log_in.Where(x => x.LID == (string)employee.EmpID).FirstOrDefault();
+                        empLOG.SID = (int)employee.DID;
+                        context.Entry(empLOG).State = EntityState.Modified;
+                        context.SaveChanges();
+
+                        employees.Update(employee);
+
+                        if (Session["LID"].Equals((string)employee.EmpID) || (string)Session["LID"] == (string)employee.EmpID)
+                        {
+                            return RedirectToAction("Index", "Logout");
+                        }
+
+                        else
+                        {
+                            return RedirectToAction("EmployeeManagement");
+                        }
                     }
 
                     else
                     {
-                        return RedirectToAction("EmployeeManagement");
+                        TempData["err2"] = "Email Taken";
+                        EmployeeRepository employees = new EmployeeRepository();
+                        StatusRepository status = new StatusRepository();
+                        ViewData["design"] = status.GetAll();
+                        var employeef = employees.Get(id);
+
+                        if (employeef == null)
+                        {
+                            return RedirectToAction("EmployeeManagement");
+                        }
+
+                        else
+                        {
+                            return View("EmployeeManagement/Update/Index", employeef);
+                        }
                     }
+
                 }
 
                 else
