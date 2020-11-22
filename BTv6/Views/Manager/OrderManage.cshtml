@@ -8,12 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Pending Orders</title>
     <link rel="stylesheet" type="text/css" href="~/Assets/css/orderManage.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="~/Assets/js/jquerySearch.js"></script>
 
 </head>
 <body>
     <div align="center" class="table">
         <h1 style="color:wheat;">Order Manage</h1>
         <hr />
+        <input style="width:15%;margin-left:10px" type="text" name="txtsearch" id="txtsearch" onkeyup="search()" value="" />
         <table class="content-table">
             <thead>
                 <tr>
@@ -48,6 +51,7 @@
                                     <button class="a">@Html.ActionLink("Approve", "Approve", new { id = order.orderid })</button>
 
                                 </td>
+                                <td></td>
 
                             </tr>
                         }
