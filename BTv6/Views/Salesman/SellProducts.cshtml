@@ -40,7 +40,7 @@
                 <input type="submit" name="SELL" id="SELL" value="Sell"><br><br>
 
             </form>
-            <input style="margin-left: 80px" type="submit" name="PRINT" id="PRINT" onclick="savePDF()" value="Print">
+            <input style="margin-left: 80px" type="submit" name="PRINT" id="PRINT" onclick="return saveFile()" value="Print">
         </div>
         <div align="right" class="table" id="table">
             <h4 align="center" style="color:red;">@TempData["message"]</h4>
@@ -62,14 +62,14 @@
                     @foreach (var item in  ViewData["products"] as List<BTv6.Models.product>) {
                     <tr>
                        
-                        <td>@item.PID </td>
-                        <td>@item.P_NAME</td>
-                        <td>@item.TYPE</td>
-                        <td>@item.QUANTITY</td>
-                        <td>@item.BUY_PRICE</td>
-                        <td>@item.SELL_PRICE</td>
-                        <td>@item.MOD_BY</td>
-                        <td>@item.Add_PDate</td>
+                        <td align="center">@item.PID </td>
+                        <td align="center">@item.P_NAME</td>
+                        <td align="center">@item.TYPE</td>
+                        <td align="center">@item.QUANTITY</td>
+                        <td align="center">@item.BUY_PRICE</td>
+                        <td align="center">@item.SELL_PRICE</td>
+                        <td align="center">@item.MOD_BY</td>
+                        <td align="center">@item.Add_PDate</td>
                        
                     </tr>
                     }

@@ -90,18 +90,18 @@ namespace BTv6.Controllers
                             {
                                 chatrepo.Insert(chatToInsert);
                                 TempData["message"] = "Message Sent";
-                                return RedirectToAction("Index");
+                                return RedirectToAction("send");
                             }
                             else
                             {
                                 TempData["message"] = "You are not allowed to send message to yourself";
-                                return RedirectToAction("Index");
+                                return RedirectToAction("send");
                             }
                         }
                         else
                         {
                             TempData["message"] = "Message Can't Send";
-                            return RedirectToAction("Index");
+                            return RedirectToAction("send");
                         }
                     }
 
@@ -112,7 +112,12 @@ namespace BTv6.Controllers
                         return RedirectToAction("Index");
                     }
                 }
-                
+
+
+                else if (Request["BACK"] != null)
+                {
+                    return RedirectToAction("Index");
+                }
 
                 else
                 {
