@@ -11,7 +11,8 @@ namespace BTv6.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class product
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -26,6 +27,7 @@ namespace BTv6.Models
         public string P_IMG { get; set; }
         public string TYPE { get; set; }
         public string AVAILABILITY { get; set; }
+        [Required(ErrorMessage ="*")]
         public int QUANTITY { get; set; }
         public double BUY_PRICE { get; set; }
         public double SELL_PRICE { get; set; }

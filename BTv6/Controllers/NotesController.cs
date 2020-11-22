@@ -38,7 +38,9 @@ namespace BTv6.Controllers
                 if (Session["SID"] != null)
                 {
 
-                    note noteToInsert = new note();
+                    if (ModelState.IsValid)
+                    {
+                        note noteToInsert = new note();
 
                     noteToInsert.OwnerID = (string)Session["LID"];
                     noteToInsert.NoteName = (string)nt.NoteName;
@@ -47,8 +49,7 @@ namespace BTv6.Controllers
                     TempData["names"] = noteToInsert.NoteName;
                     TempData["texts"] = noteToInsert.Text;
 
-                    if (noteToInsert.NoteName != null && noteToInsert.Text != null)
-                    {
+                   
 
                         noterepo.Insert(noteToInsert);
 
@@ -58,8 +59,17 @@ namespace BTv6.Controllers
                     }
                     else
                     {
-                        TempData["message"] = "Fill all the fields";
-                        return RedirectToAction("Index");
+                        
+                       if (Session["SID"] != null)
+                        {
+                            ViewData["notes"] = noterepo.GetNotice((string)Session["LID"]);
+                            return View();
+                        }
+
+                        else
+                        {
+                            return RedirectToAction("Index", "Login");
+                        }
                     }
 
                 }

@@ -157,6 +157,33 @@ namespace BTv6.Controllers
 
                     }
 
+                    else if (Request["PRINT"] != null)
+                    {
+                        sale saleId = new sale();
+                        saleId.PID = (string)sl.PID;
+                        var OnlyProd = prodrepo.Get(saleId.PID);
+                        if (saleId.PID != null)
+                        {
+                            
+                            TempData["pid"] = OnlyProd.PID;
+                            TempData["pname"] = OnlyProd.P_NAME;
+                            TempData["ptype"] = OnlyProd.TYPE;
+                            TempData["tprice"] = OnlyProd.SELL_PRICE* sl.QUANT;
+                            TempData["quant"] = sl.QUANT;
+                            TempData["cname"] = sl.C_NAME;
+                            TempData["cno"] = sl.C_MOB;
+                            TempData["sellby"] = Session["LID"];
+                            return View("print");
+                        }
+                        else
+                        {
+                            
+                            TempData["message"] = "Load First";
+                            return RedirectToAction("SellProducts");
+                        }
+
+                    }
+
                     else if (Request["REFRESH"] != null)
                     {
                         TempData["QUANT"] = "";
@@ -169,7 +196,7 @@ namespace BTv6.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Index","Login");
+                    return RedirectToAction("Index", "Login");
                 }
             }
             else
@@ -188,9 +215,13 @@ namespace BTv6.Controllers
             {
                 if (this.checkSalesman((int)Session["SID"]))
                 {
-                   var saleCount = salerepo.GetSaleProductByUser((string)Session["LID"]).Count();
-                   ViewData["sale"] = saleCount;
-                   return View();
+                   var fsaleCount = salerepo.GetSaleProductByUser("3").Count();
+                   var ssaleCount = salerepo.GetSaleProductByUser("33").Count();
+                   var tsaleCount = salerepo.GetSaleProductByUser("333").Count();
+                    ViewData["fsale"] = fsaleCount;
+                    ViewData["ssale"] = ssaleCount;
+                    ViewData["tsale"] = tsaleCount;
+                    return View();
                 }
                 else
                 {
