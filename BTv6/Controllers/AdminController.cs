@@ -145,7 +145,7 @@ namespace BTv6.Controllers
                         EmployeeRepository check = new EmployeeRepository();
                         var checkuser = check.GetByID(employee.EmpID);
 
-                        if(checkuser == null)
+                        if(checkuser != null)
                         {
                             TempData["err"] = "User Exists";
                             return RedirectToAction("CreateEmployee");
@@ -187,7 +187,6 @@ namespace BTv6.Controllers
                             }
                         }
                     }
-
                 }
 
                 else
@@ -245,47 +244,25 @@ namespace BTv6.Controllers
                 if ((int)Session["SID"] == 1)
                 {
 
-                    if (!ModelState.IsValid)
+                    EmployeeRepository employees = new EmployeeRepository();
+                    BusinessToolDBEntities context = new BusinessToolDBEntities();
+
+                    var empLOG = context.log_in.Where(x => x.LID == (string)employee.EmpID).FirstOrDefault();
+                    empLOG.SID = (int)employee.DID;
+                    context.Entry(empLOG).State = EntityState.Modified;
+                    context.SaveChanges();
+
+                    employees.Update(employee);
+
+                    if (Session["LID"].Equals((string)employee.EmpID) || (string)Session["LID"] == (string)employee.EmpID)
                     {
-                        EmployeeRepository employees = new EmployeeRepository();
-                        StatusRepository status = new StatusRepository();
-                        ViewData["design"] = status.GetAll();
-                        var employeep = employees.Get(id);
-
-                        if (employeep == null)
-                        {
-                            return RedirectToAction("EmployeeManagement");
-                        }
-
-                        else
-                        {
-                            return View("EmployeeManagement/Update/Index", employeep);
-                        }
+                        return RedirectToAction("Index", "Logout");
                     }
 
                     else
                     {
-                        EmployeeRepository employees = new EmployeeRepository();
-                        BusinessToolDBEntities context = new BusinessToolDBEntities();
-
-                        var empLOG = context.log_in.Where(x => x.LID == (string)employee.EmpID).FirstOrDefault();
-                        empLOG.SID = (int)employee.DID;
-                        context.Entry(empLOG).State = EntityState.Modified;
-                        context.SaveChanges();
-
-                        employees.Update(employee);
-
-                        if (Session["LID"].Equals((string)employee.EmpID) || (string)Session["LID"] == (string)employee.EmpID)
-                        {
-                            return RedirectToAction("Index", "Logout");
-                        }
-
-                        else
-                        {
-                            return RedirectToAction("EmployeeManagement");
-                        }
+                        return RedirectToAction("EmployeeManagement");
                     }
-                    
                 }
 
                 else
