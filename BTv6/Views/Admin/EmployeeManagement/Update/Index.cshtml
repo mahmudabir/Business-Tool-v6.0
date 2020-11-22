@@ -27,7 +27,8 @@
                     NAME
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.E_NAME, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.E_NAME, "", new { @class = "text-danger" })
+                        
+                        <span style="color: red; font-size:26px">@Html.ValidationMessageFor(model => model.E_NAME, "", new { @class = "text-danger" })</span>
                     </div>
                 </div>
 
@@ -58,7 +59,8 @@
                     SALARY
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.SAL, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.SAL, "", new { @class = "text-danger" })
+                        
+                        <span style="color: red; font-size:26px">@Html.ValidationMessageFor(model => model.E_NAME, "", new { @class = "text-danger" })</span>
                     </div>
                 </div>
 
@@ -66,7 +68,8 @@
                     MOBILE NO.
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.E_MOB, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.E_MOB, "", new { @class = "text-danger" })
+                        
+                        <span style="color: red; font-size:26px">@Html.ValidationMessageFor(model => model.E_MOB, "", new { @class = "text-danger" })</span>
                     </div>
                 </div>
 
@@ -74,7 +77,8 @@
                     MAIL
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.E_MAIL, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.E_MAIL, "", new { @class = "text-danger" })
+                        
+                        <span style="color: red; font-size:26px">@Html.ValidationMessageFor(model => model.E_MAIL, "", new { @class = "text-danger" })</span>
                     </div>
                 </div>
 
