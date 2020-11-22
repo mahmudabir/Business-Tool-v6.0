@@ -21,14 +21,18 @@ namespace BTv6.Models
             this.orders = new HashSet<order>();
             this.sales = new HashSet<sale>();
         }
-    
+
+        [Required(ErrorMessage = "*")]
         public string PID { get; set; }
+        [Required(ErrorMessage = "*")]
         public string P_NAME { get; set; }
         public string P_IMG { get; set; }
+        [Required(ErrorMessage = "*")]
         public string TYPE { get; set; }
         public string AVAILABILITY { get; set; }
-        [Required(ErrorMessage ="*")]
+        [Required(ErrorMessage ="*"), Range(1, 99999999, ErrorMessage = "*")]
         public int QUANTITY { get; set; }
+        [Required(ErrorMessage = "*"), Range(1, 99999999, ErrorMessage = "*")]
         public double BUY_PRICE { get; set; }
         [Required(ErrorMessage = "*"), Range(1, 99999999, ErrorMessage = "*")]
         public double SELL_PRICE { get; set; }

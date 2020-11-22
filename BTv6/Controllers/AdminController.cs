@@ -520,59 +520,88 @@ namespace BTv6.Controllers
             {
                 if ((int)Session["SID"] == 1)
                 {
-                    ProductRepository products = new ProductRepository();
-
-                    var av = products.CheckProduct(product);
-
-                    if (!av)
-                    {
-                        product.MOD_BY = (string)Session["LID"];
-                        product.Add_PDate = DateTime.Now;
-
-                        if (product.QUANTITY > 0)
-                        {
-                            product.AVAILABILITY = "AVAILABLE";
-                        }
-
-                        else
-                        {
-                            product.AVAILABILITY = "UNAVAILABLE";
-                        }
-
-                        string path = HttpContext.Server.MapPath("~/Assets/image/product");
-
-                        HttpPostedFileBase file = Request.Files["avatar"];
-
-                        if (file != null)
-                        {
-                            if (Path.GetFileName(file.FileName).Length > 0)
-                            {
-                                string fullPath = Path.Combine(path, Path.GetFileName(file.FileName));
-                                avatar.SaveAs(fullPath);
-                                product.P_IMG = "~/Assets/image/product/" + Path.GetFileName(file.FileName);
-                            }
-
-                            else
-                            {
-                                product.P_IMG = "~/Assets/image/product/default.png";
-                            }
-
-                        }
-
-                        else
-                        {
-                            product.P_IMG = "~/Assets/image/product/default.png";
-                        }
-
-                        products.InsertByObj(product);
-
-
-                        return RedirectToAction("ProductManagement");
+                    if (!ModelState.IsValid)
+                    {                
+                        return View("ProductManagement/Create/Index");
                     }
 
                     else
                     {
-                        return RedirectToAction("CreateProduct");
+                        ProductRepository check = new ProductRepository();
+                        var ck = check.GetProductByID(product.PID);
+
+                        if(ck != null)
+                        {
+                            TempData["err"] = "Product ID Exists";
+                            return RedirectToAction("CreateProduct");
+                        }
+
+                        else
+                        {
+                            ProductRepository products = new ProductRepository();
+
+                            var av = products.CheckProduct(product);
+
+                            if (!av)
+                            {
+                                product.MOD_BY = (string)Session["LID"];
+                                product.Add_PDate = DateTime.Now;
+
+                                if (product.QUANTITY > 0)
+                                {
+                                    product.AVAILABILITY = "AVAILABLE";
+                                }
+
+                                else
+                                {
+                                    product.AVAILABILITY = "UNAVAILABLE";
+                                }
+
+                                string path = HttpContext.Server.MapPath("~/Assets/image/product");
+
+                                HttpPostedFileBase file = Request.Files["avatar"];
+
+                                if (file != null)
+                                {
+                                    if (Path.GetFileName(file.FileName).Length > 0)
+                                    {
+                                        string fullPath = Path.Combine(path, Path.GetFileName(file.FileName));
+                                        avatar.SaveAs(fullPath);
+                                        product.P_IMG = "~/Assets/image/product/" + Path.GetFileName(file.FileName);
+                                    }
+
+                                    else
+                                    {
+                                        product.P_IMG = "~/Assets/image/product/default.png";
+                                    }
+
+                                }
+
+                                else
+                                {
+                                    product.P_IMG = "~/Assets/image/product/default.png";
+                                }
+
+                                if(product.BUY_PRICE <= product.SELL_PRICE)
+                                {
+                                    products.InsertByObj(product);
+
+                                    return RedirectToAction("ProductManagement");
+                                }
+                                else
+                                {
+                                    TempData["err2"] = "Sell Price Should >= BuyPrice";
+
+                                    return RedirectToAction("CreateProduct");
+                                }
+                            }
+
+                            else
+                            {
+                                return RedirectToAction("CreateProduct");
+                            }
+
+                        }
                     }
 
                 }
@@ -596,10 +625,22 @@ namespace BTv6.Controllers
             {
                 if ((int)Session["SID"] == 1)
                 {
-                    ProductRepository products = new ProductRepository();
-                    var prod = products.Get(id);
+                    ProductRepository check = new ProductRepository();
+                    var ck = check.GetProductByID(id);
 
-                    return View("ProductManagement/Update/Index", prod);
+                    if(ck != null)
+                    {
+                        ProductRepository products = new ProductRepository();
+                        var prod = products.Get(id);
+
+                        return View("ProductManagement/Update/Index", prod);
+                    }
+
+                    else
+                    {
+                        return RedirectToAction("ProductManagement");
+                    }
+                    
                 }
 
                 else
@@ -610,7 +651,7 @@ namespace BTv6.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateProduct(product product, HttpPostedFileBase avatar)
+        public ActionResult UpdateProduct(product product, HttpPostedFileBase avatar, string id)
         {
             if (Session["LID"] == null)
             {
@@ -621,61 +662,85 @@ namespace BTv6.Controllers
             {
                 if ((int)Session["SID"] == 1)
                 {
-                    ProductRepository products = new ProductRepository();
-                    product.MOD_BY = (string)Session["LID"];
-                    product.Add_PDate = DateTime.Now;
-
-                    if (product.QUANTITY > 0)
+                    if (!ModelState.IsValid)
                     {
-                        product.AVAILABILITY = "AVAILABLE";
+                        ProductRepository productsp = new ProductRepository();
+                        var prodp = productsp.Get(id);
+
+                        return View("ProductManagement/Update/Index", prodp);
                     }
 
                     else
                     {
-                        product.AVAILABILITY = "UNAVAILABLE";
-                    }
+                        ProductRepository products = new ProductRepository();
+                        product.MOD_BY = (string)Session["LID"];
+                        product.Add_PDate = DateTime.Now;
 
-                    string path = HttpContext.Server.MapPath("~/Assets/image/product");
-
-                    HttpPostedFileBase file = Request.Files["avatar"];
-
-                    if (file != null)
-                    {
-                        ProductRepository prodIMG = new ProductRepository();
-                        var img = prodIMG.GetProductByID(product.PID);
-                        string image = (string)img.P_IMG;
-
-                        if (Path.GetFileName(file.FileName).Length > 0)
+                        if (product.QUANTITY > 0)
                         {
-                            string fullPath = Path.Combine(path, Path.GetFileName(file.FileName));
-
-                            if (image != "~/Assets/image/product/default.png")
-                            {
-                                System.IO.File.Delete(Server.MapPath(image));
-                            }
-
-                            avatar.SaveAs(fullPath);
-                            product.P_IMG = "~/Assets/image/product/" + Path.GetFileName(file.FileName);
+                            product.AVAILABILITY = "AVAILABLE";
                         }
 
                         else
                         {
+                            product.AVAILABILITY = "UNAVAILABLE";
+                        }
+
+                        string path = HttpContext.Server.MapPath("~/Assets/image/product");
+
+                        HttpPostedFileBase file = Request.Files["avatar"];
+
+                        if (file != null)
+                        {
+                            ProductRepository prodIMG = new ProductRepository();
+                            var img = prodIMG.GetProductByID(product.PID);
+                            string image = (string)img.P_IMG;
+
+                            if (Path.GetFileName(file.FileName).Length > 0)
+                            {
+                                string fullPath = Path.Combine(path, Path.GetFileName(file.FileName));
+
+                                if (image != "~/Assets/image/product/default.png")
+                                {
+                                    System.IO.File.Delete(Server.MapPath(image));
+                                }
+
+                                avatar.SaveAs(fullPath);
+                                product.P_IMG = "~/Assets/image/product/" + Path.GetFileName(file.FileName);
+                            }
+
+                            else
+                            {
+                                product.P_IMG = image;
+                            }
+                        }
+
+                        else
+                        {
+                            ProductRepository prodIMG = new ProductRepository();
+                            var img = prodIMG.GetProductByID(product.PID);
+                            string image = (string)img.P_IMG;
+
                             product.P_IMG = image;
+                        }                    
+
+                        if (product.BUY_PRICE <= product.SELL_PRICE)
+                        {
+                            products.Update(product);
+
+                            return RedirectToAction("ProductManagement");
+                        }
+                        else
+                        {
+                            TempData["err2"] = "Sell Price Should >= BuyPrice";
+
+                            ProductRepository productsf = new ProductRepository();
+                            var prodf = productsf.Get(id);
+
+                            return View("ProductManagement/Update/Index", prodf);
                         }
                     }
-
-                    else
-                    {
-                        ProductRepository prodIMG = new ProductRepository();
-                        var img = prodIMG.GetProductByID(product.PID);
-                        string image = (string)img.P_IMG;
-
-                        product.P_IMG = image;
-                    }
-
-                    products.Update(product);
-
-                    return RedirectToAction("ProductManagement");
+                    
                 }
 
                 else
@@ -697,14 +762,25 @@ namespace BTv6.Controllers
             {
                 if ((int)Session["SID"] == 1)
                 {
-                    BusinessToolDBEntities context = new BusinessToolDBEntities();
+                    ProductRepository check = new ProductRepository();
+                    var ck = check.GetProductByID(id);
 
-                    var prod = context.products.Where(x => x.PID == (string)id).FirstOrDefault();
-                    prod.AVAILABILITY = "UNAVAILABLE";
-                    context.Entry(prod).State = EntityState.Modified;
-                    context.SaveChanges();
+                    if (ck != null)
+                    {
+                        BusinessToolDBEntities context = new BusinessToolDBEntities();
 
-                    return RedirectToAction("ProductManagement");
+                        var prod = context.products.Where(x => x.PID == (string)id).FirstOrDefault();
+                        prod.AVAILABILITY = "UNAVAILABLE";
+                        context.Entry(prod).State = EntityState.Modified;
+                        context.SaveChanges();
+
+                        return RedirectToAction("ProductManagement");
+                    }
+                    
+                    else
+                    {
+                        return RedirectToAction("ProductManagement");
+                    }
                 }
 
                 else
@@ -719,14 +795,25 @@ namespace BTv6.Controllers
         {
             if ((int)Session["SID"] == 1)
             {
-                BusinessToolDBEntities context = new BusinessToolDBEntities();
+                ProductRepository check = new ProductRepository();
+                var ck = check.GetProductByID(id);
 
-                var prod = context.products.Where(x => x.PID == (string)id).FirstOrDefault();
-                prod.AVAILABILITY = "AVAILABLE";
-                context.Entry(prod).State = EntityState.Modified;
-                context.SaveChanges();
+                if (ck != null)
+                {
+                    BusinessToolDBEntities context = new BusinessToolDBEntities();
 
-                return RedirectToAction("ProductManagement");
+                    var prod = context.products.Where(x => x.PID == (string)id).FirstOrDefault();
+                    prod.AVAILABILITY = "AVAILABLE";
+                    context.Entry(prod).State = EntityState.Modified;
+                    context.SaveChanges();
+
+                    return RedirectToAction("ProductManagement");
+                }
+
+                else
+                {
+                    return RedirectToAction("ProductManagement");
+                }
             }
 
             else
