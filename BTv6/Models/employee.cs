@@ -34,7 +34,7 @@ namespace BTv6.Models
         public int DID { get; set; }
         [Required(ErrorMessage = "*"), Range(0,99999999, ErrorMessage = "*")]
         public double SAL { get; set; }
-        [Required(ErrorMessage = "*"), StringLength(maximumLength: 11, MinimumLength =14, ErrorMessage ="*")]
+        [Required(ErrorMessage = "*"), StringLength(maximumLength: 14, MinimumLength =9, ErrorMessage ="*")]
         public string E_MOB { get; set; }
         [Required(ErrorMessage = "*")]
         public string E_MAIL { get; set; }

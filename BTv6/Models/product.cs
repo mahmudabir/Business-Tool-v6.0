@@ -30,6 +30,7 @@ namespace BTv6.Models
         [Required(ErrorMessage ="*")]
         public int QUANTITY { get; set; }
         public double BUY_PRICE { get; set; }
+        [Required(ErrorMessage = "*"), Range(1, 99999999, ErrorMessage = "*")]
         public double SELL_PRICE { get; set; }
         public string MOD_BY { get; set; }
         public Nullable<System.DateTime> Add_PDate { get; set; }
