@@ -97,7 +97,7 @@ body {
 .content-table tbody tr:last-of-type {
     border-bottom: 2px solid #009879;
 }
-#PRINT {
+/*#PRINT {
 	box-shadow: 3px 4px 0px 0px #3dc21b;
 	background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
 	background-color:#44c767;
@@ -120,4 +120,4 @@ body {
 #PRINT:active {
 	position:relative;
 	top:1px;
-}
+}*/
