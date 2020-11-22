@@ -132,37 +132,56 @@ namespace BTv6.Controllers
             {
                 if ((int)Session["SID"] == 1)
                 {
-                    EmployeeRepository employees = new EmployeeRepository();
-                    LoginRepository logins = new LoginRepository();
-                    Profile_imagesRepository profile_Images = new Profile_imagesRepository();
-
-                    log_in l = new log_in();
-                    l.LID = (string)employee.EmpID;
-                    l.SID = (int)employee.DID;
-                    l.PASS = "12345";
-
-                    profile_images images = new profile_images();
-                    images.UID = (string)employee.EmpID;
-                    images.IMAGE = "~/Assets/image/profile/default.png";
-
-                    var av = employees.CheckUser(employee);
-
-                    if (!av)
+                    if (!ModelState.IsValid)
                     {
-                        logins.InsertByObj(l);
+                        StatusRepository status = new StatusRepository();
+                        ViewData["design"] = status.GetAll();
 
-                        employee.ADDED_BY = (string)Session["LID"];
-                        employee.JOIN_DATE = DateTime.Now;
-                        employees.InsertByObj(employee);
-
-                        profile_Images.InsertByObj(images);
-
-                        return RedirectToAction("EmployeeManagement");
+                        return View("EmployeeManagement/Create/Index");
                     }
 
                     else
                     {
-                        return RedirectToAction("CreateEmployee");
+                        EmployeeRepository check = new EmployeeRepository();
+                        var checkuser = check.GetByID(employee.EmpID);
+
+                        if(checkuser != null)
+                        {
+                            TempData["err"] = "User Exists";
+                            return RedirectToAction("CreateEmployee");
+                        }
+                        EmployeeRepository employees = new EmployeeRepository();
+                        LoginRepository logins = new LoginRepository();
+                        Profile_imagesRepository profile_Images = new Profile_imagesRepository();
+
+                        log_in l = new log_in();
+                        l.LID = (string)employee.EmpID;
+                        l.SID = (int)employee.DID;
+                        l.PASS = "12345";
+
+                        profile_images images = new profile_images();
+                        images.UID = (string)employee.EmpID;
+                        images.IMAGE = "~/Assets/image/profile/default.png";
+
+                        var av = employees.CheckUser(employee);
+
+                        if (!av)
+                        {
+                            logins.InsertByObj(l);
+
+                            employee.ADDED_BY = (string)Session["LID"];
+                            employee.JOIN_DATE = DateTime.Now;
+                            employees.InsertByObj(employee);
+
+                            profile_Images.InsertByObj(images);
+
+                            return RedirectToAction("EmployeeManagement");
+                        }
+
+                        else
+                        {
+                            return RedirectToAction("CreateEmployee");
+                        }
                     }
 
                 }
@@ -191,7 +210,15 @@ namespace BTv6.Controllers
                     ViewData["design"] = status.GetAll();
                     var employee = employees.Get(id);
 
-                    return View("EmployeeManagement/Update/Index", employee);
+                    if(employee == null)
+                    {
+                        return RedirectToAction("EmployeeManagement");
+                    }
+
+                    else
+                    {
+                        return View("EmployeeManagement/Update/Index", employee);
+                    }                   
                 }
 
                 else
@@ -202,7 +229,7 @@ namespace BTv6.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateEmployee(employee employee)
+        public ActionResult UpdateEmployee(employee employee, string id)
         {
             if (Session["LID"] == null)
             {
@@ -213,25 +240,48 @@ namespace BTv6.Controllers
             {
                 if ((int)Session["SID"] == 1)
                 {
-                    EmployeeRepository employees = new EmployeeRepository();
-                    BusinessToolDBEntities context = new BusinessToolDBEntities();
 
-                    var empLOG = context.log_in.Where(x => x.LID == (string)employee.EmpID).FirstOrDefault();
-                    empLOG.SID = (int)employee.DID;
-                    context.Entry(empLOG).State = EntityState.Modified;
-                    context.SaveChanges();
-
-                    employees.Update(employee);
-
-                    if (Session["LID"].Equals((string)employee.EmpID) || (string)Session["LID"] == (string)employee.EmpID)
+                    if (!ModelState.IsValid)
                     {
-                        return RedirectToAction("Index", "Logout");
+                        EmployeeRepository employees = new EmployeeRepository();
+                        StatusRepository status = new StatusRepository();
+                        ViewData["design"] = status.GetAll();
+                        var employeep = employees.Get(id);
+
+                        if (employeep == null)
+                        {
+                            return RedirectToAction("EmployeeManagement");
+                        }
+
+                        else
+                        {
+                            return View("EmployeeManagement/Update/Index", employeep);
+                        }
                     }
 
                     else
                     {
-                        return RedirectToAction("EmployeeManagement");
+                        EmployeeRepository employees = new EmployeeRepository();
+                        BusinessToolDBEntities context = new BusinessToolDBEntities();
+
+                        var empLOG = context.log_in.Where(x => x.LID == (string)employee.EmpID).FirstOrDefault();
+                        empLOG.SID = (int)employee.DID;
+                        context.Entry(empLOG).State = EntityState.Modified;
+                        context.SaveChanges();
+
+                        employees.Update(employee);
+
+                        if (Session["LID"].Equals((string)employee.EmpID) || (string)Session["LID"] == (string)employee.EmpID)
+                        {
+                            return RedirectToAction("Index", "Logout");
+                        }
+
+                        else
+                        {
+                            return RedirectToAction("EmployeeManagement");
+                        }
                     }
+                    
                 }
 
                 else
@@ -253,26 +303,37 @@ namespace BTv6.Controllers
             {
                 if ((int)Session["SID"] == 1)
                 {
-                    BusinessToolDBEntities context = new BusinessToolDBEntities();
+                    EmployeeRepository ck = new EmployeeRepository();
+                    var check = ck.GetByID(id);
 
-                    var empLOG = context.log_in.Where(x => x.LID == (string)id).FirstOrDefault();
-                    empLOG.SID = 0;
-                    context.Entry(empLOG).State = EntityState.Modified;
-                    context.SaveChanges();
-
-                    var emp = context.employees.Where(x => x.EmpID == (string)id).FirstOrDefault();
-                    emp.DID = 0;
-                    context.Entry(emp).State = EntityState.Modified;
-                    context.SaveChanges();
-
-                    if (Session["LID"].Equals((string)id) || (string)Session["LID"] == (string)id)
+                    if(check == null)
                     {
-                        return RedirectToAction("Index", "Logout");
+                        return RedirectToAction("EmployeeManagement");
                     }
 
                     else
                     {
-                        return RedirectToAction("EmployeeManagement");
+                        BusinessToolDBEntities context = new BusinessToolDBEntities();
+
+                        var empLOG = context.log_in.Where(x => x.LID == (string)id).FirstOrDefault();
+                        empLOG.SID = 0;
+                        context.Entry(empLOG).State = EntityState.Modified;
+                        context.SaveChanges();
+
+                        var emp = context.employees.Where(x => x.EmpID == (string)id).FirstOrDefault();
+                        emp.DID = 0;
+                        context.Entry(emp).State = EntityState.Modified;
+                        context.SaveChanges();
+
+                        if (Session["LID"].Equals((string)id) || (string)Session["LID"] == (string)id)
+                        {
+                            return RedirectToAction("Index", "Logout");
+                        }
+
+                        else
+                        {
+                            return RedirectToAction("EmployeeManagement");
+                        }
                     }
                 }
 
@@ -295,12 +356,33 @@ namespace BTv6.Controllers
             {
                 if ((int)Session["SID"] == 1)
                 {
-                    EmployeeRepository employees = new EmployeeRepository();
-                    StatusRepository status = new StatusRepository();
-                    ViewData["design"] = status.GetAll();
-                    var employee = employees.Get(id);
+                    EmployeeRepository ck = new EmployeeRepository();
+                    var check = ck.GetByID(id);
 
-                    return View("EmployeeManagement/LoginAllow/Index", employee);
+                    if (check == null)
+                    {
+                        return RedirectToAction("EmployeeManagement");
+                    }
+                    else
+                    {
+                        LoginRepository log = new LoginRepository();
+                        var user = log.GetByID(id);
+
+                        if(user.SID == 0)
+                        {
+                            EmployeeRepository employees = new EmployeeRepository();
+                            StatusRepository status = new StatusRepository();
+                            ViewData["design"] = status.GetAll();
+                            var employee = employees.Get(id);
+
+                            return View("EmployeeManagement/LoginAllow/Index", employee);
+                        }
+
+                        else
+                        {
+                            return RedirectToAction("EmployeeManagement");
+                        }                     
+                    }                  
                 }
 
                 else
@@ -971,7 +1053,16 @@ namespace BTv6.Controllers
 
                     var notice = notices.GetByID(id);
 
-                    return View("NoticeManagement/Update/Index", notice);
+                    if(notice == null)
+                    {
+                        return RedirectToAction("NoticeManagement/Index");
+                    }
+
+                    else
+                    {
+                        return View("NoticeManagement/Update/Index", notice);
+                    }
+                    
                 }
 
                 else
