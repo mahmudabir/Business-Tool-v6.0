@@ -18,7 +18,7 @@ namespace BTv6.Models
         [Required, StringLength(30)]
         public string LID { get; set; }
         public int SID { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Password can not be empty.")]
         public string PASS { get; set; }
 
         public virtual customer customer { get; set; }
