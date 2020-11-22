@@ -14,38 +14,54 @@ namespace BTv6.Controllers
         [HttpGet]
         public ActionResult Index(notice notice)
         {
-            if ((int)Session["SID"] == 1 || (int)Session["SID"] == 2 || (int)Session["SID"] == 3 || (int)Session["SID"] == 4)
-            {
-                NoticeRepository notices = new NoticeRepository();
-                List<notice> noticeList = notices.GetAll();
-
-                return View(noticeList);
-
-            }
-
-            else
+            if(Session["LID"] == null)
             {
                 return RedirectToAction("Index", "Login");
+            }
+            
+            else
+            {
+                if ((int)Session["SID"] == 1 || (int)Session["SID"] == 2 || (int)Session["SID"] == 3 || (int)Session["SID"] == 4)
+                {
+                    NoticeRepository notices = new NoticeRepository();
+                    List<notice> noticeList = notices.GetAll();
+
+                    return View(noticeList);
+
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
         }
 
         [HttpGet]
         public ActionResult DetailsNotice(int id)
         {
-            if ((int)Session["SID"] == 1 || (int)Session["SID"] == 2 || (int)Session["SID"] == 3 || (int)Session["SID"] == 4)
+            if (Session["LID"] == null)
             {
-                NoticeRepository notices = new NoticeRepository();
-
-                var notice = notices.GetByID(id);
-
-                return View("Details/Index", notice);
-
+                return RedirectToAction("Index", "Login");
             }
 
             else
             {
-                return RedirectToAction("Index", "Login");
-            }
+                if ((int)Session["SID"] == 1 || (int)Session["SID"] == 2 || (int)Session["SID"] == 3 || (int)Session["SID"] == 4)
+                {
+                    NoticeRepository notices = new NoticeRepository();
+
+                    var notice = notices.GetByID(id);
+
+                    return View("Details/Index", notice);
+
+                }
+
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }      
         }
     }
 }

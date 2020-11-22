@@ -28,27 +28,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Notice</title>
     <link rel="stylesheet" type="text/css" href="~/Assets/css/common.css">
-    <link rel="stylesheet" type="text/css" href="~/Assets/css/manage.css">
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/pendingReg.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 </head>
 
 <body>
-    <div class="box">
-        <h4>Notice</h4>
+    <div class="table">
+        <div align="center"><h2 style="color:navajowhite">Notice: @Html.DisplayFor(model => model.noteSub)</h2></div>
         <hr />
         <dl class="dl-horizontal">
-            <dt>
-                Subject: &nbsp; @Html.DisplayFor(model => model.noteSub)
-            </dt>
-            <br />
             <br />
             <dt>
-               Content
+                <span style="color:navajowhite">Content:</span>
             </dt>
 
             <dd>
-                <h3>@Html.DisplayFor(model => model.noticetext)</h3>
+                <h3><p style="color:white">@Html.DisplayFor(model => model.noticetext)</p></h3>
             </dd>
 
         </dl>
