@@ -145,7 +145,7 @@ namespace BTv6.Controllers
                         EmployeeRepository check = new EmployeeRepository();
                         var checkuser = check.GetByID(employee.EmpID);
 
-                        if(checkuser != null)
+                        if(checkuser == null)
                         {
                             TempData["err"] = "User Exists";
                             return RedirectToAction("CreateEmployee");
