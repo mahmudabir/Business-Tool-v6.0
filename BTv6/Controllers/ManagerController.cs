@@ -289,10 +289,9 @@ namespace BTv6.Controllers
                 return RedirectToAction("Index", "Login");
             }
             
-
         }
         [HttpGet]
-        public ActionResult Approve(order order)
+        public ActionResult Approve(int id)
         {
             if (Session["SID"] != null)
             {
@@ -305,7 +304,7 @@ namespace BTv6.Controllers
                     //BusinessToolDBEntities db = new BusinessToolDBEntities();
                     //List<order> list = db.orders.Where(x => x.stat == "0").ToList();
                     OrderRepository orders = new OrderRepository();
-                    List<order> list = orders.GetAll().ToList();
+                    var list = orders.GetOrderByID(id);
 
                     return View(list);
                 }
