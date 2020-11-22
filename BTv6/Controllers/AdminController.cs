@@ -142,7 +142,7 @@ namespace BTv6.Controllers
 
                     else
                     {
-                        EmployeeRepository check = new EmployeeRepository();
+                        LoginRepository check = new LoginRepository();
                         var checkuser = check.GetByID(employee.EmpID);
 
                         if(checkuser != null)
