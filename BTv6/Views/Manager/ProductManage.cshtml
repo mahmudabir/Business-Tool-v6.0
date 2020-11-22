@@ -9,21 +9,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Products</title>
     <link rel="stylesheet" type="text/css" href="~/Assets/css/common.css">
-    <link rel="stylesheet" type="text/css" href="~/Assets/css/manage.css">
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/pendingReg.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <script src="~/Assets/js/excelPrint.js"></script>
+
     <script src="~/Assets/js/pdfPrint.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="~/Assets/js/jquerySearch.js"></script>
 
 </head>
 
 <body>
-    <div class="box">
-        <form method="POST">
-            <input type="submit" name="CREATE" id="CREATE" value="CREATE">
-            <input type="submit" name="PRINT" id="PRINT" onclick="savePDF()" value="Export PDF">
-            <input type="submit" name="excel" onclick="exportToExcel('tblexportData', 'user-data')" value="Export Excel">
-        </form>
-        <div align="right" class="table" id="table">
+    <div class="">
+
+        <div align="center" class="table" id="table">
+            <form method="POST">
+                <input type="submit" name="CREATE" id="CREATE" value="CREATE">
+                <input style="width:15%;margin-left:10px" type="text" name="txtsearch" id="txtsearch" onkeyup="search()" value="" placeholder="Seach By Column" />
+                <input type="submit" name="PRINT" id="PRINT" onclick="savePDF()" value="Export PDF">
+            </form>
             <table class="content-table" id="tblexportData">
                 <thead>
                     <tr>
@@ -64,7 +67,7 @@
                                 <td align='center'>@product.Add_PDate</td>
                                 <td align='center'>@product.MOD_BY</td>
                                 <td align='center'>
-                                    <button style="width: 50px;height: 20px; font-size:12px;">@Html.ActionLink("Edit","EditProduct", new { id = product.PID })</button>
+                                    <button style="width: 50px;height: 20px; font-size:12px;">@Html.ActionLink("Edit", "EditProduct", new { id = product.PID })</button>
                                 </td>
                                 <td></td>
                             </tr>
