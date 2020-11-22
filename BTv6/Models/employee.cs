@@ -11,7 +11,8 @@ namespace BTv6.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class employee
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -30,6 +31,7 @@ namespace BTv6.Models
         public int DID { get; set; }
         public double SAL { get; set; }
         public string E_MOB { get; set; }
+        [Required(ErrorMessage = "Subject can not be empty.")]
         public string E_MAIL { get; set; }
         public System.DateTime JOIN_DATE { get; set; }
         public string ADDED_BY { get; set; }
