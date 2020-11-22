@@ -48,7 +48,7 @@ input[type="submit"]:hover {
     width: 1000px;
     height: 600px;
     top: 51%;
-    left: 50%;
+    left: 60%;
     position: absolute;
     transform: translate(-50%, -50%);
     box-sizing: border-box;
