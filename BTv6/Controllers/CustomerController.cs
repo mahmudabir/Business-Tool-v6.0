@@ -82,19 +82,39 @@ namespace BTv6.Controllers
             {
                 if (this.CheckCustomer((int)Session["SID"]))
                 {
-                    ComplainRepository complainRepository = new ComplainRepository();
 
-                    complain complainToInsert = new complain();
+                    if (!ModelState.IsValid)
+                    {
+                        ComplainRepository complainRepository = new ComplainRepository();
 
-                    complainToInsert.OwnerID = (string)Session["LID"];
-                    complainToInsert.sub = (string)cmpln.sub;
-                    complainToInsert.Text = (string)cmpln.Text;
+                        complain complainToInsert = new complain();
 
-                    complainRepository.Insert(complainToInsert);
+                        complainToInsert.OwnerID = (string)Session["LID"];
+                        complainToInsert.sub = (string)cmpln.sub;
+                        complainToInsert.Text = (string)cmpln.Text;
 
-                    TempData["success"] = "Your complain was submitted!";
+                        complainRepository.Insert(complainToInsert);
 
-                    return RedirectToAction("Index", "Customer");
+                        TempData["error"] = "Your complain was not submitted!";
+
+                        return RedirectToAction("Index", "Complain");
+                    }
+                    else
+                    {
+                        ComplainRepository complainRepository = new ComplainRepository();
+
+                        complain complainToInsert = new complain();
+
+                        complainToInsert.OwnerID = (string)Session["LID"];
+                        complainToInsert.sub = (string)cmpln.sub;
+                        complainToInsert.Text = (string)cmpln.Text;
+
+                        complainRepository.Insert(complainToInsert);
+
+                        TempData["success"] = "Your complain was submitted!";
+
+                        return RedirectToAction("Index", "Customer");
+                    }
                 }
                 else
                 {
