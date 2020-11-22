@@ -175,46 +175,67 @@ namespace BTv6.Controllers
 
 
 
-        //[HttpGet]
-        //public ActionResult OrderTypeChart()
-        //{
+        [HttpGet]
+        public ActionResult SaleTypeChart()
+        {
 
-        //    if (Session["SID"] != null)
-        //    {
-        //        if (this.checkSalesman((int)Session["SID"]))
-        //        {
+            if (Session["SID"] != null)
+            {
+                if (this.checkSalesman((int)Session["SID"]))
+                {
+                   
+
+                    var saleCount = salerepo.GetSaleProductByUser((string)Session["LID"]).Count();
                     
 
-        //            var recievedOrderCount = orderRepository.GetRecievedOrderByUser((string)Session["LID"]).Count();
-        //            var pendingOrderCount = orderRepository.GetPendingOrderByUser((string)Session["LID"]).Count();
-        //            var confirmedOrderCount = orderRepository.GetConfirmedOrderByUser((string)Session["LID"]).Count();
+                    ViewData["sale"] = saleCount;
+                   
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
 
-        //            ViewData["rOrder"] = recievedOrderCount;
-        //            ViewData["pOrder"] = pendingOrderCount;
-        //            ViewData["cOrder"] = confirmedOrderCount;
+        [HttpGet]
+        public ActionResult NoteChart()
+        {
 
-        //            var orderTypeChart = new Chart(width: 1200, height: 800)
-        //            .AddTitle("Order Chart")
-        //            .AddSeries(
-        //            name: "Orders",
-        //            xValue: new[] { "Recived", "Confirmed", "Pending" },
-        //            yValues: new[] { ViewData["rOrder"], ViewData["cOrder"], ViewData["pOrder"] })
-        //            .Write();
+            if (Session["SID"] != null)
+            {
+                if (this.checkSalesman((int)Session["SID"]))
+                {
 
-        //            ViewData["orderChart"] = orderTypeChart;
+                    NotesRepository noterepo =new NotesRepository();
+                    var AdminNoteCount = noterepo.GetNotice("1").Count();
+                    var ManagerNoteCount = noterepo.GetNotice("2").Count();
+                    var SalesmanNoteCount = noterepo.GetNotice("3").Count();
+                    var DeliverymanNoteCount = noterepo.GetNotice("4").Count();
 
-        //            return View();
-        //        }
-        //        else
-        //        {
-        //            return RedirectToAction("Index", "Login");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return RedirectToAction("Index", "Login");
-        //    }
-        //}
+                    ViewData["anote"] = AdminNoteCount;
+                    ViewData["mnote"] = ManagerNoteCount;
+                    ViewData["snote"] = SalesmanNoteCount;
+                    ViewData["dnote"] = DeliverymanNoteCount;
+
+
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
 
 
         [NonAction]

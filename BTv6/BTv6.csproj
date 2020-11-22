@@ -303,6 +303,8 @@
     <Content Include="Views\RecoverPassword\ResetPassword.cshtml" />
     <Content Include="Views\Manager\ProductChart.cshtml" />
     <Content Include="Views\Manager\OrderPendingChart.cshtml" />
+    <Content Include="Views\Salesman\SaleTypeChart.cshtml" />
+    <Content Include="Views\Salesman\NoteChart.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

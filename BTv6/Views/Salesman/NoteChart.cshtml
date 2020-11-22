@@ -1,0 +1,9 @@
+﻿@{
+    var myChart = new Chart(width: 600, height: 400)
+    .AddTitle("Note Chart")
+    .AddSeries(
+    name: "Notes",
+    xValue: new[] { "Admin", "Manager", "Salesman","Deliveryman" },
+    yValues: new[] { ViewData["anote"], ViewData["mnote"], ViewData["snote"], ViewData["dnote"] })
+    .Write();
+}
