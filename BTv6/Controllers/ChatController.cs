@@ -20,7 +20,9 @@ namespace BTv6.Controllers
             {
                
                 ViewData["receiver"] = chatrepo.GetAllByReceiverId((string)Session["LID"]);
-                
+                TempData["ncount"] = chatrepo.GetAllByReceiverId((string)Session["LID"]).Count();
+                TempData["ocount"] = chatrepo.GetAllSeenById((string)Session["LID"]).Count();
+
                 return View();
             }
             else
@@ -37,7 +39,7 @@ namespace BTv6.Controllers
             {
 
                 chat ct = new chat();
-                ct= chatrepo.GetChatByID(id);
+                ct = chatrepo.GetChatByID(id);
                 ct.STATUS = 1;
                 chatrepo.Update(ct);
 

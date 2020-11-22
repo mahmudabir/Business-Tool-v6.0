@@ -47,14 +47,14 @@
             <center>
 
                 <br>
-                <p style="color:black;">Old Messages</p>
+                <p style="color:black;">Old Messages <input type="submit" name="seenmessage" value="@TempData["ocount"]"></p>
             </center>
         </h2>
 
         <table class="content-table">
             <thead>
                 <tr>
-                    <th>#SL</th>
+                    @*<th>#SL</th>*@
                     <th>From</th>
                     <th>Date</th>
                     <th>Subject</th>
@@ -66,13 +66,13 @@
 
             <tbody id='tab'>
                 @{
-                    int i = 0;
+                    //int i = 0;
 
                     foreach (var item in ViewData["receiver"] as List<BTv6.Models.chat>)
                     {
-                        i = i + 1;
+                       // i = i + 1;
                         <tr>
-                            <td align='middle'>@i</td>
+                            @*<td align='middle'>@i</td>*@
                             <td align='middle'>@item.SENDER</td>
                             <td align='middle'>@item.DATE</td>
                             <td align='middle'>@item.SUB</td>
