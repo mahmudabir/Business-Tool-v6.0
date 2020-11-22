@@ -17,36 +17,58 @@
         <hr>
         @if (Model.Count() == 0)
         {
-            <p style="color: red">No Products Available</p>
+            <div align="center">
+                <form method="post">
+                    <input type="search" name="search" id="txtsearch" placeholder="Enter product name..." />
+                    <select name="sortby">
+                        <option value="nothing">----Sort by----</option>
+                        <option value="aprice" @TempData["aprice"]>Price(Low to High)</option>
+                        <option value="dprice" @TempData["dprice"]>Price(High to Low)</option>
+                        <option value="adate" @TempData["adate"]>Date(New to Old)</option>
+                        <option value="ddate" @TempData["ddate"]>Date(Old to New)</option>
+                    </select>
+                    <input type="submit" />
+                    <div style="margin-left: 350px;">
+                        <p style="color: red">No product found</p>
+                    </div>
+                </form>
+            </div>
         }
         else
         {
-            foreach (var product in Model)
-            {
-                if (product.AVAILABILITY.Equals("AVAILABLE"))
-                {
-                    if (product.QUANTITY > 0)
-                    {
-                        <form method="post">
-                            <div class="cart" style="margin-left: 25px;">
-                                <p><img style="margin-left: 90px" src="@Url.Content(product.P_IMG)" alt="@product.PID" height="65" width="65" /></p>
-                                @*<p><img src="@product.P_IMG" alt="@product.PID" height="45" width="45" /></p>*@
-                                <p>Product ID: @product.PID</p>
-                                <p>Product Name: @product.P_NAME</p>
-                                <p>Available Quantity: @product.QUANTITY</p>
-                                <p>Price: @product.SELL_PRICE</p>
-                                <p>Type: @product.TYPE</p>
-                                <hr>
-                                <div style="margin-left:70px;margin-top:20px">
-                                    <a class="buy" href="~/Customer/BuyProduct/@product.PID">Buy</a>
-                                </div>
+            <div align="center">
+                <form method="post">
+                    <input type="search" name="search" id="txtsearch" placeholder="Search.." />
+                    <select name="sortby">
+                        <option value="nothing">----Sort by----</option>
+                        <option value="aprice" @TempData["aprice"]>Price(Low to High)</option>
+                        <option value="dprice" @TempData["dprice"]>Price(High to Low)</option>
+                        <option value="adate" @TempData["adate"]>Date(New to Old)</option>
+                        <option value="ddate" @TempData["ddate"]>Date(Old to New)</option>
+                    </select>
+                    <input type="submit" value="Search" />
+                </form>
+                <span style="color:lawngreen">@TempData["searchResult"]</span>
+            </div>
 
-                            </div>
-                        </form>
-                    }
-                }
+            foreach (var product in ViewBag.result)
+            {
+
+                <div class="cart" style="margin-left: 25px;">
+                    <p><img style="margin-left: 90px" src="@Url.Content(product.P_IMG)" alt="@product.PID" height="65" width="65" /></p>
+                    <p>Product ID: @product.PID</p>
+                    <p>Product Name: @product.P_NAME</p>
+                    <p>Available Quantity: @product.QUANTITY</p>
+                    <p>Price: @product.SELL_PRICE</p>
+                    <p>Type: @product.TYPE</p>
+                    <hr>
+                    <div style="margin-left:70px;margin-top:20px">
+                        <a class="buy" href="~/Customer/BuyProduct/@product.PID">Buy</a>
+                    </div>
+                </div>
             }
         }
     </div>
+    </script>
 </body>
 </html>

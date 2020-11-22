@@ -68,6 +68,12 @@ namespace BTv6.Repositories.CommonRepositories
             return this.context.Set<product>().Where(x => x.QUANTITY > 0).ToList();
         }
 
+        public List<product> SearchProduct(string search)
+        {
+
+            return this.GetAll().Where(x => x.AVAILABILITY == "AVAILABLE" && x.QUANTITY > 0 && (x.P_NAME.ToLower().Contains(search) || (x.TYPE.ToLower().Contains(search)))).ToList();
+        }
+
 
     }
 }

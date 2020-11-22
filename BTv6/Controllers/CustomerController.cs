@@ -4,7 +4,6 @@ using BTv6.Repositories.CustomerRepositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 
@@ -20,7 +19,6 @@ namespace BTv6.Controllers
             {
                 if (this.CheckCustomer((int)Session["SID"]))
                 {
-
                     return View();
                 }
                 else
@@ -82,7 +80,6 @@ namespace BTv6.Controllers
             {
                 if (this.CheckCustomer((int)Session["SID"]))
                 {
-
                     if (ModelState.IsValid)
                     {
                         ComplainRepository complainRepository = new ComplainRepository();
@@ -98,7 +95,6 @@ namespace BTv6.Controllers
                         TempData["success"] = "Your complain was submitted!";
 
                         return RedirectToAction("Index", "Customer");
-
                     }
                     else
                     {
@@ -140,7 +136,6 @@ namespace BTv6.Controllers
             }
         }
 
-
         [HttpGet]
         public ActionResult OrderProduct()
         {
@@ -150,7 +145,9 @@ namespace BTv6.Controllers
                 {
                     ProductRepository productRepository = new ProductRepository();
 
-                    var productsToView = productRepository.GetAll();
+                    var productsToView = productRepository.GetAll().Where(x => x.AVAILABILITY == "AVAILABLE" && x.QUANTITY > 0).ToList();
+
+                    ViewBag.result = productsToView;
 
                     return View(productsToView);
                 }
@@ -165,6 +162,100 @@ namespace BTv6.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult OrderProduct(string search, string sortby)
+        {
+            if (Session["SID"] != null)
+            {
+                if (this.CheckCustomer((int)Session["SID"]))
+                {
+                    ProductRepository productRepository = new ProductRepository();
+
+                    if (search != "")
+                    {
+
+                        if (sortby == "aprice")
+                        {
+                            var productsToView = productRepository.SearchProduct(search).OrderBy(x => x.SELL_PRICE).ToList();
+
+                            ViewBag.result = productsToView;
+
+
+                            TempData["searchResult"] = "Search Result for " + "\"" + search + "\" Sorted by Price(L-H)";
+
+                            TempData["aprice"] = "selected";
+
+                            return View(productsToView);
+                        }
+                        else if (sortby == "dprice")
+                        {
+                            var productsToView = productRepository.SearchProduct(search).OrderByDescending(x => x.SELL_PRICE).ToList();
+
+                            ViewBag.result = productsToView;
+
+                            TempData["searchResult"] = "Search Result for " + "\"" + search + "\" Sorted by Price(H-L)";
+
+                            TempData["dprice"] = "selected";
+
+                            return View(productsToView);
+                        }
+                        else if (sortby == "adate")
+                        {
+                            var productsToView = productRepository.SearchProduct(search).OrderByDescending(x => x.Add_PDate).ToList();
+
+                            ViewBag.result = productsToView;
+
+                            TempData["searchResult"] = "Search Result for " + "\"" + search + "\" Sorted by Date(O-N)";
+
+                            TempData["adate"] = "selected";
+
+                            return View(productsToView);
+                        }
+                        else if (sortby == "ddate")
+                        {
+                            var productsToView = productRepository.SearchProduct(search).OrderBy(x => x.Add_PDate).ToList(); ;
+
+                            ViewBag.result = productsToView;
+
+                            TempData["searchResult"] = "Search Result for " + "\"" + search + "\" Sorted by Date(N-O)";
+
+                            TempData["ddate"] = "selected";
+
+                            return View(productsToView);
+                        }
+                        else
+                        {
+                            var productsToView = productRepository.SearchProduct(search);
+
+                            ViewBag.result = productsToView;
+
+                            TempData["searchResult"] = "Search Result for " + "\"" + search + "\"";
+
+                            return View(productsToView);
+                        }
+
+                    }
+                    else
+                    {
+                        var productsToView = productRepository.GetAll().Where(x => x.AVAILABILITY == "AVAILABLE" && x.QUANTITY > 0).ToList();
+
+                        ViewBag.result = productsToView;
+
+                        return View(productsToView);
+                    }
+
+
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
 
         [HttpGet]
         public ActionResult BuyProduct(string id)
@@ -194,7 +285,6 @@ namespace BTv6.Controllers
                         TempData["error"] = "The Product you are searching is not Available.";
                         return RedirectToAction("Index");
                     }
-
                 }
                 else
                 {
@@ -255,7 +345,6 @@ namespace BTv6.Controllers
                             productRepository.Update(productFromDB);
                             return RedirectToAction("OrderProduct");
                         }
-
                     }
                 }
                 else
@@ -268,7 +357,6 @@ namespace BTv6.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
-
 
         [HttpGet]
         public ActionResult PendingOrder(string id)
@@ -338,7 +426,6 @@ namespace BTv6.Controllers
             }
         }
 
-
         [HttpGet]
         public ActionResult EditPendingOrder(int id)
         {
@@ -373,7 +460,6 @@ namespace BTv6.Controllers
                         TempData["error"] = "Sorry, Cannot view the order!";
                         return RedirectToAction("Index");
                     }
-
                 }
                 else
                 {
@@ -389,7 +475,6 @@ namespace BTv6.Controllers
         [HttpPost]
         public ActionResult EditPendingOrder(int orderid, int quant)
         {
-
             if (Session["SID"] != null)
             {
                 if (this.CheckCustomer((int)Session["SID"]))
@@ -466,11 +551,8 @@ namespace BTv6.Controllers
 
                             int productToAdd = orderFromDB.quant - quant;
 
-
-
                             //add product
                             productToUpdate.QUANTITY = productFromDB.QUANTITY + productToAdd;
-
 
                             //Change "Available"
                             if (productToUpdate.QUANTITY > 0)
@@ -478,14 +560,12 @@ namespace BTv6.Controllers
                                 productToUpdate.AVAILABILITY = "AVAILABLE";
                                 productRepository.Update(productToUpdate);
 
-
                                 orderToUpdate.quant = quant;
                                 orderToUpdate.ammout = quant * productFromDB.SELL_PRICE;
                                 orderRepository.Update(orderToUpdate);
 
                                 TempData["success"] = "Your Order Updated Successfully!";
                                 return RedirectToAction("Index");
-
                             }
                             else
                             {
@@ -498,9 +578,7 @@ namespace BTv6.Controllers
                                 TempData["success"] = "Your Order Updated Successfully!";
                                 return RedirectToAction("Index");
                             }
-
                         }
-
                     }
                 }
                 else
@@ -540,7 +618,6 @@ namespace BTv6.Controllers
                             orderRepository.DeleteOrderByID(id);
                             productRepository.Update(productToUpdate);
 
-
                             TempData["success"] = "Your Order Canceled Successfully!";
                             return RedirectToAction("Index");
                         }
@@ -570,7 +647,6 @@ namespace BTv6.Controllers
         [HttpGet]
         public ActionResult OrderTypeChart()
         {
-
             if (Session["SID"] != null)
             {
                 if (this.CheckCustomer((int)Session["SID"]))
@@ -598,8 +674,6 @@ namespace BTv6.Controllers
             }
         }
 
-
-
         [HttpGet]
         public ActionResult LastOrderChart(int id = 5)
         {
@@ -616,7 +690,6 @@ namespace BTv6.Controllers
                         var orderListFromDB = orderRepository.GetOrderByUser((string)Session["LID"]).OrderByDescending(x => x.orderid).Take(id);
                         var productListFromDB = productRepository.GetAll();
 
-
                         List<string> oList = new List<string>();
                         List<string> pList = new List<string>();
 
@@ -630,10 +703,8 @@ namespace BTv6.Controllers
                         var oArray = oList.ToArray();
                         var pArray = pList.ToArray();
 
-
                         ViewData["olist"] = oArray;
                         ViewData["plist"] = pArray;
-
 
                         var orderItemTypeChart = new Chart(width: 600, height: 400)
                         .AddTitle("Ordered Item Chart")
@@ -652,7 +723,6 @@ namespace BTv6.Controllers
                         var orderListFromDB = orderRepository.GetOrderByUser((string)Session["LID"]).OrderByDescending(x => x.orderid).Take(id);
                         var productListFromDB = productRepository.GetAll();
 
-
                         List<string> oList = new List<string>();
                         List<string> pList = new List<string>();
 
@@ -666,10 +736,8 @@ namespace BTv6.Controllers
                         var oArray = oList.ToArray();
                         var pArray = pList.ToArray();
 
-
                         ViewData["olist"] = oArray;
                         ViewData["plist"] = pArray;
-
 
                         var orderItemTypeChart = new Chart(width: 600, height: 400)
                         .AddTitle("Ordered Item Chart")
@@ -683,7 +751,6 @@ namespace BTv6.Controllers
 
                         return View();
                     }
-
                 }
                 else
                 {
@@ -696,7 +763,6 @@ namespace BTv6.Controllers
             }
         }
 
-
         //AJAX Action Methods
         [HttpGet]
         public JsonResult SearchProductByName(string P_NAME)
@@ -708,7 +774,6 @@ namespace BTv6.Controllers
 
             return Json(productFromDB, JsonRequestBehavior.AllowGet);
         }
-
 
         // Non Action Methods
         [NonAction]
