@@ -11,11 +11,14 @@ namespace BTv6.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class notice
     {
         public int noticeID { get; set; }
+        [Required(ErrorMessage = "*")]
         public string noteSub { get; set; }
+        [Required(ErrorMessage = "*")]
         public string noticetext { get; set; }
     }
 }

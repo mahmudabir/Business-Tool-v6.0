@@ -933,11 +933,19 @@ namespace BTv6.Controllers
             {
                 if ((int)Session["SID"] == 1)
                 {
-                    NoticeRepository notices = new NoticeRepository();
+                    if(!ModelState.IsValid)
+                    {
+                        return View("NoticeManagement/Create/Index");
+                    }
 
-                    notices.Insert(notice);
+                    else
+                    {
+                        NoticeRepository notices = new NoticeRepository();
 
-                    return RedirectToAction("NoticeManagement/Index");
+                        notices.Insert(notice);
+
+                        return RedirectToAction("NoticeManagement/Index");                       
+                    }           
                 }
 
                 else
@@ -974,7 +982,7 @@ namespace BTv6.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateNotice(notice notice)
+        public ActionResult UpdateNotice(notice notice, int id)
         {
             if (Session["LID"] == null)
             {
@@ -985,11 +993,23 @@ namespace BTv6.Controllers
             {
                 if ((int)Session["SID"] == 1)
                 {
-                    NoticeRepository notices = new NoticeRepository();
+                    if (!ModelState.IsValid)
+                    {
+                        NoticeRepository notices = new NoticeRepository();
 
-                    notices.Update(notice);
+                        var not = notices.GetByID(id);
 
-                    return RedirectToAction("NoticeManagement/Index");
+                        return View("NoticeManagement/Update/Index", not);
+                    }
+                    
+                    else
+                    {
+                        NoticeRepository notices = new NoticeRepository();
+
+                        notices.Update(notice);
+
+                        return RedirectToAction("NoticeManagement/Index");
+                    }
                 }
 
                 else

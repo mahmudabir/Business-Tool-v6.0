@@ -25,13 +25,18 @@ namespace BTv6.Models
             this.products = new HashSet<product>();
             this.sales = new HashSet<sale>();
         }
-    
+
+        [Required(ErrorMessage = "*")]
         public string EmpID { get; set; }
+        [Required(ErrorMessage = "*")]
         public string E_NAME { get; set; }
+        [Required(ErrorMessage = "*")]
         public int DID { get; set; }
+        [Required(ErrorMessage = "*"), Range(0,99999999, ErrorMessage = "*")]
         public double SAL { get; set; }
+        [Required(ErrorMessage = "*"), StringLength(maximumLength: 11, MinimumLength =14, ErrorMessage ="*")]
         public string E_MOB { get; set; }
-        [Required(ErrorMessage = "Subject can not be empty.")]
+        [Required(ErrorMessage = "*")]
         public string E_MAIL { get; set; }
         public System.DateTime JOIN_DATE { get; set; }
         public string ADDED_BY { get; set; }
