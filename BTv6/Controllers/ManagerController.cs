@@ -330,9 +330,10 @@ namespace BTv6.Controllers
                     BusinessToolDBEntities context = new BusinessToolDBEntities();
                     var OrderDB = context.orders.Where(x => x.orderid == id).FirstOrDefault();
                     OrderDB.stat = "1";
+                    OrderDB.deliveryby = Request["deliveryby"];
                     context.Entry(OrderDB).State = EntityState.Modified;
                     context.SaveChanges();
-
+                    TempData["suc"] = "Order Approved";
                     return RedirectToAction("OrderManage", "Manager");
                 }
                 else

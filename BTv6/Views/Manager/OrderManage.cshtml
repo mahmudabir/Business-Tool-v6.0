@@ -16,7 +16,8 @@
     <div align="center" class="table">
         <h1 style="color:wheat;">Order Manage</h1>
         <hr />
-        <input style="width:15%;margin-left:10px" type="text" name="txtsearch" id="txtsearch" onkeyup="search()" value="" />
+        <input style="width:15%;margin-left:10px" type="text" name="txtsearch" id="txtsearch" onkeyup="search()" value="" /><br />
+        <span style="color:green">@TempData["suc"]</span>
         <table class="content-table">
             <thead>
                 <tr>
@@ -24,9 +25,9 @@
                     <th>Product ID</th>
                     <th>Quantity</th>
                     <th>Cash</th>
-                    <th>stat</th>
+                    
                     <th>Date</th>
-                    <th>By</th>
+                    
                     <th></th>
                     <th></th>
                 </tr>
@@ -44,9 +45,7 @@
                                 <td>@order.prodid</td>
                                 <td>@order.quant</td>
                                 <td>@order.ammout</td>
-                                <td>@order.stat</td>
                                 <td>@order.ord_date</td>
-                                <td>@order.orderby</td>
                                 <td>
                                     <button class="a">@Html.ActionLink("Approve", "Approve", new { id = order.orderid })</button>
 

@@ -11,7 +11,8 @@ namespace BTv6.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class order
     {
         public int orderid { get; set; }
@@ -20,6 +21,7 @@ namespace BTv6.Models
         public double ammout { get; set; }
         public string stat { get; set; }
         public Nullable<System.DateTime> ord_date { get; set; }
+        [Required]
         public string deliveryby { get; set; }
         public string orderby { get; set; }
     
