@@ -108,7 +108,13 @@ namespace BTv6.Controllers
                                 {
                                     prodrepo.UpdateQuantity(prod, prod.PID);
                                     salerepo.Insert(saleToInsert);
-
+                                    TempData["pid"] = OnlyProd.PID;
+                                    TempData["pname"] = OnlyProd.P_NAME;
+                                    TempData["ptype"] = OnlyProd.TYPE;
+                                    TempData["QUANT"] = saleToInsert.QUANT;
+                                    TempData["C_NAME"] = saleToInsert.C_NAME;
+                                    TempData["C_MOB"] = saleToInsert.C_MOB;
+                                    TempData["price"] = OnlyProd.SELL_PRICE;
                                     TempData["message"] = "Product sold successfully";
                                     return RedirectToAction("SellProducts");
                                 }

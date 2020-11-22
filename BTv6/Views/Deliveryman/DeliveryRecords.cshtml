@@ -4,41 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="~/Assets/css/history.css">
+    <script src="~/Assets/js/pdfPrint.js"></script>
     <title>Delivery Records</title>
 </head>
 <body>
-
+   
     <div align="center" class="table">
-        <table class="content-table">
-            <thead>
-                <tr>
-                    <th>Order#</th>
-                    <th>Date</th>
-                    <th>Product ID</th>
-                    <th>Ammount</th>
-                    <th>Quantity</th>
-                    <th>Order Total</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-
-            <tbody id='tab'>
-                @foreach (var item in ViewData["confirmed"] as List<BTv6.Models.order>)
-                {
+        <h1>Accepted Product List</h1>
+        <input style="margin-top: 5px;margin-left: 14px;" name="PRINT" id="PRINT" onclick="savePDF()" type="submit" value="Export PDF">
+        <div class=tab1 id="table">
+            <table class="content-table" id="tblexportData" border="1">
+                <thead>
                     <tr>
-                        <td align='middle'>@item.orderid</td>
-                        <td align='middle'>@item.ord_date</td>
-                        <td align='middle'>@item.prodid</td>
-                        <td align='middle'>@item.ammout</td>
-                        <td align='middle'>@item.quant</td>
-                        <td align='middle'>@(@item.quant * @item.ammout)</td>
-                        <td align='middle'>Delivered</td>
-                        
+                        <th>Order#</th>
+                        <th>Date</th>
+                        <th>Product ID</th>
+                        <th>Ammount</th>
+                        <th>Quantity</th>
+                        <th>Order Total</th>
+                        <th>Status</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
 
-    </div>
+                <tbody id='tab'>
+                    @foreach (var item in ViewData["confirmed"] as List<BTv6.Models.order>)
+                    {
+                        <tr>
+                            <td align='middle'>@item.orderid</td>
+                            <td align='middle'>@item.ord_date</td>
+                            <td align='middle'>@item.prodid</td>
+                            <td align='middle'>@item.ammout</td>
+                            <td align='middle'>@item.quant</td>
+                            <td align='middle'>@(@item.quant * @item.ammout)</td>
+                            <td align='middle'>Delivered</td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        </div>
 </body>
 </html>
