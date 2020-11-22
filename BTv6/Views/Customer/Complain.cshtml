@@ -1,4 +1,6 @@
-﻿@RenderPage("~/Views/Customer/Common.cshtml")
+﻿@model BTv6.Models.complain
+
+@RenderPage("~/Views/Customer/Common.cshtml")
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,9 +18,14 @@
             <hr>
             <p style="margin-top: 5px;">Subject</p>
             <input type="text" name="sub" placeholder="Type Subject">
+            <span style="color:red;">@Html.ValidationMessageFor(model => model.sub)</span>
+
             <p>Your Complain</p>
-            <textarea style="margin-top: 5px;" name="Text" id="complain" cols="50" rows="20"></textarea><br>
+            <textarea style="margin-top: 5px;" name="Text" id="complain" cols="50" rows="20"></textarea>
+            <span style="color:red;">@Html.ValidationMessageFor(model => model.Text)</span><br />
             <input type="submit" name="send" value="Send">
+
+
         </div>
     </form>
 </body>

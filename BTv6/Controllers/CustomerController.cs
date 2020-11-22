@@ -82,19 +82,28 @@ namespace BTv6.Controllers
             {
                 if (this.CheckCustomer((int)Session["SID"]))
                 {
-                    ComplainRepository complainRepository = new ComplainRepository();
 
-                    complain complainToInsert = new complain();
+                    if (ModelState.IsValid)
+                    {
+                        ComplainRepository complainRepository = new ComplainRepository();
 
-                    complainToInsert.OwnerID = (string)Session["LID"];
-                    complainToInsert.sub = (string)cmpln.sub;
-                    complainToInsert.Text = (string)cmpln.Text;
+                        complain complainToInsert = new complain();
 
-                    complainRepository.Insert(complainToInsert);
+                        complainToInsert.OwnerID = (string)Session["LID"];
+                        complainToInsert.sub = (string)cmpln.sub;
+                        complainToInsert.Text = (string)cmpln.Text;
 
-                    TempData["success"] = "Your complain was submitted!";
+                        complainRepository.Insert(complainToInsert);
 
-                    return RedirectToAction("Index", "Customer");
+                        TempData["success"] = "Your complain was submitted!";
+
+                        return RedirectToAction("Index", "Customer");
+
+                    }
+                    else
+                    {
+                        return View();
+                    }
                 }
                 else
                 {
