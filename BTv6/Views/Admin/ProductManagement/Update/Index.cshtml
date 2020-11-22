@@ -20,17 +20,17 @@
             <div class="form-horizontal">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 @Html.HiddenFor(model => model.PID)
+                <div class="img">
+                    <img src="@Url.Content(Model.P_IMG)" style="height: 250px;width:250px;border-radius:50%">
 
-                <img src="@Url.Content(Model.P_IMG)" style="height: 50px;width:50px;border-radius:50%">
-
-                <div class="form-group">
-                    Chose Image File
-                    <div class="col-md-10">
-                        <input style="margin-top: 5px" type="file" name="avatar" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
-                        @Html.ValidationMessageFor(model => model.P_IMG, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        Chose Image File
+                        <div class="col-md-10">
+                            <input style="margin-top: 5px" type="file" name="avatar" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*">
+                            @Html.ValidationMessageFor(model => model.P_IMG, "", new { @class = "text-danger" })
+                        </div>
                     </div>
                 </div>
-
                 <div class="form-group">
                     Name
                     <div class="col-md-10">
@@ -39,6 +39,7 @@
                     </div>
                 </div>
 
+
                 <div class="form-group">
                     Type
                     <div class="col-md-10">
@@ -46,6 +47,7 @@
                         @Html.ValidationMessageFor(model => model.TYPE, "", new { @class = "text-danger" })
                     </div>
                 </div>
+
 
                 <div class="form-group">
                     Quantity
@@ -56,7 +58,7 @@
                 </div>
 
                 <div class="form-group">
-                   Buy Price
+                    Buy Price
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.BUY_PRICE, new { htmlAttributes = new { @class = "form-control", min = 1 } })
                         @Html.ValidationMessageFor(model => model.BUY_PRICE, "", new { @class = "text-danger" })
