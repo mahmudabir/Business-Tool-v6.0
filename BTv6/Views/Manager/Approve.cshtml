@@ -22,8 +22,8 @@
             <input type="text" name="ammount" value="@Model.ammout" readonly>
             <p>Order Date</p>
             <input type="text" name="ord_date" value="@Model.ord_date" readonly>
-            <p>Delivery By</p>
-            <input type="text" placeholder="Enter Delivery Man ID." value="@Model.deliveryby" name="deliveryby"><br>
+            <p> <span style="color:red">*</span>Delivery By</p>
+            <input type="number" placeholder="Enter Delivery Man ID." value="@Model.deliveryby" name="deliveryby" required><br>
             <input type="submit" value="CONFIRM">
         </div>
     </form>
