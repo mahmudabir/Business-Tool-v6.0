@@ -11,11 +11,12 @@ namespace BTv6.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
     public partial class log_in
     {
-        [Required, StringLength(30)]
+        [Required(ErrorMessage = "Username can not be empty."), StringLength(30)]
         public string LID { get; set; }
         public int SID { get; set; }
         [Required(ErrorMessage = "Password can not be empty.")]

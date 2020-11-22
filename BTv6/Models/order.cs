@@ -24,7 +24,7 @@ namespace BTv6.Models
         [Required]
         public string deliveryby { get; set; }
         public string orderby { get; set; }
-    
+
         public virtual customer customer { get; set; }
         public virtual employee employee { get; set; }
         public virtual product product { get; set; }

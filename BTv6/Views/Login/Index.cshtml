@@ -18,9 +18,11 @@
         <h1>Login Here</h1>
         <form method="post">
             <p>Username</p>
-            <input type="text" name="LID" id="LID" placeholder="Enter Username" required><br>
+            <input type="text" name="LID" id="LID" placeholder="Enter Username"><br>
+            <span>@Html.ValidationMessageFor(model => model.LID)</span>
             <p>Password</p>
-            <input type="password" name="PASS" id="PASS" placeholder="Enter Password" required><br>
+            <input type="password" name="PASS" id="PASS" placeholder="Enter Password"><br>
+            <span>@Html.ValidationMessageFor(model => model.PASS)</span>
 
             <span style="color:red;">@TempData["error"]</span>
 

@@ -54,49 +54,59 @@ namespace BTv6.Controllers
         [HttpPost]
         public ActionResult Index(log_in login)
         {
-            BusinessToolDBEntities context = new BusinessToolDBEntities();
-
-            var userFromDB = context.log_in.Where(x => x.LID.Equals(login.LID) && x.PASS.Equals(login.PASS)).FirstOrDefault();
 
 
-
-            if (userFromDB != null)
+            if (ModelState.IsValid)
             {
-                Session["LID"] = userFromDB.LID;
-                Session["SID"] = userFromDB.SID;
+                BusinessToolDBEntities context = new BusinessToolDBEntities();
 
-                if ((int)Session["SID"] == 1)
+                var userFromDB = context.log_in.Where(x => x.LID.Equals(login.LID) && x.PASS.Equals(login.PASS)).FirstOrDefault();
+
+
+
+                if (userFromDB != null)
                 {
-                    return RedirectToAction("Index", "Admin");
-                }
-                else if ((int)Session["SID"] == 2)
-                {
-                    return RedirectToAction("Index", "Manager");
-                }
-                else if ((int)Session["SID"] == 3)
-                {
-                    return RedirectToAction("Index", "Salesman");
-                }
-                else if ((int)Session["SID"] == 4)
-                {
-                    return RedirectToAction("Index", "Deliveryman");
-                }
-                else if ((int)Session["SID"] == 5)
-                {
-                    return RedirectToAction("Index", "Customer");
+                    Session["LID"] = userFromDB.LID;
+                    Session["SID"] = userFromDB.SID;
+
+                    if ((int)Session["SID"] == 1)
+                    {
+                        return RedirectToAction("Index", "Admin");
+                    }
+                    else if ((int)Session["SID"] == 2)
+                    {
+                        return RedirectToAction("Index", "Manager");
+                    }
+                    else if ((int)Session["SID"] == 3)
+                    {
+                        return RedirectToAction("Index", "Salesman");
+                    }
+                    else if ((int)Session["SID"] == 4)
+                    {
+                        return RedirectToAction("Index", "Deliveryman");
+                    }
+                    else if ((int)Session["SID"] == 5)
+                    {
+                        return RedirectToAction("Index", "Customer");
+                    }
+                    else
+                    {
+                        TempData["error"] = "Restricted!";
+                        return RedirectToAction("Index", "Login");
+                    }
+
                 }
                 else
                 {
-                    TempData["error"] = "Restricted!";
+                    TempData["error"] = "Invalid Login!";
                     return RedirectToAction("Index", "Login");
                 }
-
             }
             else
             {
-                TempData["error"] = "Invalid Login!";
-                return RedirectToAction("Index", "Login");
+                return View();
             }
+
         }
     }
 }
