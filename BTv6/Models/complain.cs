@@ -17,7 +17,7 @@ namespace BTv6.Models
     {
         [Key]
         public int cID { get; set; }
-        [Required(ErrorMessage = "Subject can not be empty."),]
+        [Required(ErrorMessage = "Subject can not be empty."), StringLength(50)]
         public string sub { get; set; }
         public string OwnerID { get; set; }
         [Required(ErrorMessage = "Complain can not be empty.")]

@@ -15,7 +15,7 @@ namespace BTv6.Models
 
     public partial class log_in
     {
-        [Required]
+        [Required, StringLength(30)]
         public string LID { get; set; }
         public int SID { get; set; }
         [Required]

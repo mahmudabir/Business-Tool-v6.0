@@ -23,7 +23,7 @@ namespace BTv6.Models
             this.orders = new HashSet<order>();
         }
 
-        [Required, DisplayName("Username")]
+        [Required, DisplayName("Username"), StringLength(50)]
         public string cusid { get; set; }
         [Required, DisplayName("Full Name")]
         public string name { get; set; }
