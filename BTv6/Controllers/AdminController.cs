@@ -861,19 +861,30 @@ namespace BTv6.Controllers
             {
                 if ((int)Session["SID"] == 1)
                 {
-                    BusinessToolDBEntities context = new BusinessToolDBEntities();
+                    CustomerRepository log = new CustomerRepository();
+                    var check = log.GetByID(id);
 
-                    var cusLOG = context.log_in.Where(x => x.LID == (string)id).FirstOrDefault();
-                    cusLOG.SID = 5;
-                    context.Entry(cusLOG).State = EntityState.Modified;
-                    context.SaveChanges();
+                    if(check != null && check.status == 2)
+                    {
+                        BusinessToolDBEntities context = new BusinessToolDBEntities();
 
-                    var cus = context.customers.Where(x => x.cusid == (string)id).FirstOrDefault();
-                    cus.status = 1;
-                    context.Entry(cus).State = EntityState.Modified;
-                    context.SaveChanges();
+                        var cusLOG = context.log_in.Where(x => x.LID == (string)id).FirstOrDefault();
+                        cusLOG.SID = 5;
+                        context.Entry(cusLOG).State = EntityState.Modified;
+                        context.SaveChanges();
 
-                    return RedirectToAction("PendingRegistrationManagement");
+                        var cus = context.customers.Where(x => x.cusid == (string)id).FirstOrDefault();
+                        cus.status = 1;
+                        context.Entry(cus).State = EntityState.Modified;
+                        context.SaveChanges();
+
+                        return RedirectToAction("PendingRegistrationManagement");
+                    }
+
+                    else
+                    {
+                        return RedirectToAction("PendingRegistrationManagement");
+                    }
                 }
 
                 else
@@ -895,14 +906,25 @@ namespace BTv6.Controllers
             {
                 if ((int)Session["SID"] == 1)
                 {
-                    BusinessToolDBEntities db = new BusinessToolDBEntities();
-                    LoginRepository log = new LoginRepository();
-                    CustomerRepository cus = new CustomerRepository();
+                    CustomerRepository logc = new CustomerRepository();
+                    var check = logc.GetByID(id);
 
-                    cus.DeleteCustomerByID(id);
-                    log.DeleteLoginByID(id);
+                    if (check != null && check.status == 2)
+                    { 
+                        BusinessToolDBEntities db = new BusinessToolDBEntities();
+                        LoginRepository log = new LoginRepository();
+                        CustomerRepository cus = new CustomerRepository();
 
-                    return RedirectToAction("PendingRegistrationManagement");
+                        cus.DeleteCustomerByID(id);
+                        log.DeleteLoginByID(id);
+
+                        return RedirectToAction("PendingRegistrationManagement");
+                    }
+
+                    else
+                    {
+                        return RedirectToAction("PendingRegistrationManagement");
+                    }
                 }
 
                 else
@@ -951,19 +973,31 @@ namespace BTv6.Controllers
             {
                 if ((int)Session["SID"] == 1)
                 {
-                    BusinessToolDBEntities context = new BusinessToolDBEntities();
+                    CustomerRepository logc = new CustomerRepository();
+                    var check = logc.GetByID(id);
 
-                    var cusLOG = context.log_in.Where(x => x.LID == (string)id).FirstOrDefault();
-                    cusLOG.SID = 5;
-                    context.Entry(cusLOG).State = EntityState.Modified;
-                    context.SaveChanges();
+                    if (check != null && check.status == 0)
+                    {
+                        BusinessToolDBEntities context = new BusinessToolDBEntities();
 
-                    var cus = context.customers.Where(x => x.cusid == (string)id).FirstOrDefault();
-                    cus.status = 1;
-                    context.Entry(cus).State = EntityState.Modified;
-                    context.SaveChanges();
+                        var cusLOG = context.log_in.Where(x => x.LID == (string)id).FirstOrDefault();
+                        cusLOG.SID = 5;
+                        context.Entry(cusLOG).State = EntityState.Modified;
+                        context.SaveChanges();
 
-                    return RedirectToAction("CustomerManagement");
+                        var cus = context.customers.Where(x => x.cusid == (string)id).FirstOrDefault();
+                        cus.status = 1;
+                        context.Entry(cus).State = EntityState.Modified;
+                        context.SaveChanges();
+
+                        return RedirectToAction("CustomerManagement");
+                    }
+
+                    else
+                    {
+                        return RedirectToAction("CustomerManagement");
+                    }
+                    
                 }
 
                 else
@@ -984,19 +1018,31 @@ namespace BTv6.Controllers
             {
                 if ((int)Session["SID"] == 1)
                 {
-                    BusinessToolDBEntities context = new BusinessToolDBEntities();
+                    CustomerRepository logc = new CustomerRepository();
+                    var check = logc.GetByID(id);
 
-                    var cusLOG = context.log_in.Where(x => x.LID == (string)id).FirstOrDefault();
-                    cusLOG.SID = 0;
-                    context.Entry(cusLOG).State = EntityState.Modified;
-                    context.SaveChanges();
+                    if (check != null && check.status == 1)
+                    {
+                        BusinessToolDBEntities context = new BusinessToolDBEntities();
 
-                    var cus = context.customers.Where(x => x.cusid == (string)id).FirstOrDefault();
-                    cus.status = 0;
-                    context.Entry(cus).State = EntityState.Modified;
-                    context.SaveChanges();
+                        var cusLOG = context.log_in.Where(x => x.LID == (string)id).FirstOrDefault();
+                        cusLOG.SID = 0;
+                        context.Entry(cusLOG).State = EntityState.Modified;
+                        context.SaveChanges();
 
-                    return RedirectToAction("CustomerManagement");
+                        var cus = context.customers.Where(x => x.cusid == (string)id).FirstOrDefault();
+                        cus.status = 0;
+                        context.Entry(cus).State = EntityState.Modified;
+                        context.SaveChanges();
+
+                        return RedirectToAction("CustomerManagement");
+                    }
+
+                    else
+                    {
+                        return RedirectToAction("CustomerManagement");
+                    }
+                    
                 }
 
                 else
@@ -1262,7 +1308,15 @@ namespace BTv6.Controllers
 
                     var complain = complains.GetByID(id);
 
-                    return View("CustomerComplains/ComplainDetails/Index", complain);
+                    if(complain != null)
+                    {
+                        return View("CustomerComplains/ComplainDetails/Index", complain);
+                    }
+
+                    else
+                    {
+                        return RedirectToAction("CustomerComplains");
+                    }
 
                 }
 

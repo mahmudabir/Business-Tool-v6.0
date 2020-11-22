@@ -53,8 +53,16 @@ namespace BTv6.Controllers
 
                     var notice = notices.GetByID(id);
 
-                    return View("Details/Index", notice);
+                    if(notice != null)
+                    {
+                        return View("Details/Index", notice);
+                    }
 
+                    
+                    else
+                    {
+                        return RedirectToAction("Index");
+                    }
                 }
 
                 else
