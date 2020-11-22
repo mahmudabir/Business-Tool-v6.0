@@ -93,7 +93,7 @@ namespace BTv6.Controllers
                 if ((int)Session["SID"] == 2)
                 {
                     ProductRepository products = new ProductRepository();
-                    var prod = products.Get(id);
+                    var prod = products.GetProductByID(id);
 
                     return View(prod);
                 }
@@ -120,16 +120,19 @@ namespace BTv6.Controllers
                     if (!ModelState.IsValid)
                     {
                         ProductRepository products = new ProductRepository();
-                        var prod = products.Get(id);
+                        var prod = products.GetProductByID(id);
 
                         return View(prod);
                     }
 
                     else
                     {
+                        ProductRepository img = new ProductRepository();
+                        var prod = img.GetProductByID(id);
                         ProductRepository products = new ProductRepository();
                         product.MOD_BY = (string)Session["LID"];
                         product.Add_PDate = DateTime.Now;
+                        product.P_IMG = prod.P_IMG;
 
                         if (product.QUANTITY > 0)
                         {
@@ -141,10 +144,21 @@ namespace BTv6.Controllers
                             product.AVAILABILITY = "UNAVAILABLE";
                         }
 
-                        
-                        products.Update(product);
+                        if (product.BUY_PRICE <= product.SELL_PRICE)
+                        {
+                            products.Update(product);
 
-                        return RedirectToAction("ProductManage", "Manager");
+                            return RedirectToAction("ProductManage", "Manager");
+                        }
+                        else
+                        {
+                            TempData["err2"] = "Sell Price Should >= BuyPrice";
+
+                            ProductRepository productsd = new ProductRepository();
+                            var prodd = productsd.Get(id);
+
+                            return View(prodd);
+                        }
                     }
                     
                 }
@@ -194,6 +208,7 @@ namespace BTv6.Controllers
                 
                 else
                 {
+
                     if ((int)Session["SID"] == 2)
                     {
                         ProductRepository products = new ProductRepository();
@@ -217,15 +232,27 @@ namespace BTv6.Controllers
 
                             product.P_IMG = "~/Assets/image/product/default.png";
 
-                            products.InsertByObj(product);
+                            if (product.BUY_PRICE <= product.SELL_PRICE)
+                            {
+                                products.InsertByObj(product);
 
 
-                            return RedirectToAction("ProductManage", "Manager");
+                                return RedirectToAction("ProductManage", "Manager");
+                            }
+                            else
+                            {
+                                TempData["err2"] = "Sell Price Should >= BuyPrice";
+
+                                return RedirectToAction("InsertProduct");
+                            }
+
+                            
                         }
 
-
+                        else
                         {
-                            return RedirectToAction("InsertProduct", "Manager");
+                            TempData["err"] = "Product ID Exists";
+                            return RedirectToAction("InsertProduct");
                         }
 
                     }

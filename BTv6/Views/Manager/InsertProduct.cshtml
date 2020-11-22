@@ -24,6 +24,7 @@
                     ID.
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.PID, new { htmlAttributes = new { @class = "form-control" } })
+                        @TempData["err"]
                         @Html.ValidationMessageFor(model => model.PID, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -73,6 +74,7 @@
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.SELL_PRICE, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.SELL_PRICE, "", new { @class = "text-danger" })
+                        @TempData["err2"]
                     </div>
                 </div>
 
