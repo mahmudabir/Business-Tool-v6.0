@@ -11,7 +11,8 @@ namespace BTv6.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class customer
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,15 +21,17 @@ namespace BTv6.Models
             this.complains = new HashSet<complain>();
             this.orders = new HashSet<order>();
         }
-    
+
+        [Required]
         public string cusid { get; set; }
         public string name { get; set; }
         public string design { get; set; }
+        [Required]
         public string email { get; set; }
         public string mobile { get; set; }
         public Nullable<System.DateTime> reg_date { get; set; }
         public int status { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<complain> complains { get; set; }
         public virtual log_in log_in { get; set; }

@@ -11,13 +11,16 @@ namespace BTv6.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class log_in
     {
+        [Required]
         public string LID { get; set; }
         public int SID { get; set; }
+        [Required]
         public string PASS { get; set; }
-    
+
         public virtual customer customer { get; set; }
         public virtual employee employee { get; set; }
         public virtual employee employee1 { get; set; }

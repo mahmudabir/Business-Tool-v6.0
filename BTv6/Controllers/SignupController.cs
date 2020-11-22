@@ -50,18 +50,32 @@ namespace BTv6.Controllers
 
             if (!available)
             {
-                LoginRepository loginRepository = new LoginRepository();
-                loginRepository.Insert(loginToIntert);
+
+                if (ModelState.IsValid)
+                {
+                    LoginRepository loginRepository = new LoginRepository();
+                    loginRepository.Insert(loginToIntert);
 
 
-                signupRepository.Insert(customerToInsert);
+                    signupRepository.Insert(customerToInsert);
 
-                Session.Clear();
-                Session.Abandon();
+                    Session.Clear();
+                    Session.Abandon();
 
-                TempData["success"] = "You can Login after admin approval";
+                    TempData["success"] = "You can Login after admin approval";
 
-                return RedirectToAction("Index", "Signup");
+                    return RedirectToAction("Index", "Signup");
+                }
+                else
+                {
+                    TempData["cusid"] = c.cusid;
+                    TempData["name"] = c.name;
+                    TempData["design"] = c.design;
+                    TempData["email"] = c.email;
+                    TempData["mobile"] = c.mobile;
+                    return View();
+                }
+
             }
             else
             {
@@ -71,8 +85,7 @@ namespace BTv6.Controllers
                 TempData["design"] = c.design;
                 TempData["email"] = c.email;
                 TempData["mobile"] = c.mobile;
-
-                return RedirectToAction("Index", "Signup");
+                return View();
             }
         }
     }
