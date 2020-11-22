@@ -193,6 +193,7 @@
       <DependentUpon>BusinessToolDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ModelMetaData\complainMetaData.cs" />
+    <Compile Include="Models\ModelPartial\complainPartial.cs" />
     <Compile Include="Models\note.cs">
       <DependentUpon>BusinessToolDB.tt</DependentUpon>
     </Compile>
