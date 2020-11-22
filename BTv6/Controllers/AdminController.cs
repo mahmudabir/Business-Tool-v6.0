@@ -208,10 +208,10 @@ namespace BTv6.Controllers
             {
                 if ((int)Session["SID"] == 1)
                 {
-                    LoginRepository log = new LoginRepository();
+                    EmployeeRepository log = new EmployeeRepository();
                     var check = log.GetByID(id);
 
-                    if(check.SID == 0)
+                    if(check != null)
                     {
                         EmployeeRepository employees = new EmployeeRepository();
                         StatusRepository status = new StatusRepository();
@@ -299,7 +299,10 @@ namespace BTv6.Controllers
                     EmployeeRepository ck = new EmployeeRepository();
                     var check = ck.GetByID(id);
 
-                    if(check == null)
+                    LoginRepository log = new LoginRepository();
+                    var checkL = log.GetByID(id);
+
+                    if (check == null && checkL.SID == 5)
                     {
                         return RedirectToAction("EmployeeManagement");
                     }
@@ -352,7 +355,7 @@ namespace BTv6.Controllers
                     EmployeeRepository ck = new EmployeeRepository();
                     var check = ck.GetByID(id);
 
-                    if (check == null)
+                    if (check == null )
                     {
                         return RedirectToAction("EmployeeManagement");
                     }
