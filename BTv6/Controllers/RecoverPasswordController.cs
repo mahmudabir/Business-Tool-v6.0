@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using BTv6.Models;
 using BTv6.Repositories.CommonRepositories;
+using BTv6.Repositories.AdminRepositories;
 
 namespace BTv6.Controllers
 {
@@ -58,8 +59,7 @@ namespace BTv6.Controllers
         [HttpPost]
         public ActionResult Index(string EmailID)
         {
-            //string message = "";
-            //bool status = false;
+        
             using (BusinessToolDBEntities dc = new BusinessToolDBEntities())
             {
                 //employe info

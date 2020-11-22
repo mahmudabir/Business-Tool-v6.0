@@ -1,5 +1,5 @@
-﻿
-@using BTv6.Models;
+﻿@*@model BTv6.Models.employee*@
+
 <!DOCTYPE html>
 <html>
 
@@ -14,9 +14,8 @@
     <div class="wrap">
         <h2>Reset Password</h2>
         <form method="post" name="myForm">
-            @*<span style="color:red;">@Html.ValidationMessageFor(model =>model.)</span>*@
             <span style="color:red;">@TempData["message"]</span>
-            <input type="email" name="EmailID" placeholder="Enter your Email" value="" required>
+            <input type="email" name="EmailID" placeholder="Enter your Email" value="">
             <input type="submit" value="SUBMIT">
         </form>
     </div>
