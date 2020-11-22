@@ -67,51 +67,26 @@ namespace BTv6.Controllers
                 //customer info
                 var account12 = dc.customers.Where(a => a.email == EmailID).FirstOrDefault(); 
                 
-                
-                if (account12 != null)
-                {
-                    //login info
-                    var userFromDB12 = dc.log_in.Where(a => a.LID == account12.cusid).FirstOrDefault();
-                    if (userFromDB12.SID != 5)
-                    {
-                        if (account != null)
-                        {
-                            //Send Mail
-                            
-                            Session["email"] = account.E_MAIL;
-                            //send verification mail employee
-                            SendVerificationLinkEmail(account.E_MAIL, "ResetPassword");
+               
 
-                        }
-                        else
-                        {
-                            TempData["message"] = "Account Not Found";
-                            return View();
-                        }
-                    }
-                    else
-                    {
-                        var account1 = dc.customers.Where(a => a.email == EmailID).FirstOrDefault();
-                        if (account1 != null)
-                        {
-                            Session["email"] = account1.email;
-                            //send mail customer
-                            SendVerificationLinkEmail(account1.email, "ResetPassword");
-                        }
-                        else
-                        {
-                            TempData["message"] = "Account Not Found";
-                            return View();
-                        }
-                    }
+                if(account!=null)
+                {
+                  
+                    Session["email"] = account.E_MAIL;
+                    SendVerificationLinkEmail(account.E_MAIL, "ResetPassword");
+                }
+                else if (account12!=null)
+                {
+                    Session["email"] = account12.email;
+                    
+                    SendVerificationLinkEmail(account12.email, "ResetPassword");
                 }
                 else
                 {
-                    TempData["message"] = "Account Not Found";
+                    TempData["message"] = "Email Not Found";
                     return View();
                 }
-                
-                
+                             
             }
             return RedirectToAction("Index","Login");
         }
@@ -134,16 +109,17 @@ namespace BTv6.Controllers
         {
             using (BusinessToolDBEntities dc = new BusinessToolDBEntities())
             {
-                var v = dc.employees.Where(a => a.E_MAIL == EmailID).FirstOrDefault();
+                var account = dc.employees.Where(a => a.E_MAIL == EmailID).FirstOrDefault();
                 var account12 = dc.customers.Where(a => a.email == EmailID).FirstOrDefault();
-                var userFromDB12 = dc.log_in.Where(a => a.LID == account12.cusid).FirstOrDefault();
-                if (userFromDB12.SID != 5)
+
+
+                if (account!=null)
                 {
-                    if (v.E_MAIL == Request["EmailID"])
+                    if (account.E_MAIL == Request["EmailID"])
                     {
                         if (Request["newpass"] == Request["connewpass"])
                         {
-                            var userFromDB = dc.log_in.Where(a => a.LID == v.EmpID).FirstOrDefault();
+                            var userFromDB = dc.log_in.Where(a => a.LID == account.EmpID).FirstOrDefault();
                             userFromDB.PASS = Request["connewpass"];
                             dc.Entry(userFromDB).State = EntityState.Modified;
                             dc.SaveChanges();
@@ -157,12 +133,8 @@ namespace BTv6.Controllers
                         TempData["suc"] = "Password Recovered";
                         return RedirectToAction("Index", "Login");
                     }
-                    else
-                    {
-                        return RedirectToAction("Index", "Login");
-                    }
                 }
-                else
+                else if (account12!=null)
                 {
                     var v1 = dc.customers.Where(a => a.email == EmailID).FirstOrDefault();
                     if (v1.email == Request["EmailID"])
@@ -183,13 +155,13 @@ namespace BTv6.Controllers
                         TempData["suc"] = "Password Recovered";
                         return RedirectToAction("Index", "Login");
                     }
-                    else
-                    {
-                        return RedirectToAction("Index", "Login");
-                    }
                 }
-                
-                
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+                return RedirectToAction("Index", "Login");
+
             }
             
         }
