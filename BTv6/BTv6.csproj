@@ -122,6 +122,7 @@
     <Content Include="Assets\image\home.gif" />
     <Content Include="Assets\image\logo.png" />
     <Content Include="Assets\image\product\default.png" />
+    <Content Include="Assets\image\profile\default.png" />
     <Content Include="Assets\image\reg.jpeg" />
     <Content Include="Assets\image\travel.jpeg" />
     <Content Include="Assets\image\user.png" />
@@ -322,7 +323,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Assets\image\profile\" />
     <Folder Include="Views\Logout\" />
   </ItemGroup>
   <ItemGroup>
