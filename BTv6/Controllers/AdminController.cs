@@ -208,20 +208,32 @@ namespace BTv6.Controllers
             {
                 if ((int)Session["SID"] == 1)
                 {
-                    EmployeeRepository employees = new EmployeeRepository();
-                    StatusRepository status = new StatusRepository();
-                    ViewData["design"] = status.GetAll();
-                    var employee = employees.Get(id);
+                    LoginRepository log = new LoginRepository();
+                    var check = log.GetByID(id);
 
-                    if(employee == null)
+                    if(check.SID == 0)
                     {
-                        return RedirectToAction("EmployeeManagement");
+                        EmployeeRepository employees = new EmployeeRepository();
+                        StatusRepository status = new StatusRepository();
+                        ViewData["design"] = status.GetAll();
+                        var employee = employees.Get(id);
+
+                        if (employee == null)
+                        {
+                            return RedirectToAction("EmployeeManagement");
+                        }
+
+                        else
+                        {
+                            return View("EmployeeManagement/Update/Index", employee);
+                        }
                     }
 
                     else
                     {
-                        return View("EmployeeManagement/Update/Index", employee);
-                    }                   
+                        return RedirectToAction("EmployeeManagement");
+                    }
+                                   
                 }
 
                 else
