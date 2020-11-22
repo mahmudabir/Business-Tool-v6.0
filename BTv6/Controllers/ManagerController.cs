@@ -297,12 +297,13 @@ namespace BTv6.Controllers
             {
                 if ((int)Session["SID"] == 2)
                 {
-                    /*order order1 = new order();*/
-                    //OrderRepository order = new OrderRepository();
+                    /*order order1 = new order();
+                    OrderRepository order = new OrderRepository();
 
-                    //return View(order.GetPendingOrder("0"));
-                    //BusinessToolDBEntities db = new BusinessToolDBEntities();
-                    //List<order> list = db.orders.Where(x => x.stat == "0").ToList();
+                    return View(order.GetPendingOrder("0"));
+                    BusinessToolDBEntities db = new BusinessToolDBEntities();
+                    List<order> list = db.orders.Where(x => x.stat == "0").ToList();*/
+
                     OrderRepository orders = new OrderRepository();
                     var list = orders.GetOrderByID(id);
 
