@@ -83,13 +83,7 @@ namespace BTv6.Controllers
                 if (this.CheckCustomer((int)Session["SID"]))
                 {
 
-                    if (!ModelState.IsValid)
-                    {
-                        TempData["error"] = "Your complain was not submitted!";
-
-                        return RedirectToAction("Index", "Complain");
-                    }
-                    else
+                    if (ModelState.IsValid)
                     {
                         ComplainRepository complainRepository = new ComplainRepository();
 
@@ -104,6 +98,13 @@ namespace BTv6.Controllers
                         TempData["success"] = "Your complain was submitted!";
 
                         return RedirectToAction("Index", "Customer");
+
+                    }
+                    else
+                    {
+                        TempData["error"] = "Your complain was not submitted!";
+
+                        return RedirectToAction("Index", "Complain");
                     }
                 }
                 else
