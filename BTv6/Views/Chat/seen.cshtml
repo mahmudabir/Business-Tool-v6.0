@@ -71,15 +71,15 @@
                     foreach (var item in ViewData["receiver"] as List<BTv6.Models.chat>)
                     {
                        // i = i + 1;
-                        <tr>
-                            @*<td align='middle'>@i</td>*@
-                            <td align='middle'>@item.SENDER</td>
-                            <td align='middle'>@item.DATE</td>
-                            <td align='middle'>@item.SUB</td>
-                            <td align='left'>@item.TEXT</td>
+                                <tr>
+                                    @*<td align='middle'>@i</td>*@
+                                    <td align='middle'>@item.SENDER</td>
+                                    <td align='middle'>@item.DATE</td>
+                                    <td align='middle'>@item.SUB</td>
+                                    <td align='left'>@item.TEXT</td>
+                                    <td><a href="~/Chat/unseenmessage/@item.MSG_ID"><input type="submit" value="Mark as Unread"></a></td>
 
-
-                        </tr>
+                                </tr>
 
                     }
                 }

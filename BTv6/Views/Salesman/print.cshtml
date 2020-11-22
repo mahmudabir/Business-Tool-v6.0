@@ -1,0 +1,58 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="~/Assets/js/pdfPrint.js"></script>
+    <title>Sell Products</title>
+    
+</head>
+<body>
+    <div align="center" style="margin-top:100px;" class="table" id="table">
+        <center><h1>Cash Memo</h1></center>
+        <div class=tab1 id="table">
+            <table class="content-table" border="1">
+
+                <tr>
+                    <td><b>Product ID:</b></td>
+                    <td>@TempData["pid"]</td>
+                </tr>
+                <tr>
+                    <td><b>Product Name:</b></td>
+                    <td>@TempData["pname"]</td>
+                </tr>
+                <tr>
+                    <td><b>Customer Name:</b></td>
+                    <td>@TempData["cname"]</td>
+                </tr>
+                <tr>
+                    <td><b>Customer Phone:</b></td>
+                    <td>@TempData["cno"]</td>
+                </tr>
+                <tr>
+                    <td><b>Type:</b></td>
+                    <td>@TempData["ptype"]</td>
+                </tr>
+                <tr>
+                    <td><b>Quantity:</b></td>
+                    <td>@TempData["quant"]</td>
+                </tr>
+                <tr>
+                    <td><b>Total Price:</b></td>
+                    <td>@TempData["tprice"]</td>
+                </tr>
+                <tr>
+                    <td><b>Sold By:</b></td>
+                    <td>@TempData["sellby"]</td>
+                </tr>
+            </table>
+
+        </div>
+
+    </div>
+   <center> <input style="margin-left: 30px;" type="submit" name="PRINT" value="PRINT" onclick="savePDF()">
+   <a href="~/Salesman/SellProducts/"><input style="margin-left: 30px;" type="submit" name="back" value="BACK" ></a></center>
+
+</body>
+</html>

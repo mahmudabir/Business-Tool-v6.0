@@ -51,6 +51,25 @@ namespace BTv6.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult unseenmessage(int id)
+        {
+            if (Session["SID"] != null)
+            {
+
+                chat ct = new chat();
+                ct = chatrepo.GetChatByID(id);
+                ct.STATUS = 0;
+                chatrepo.Update(ct);
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
 
         [HttpPost]
         public ActionResult Index(chat ct)
