@@ -375,11 +375,11 @@ namespace BTv6.Controllers
 
                     var mod1 = productRepository.GetAll().Where(x => x.MOD_BY == "1").Count();
                     var mod2 = productRepository.GetAll().Where(x => x.MOD_BY == "2").Count();
-                    var mod3 = productRepository.GetAll().Where(x => x.MOD_BY == "3").Count();
+                    /*var mod3 = productRepository.GetAll().Where(x => x.MOD_BY == "3").Count();*/
 
                     ViewData["mod1"] = mod1;
                     ViewData["mod2"] = mod2;
-                    ViewData["mod3"] = mod3;
+                    /*ViewData["mod3"] = mod3;*/
 
 
 
