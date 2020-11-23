@@ -22,6 +22,8 @@
     <div class="">
 
         <div align="center" class="table" id="table">
+            <span style="color:green">@TempData["edit"]</span>
+            <span style="color:green">@TempData["insert"]</span>
             <form method="POST">
                 <input type="submit" name="CREATE" id="CREATE" value="CREATE">
                 <input style="width:15%;margin-left:10px" type="text" name="txtsearch" id="txtsearch" onkeyup="search()" value="" placeholder="Seach By Column" />

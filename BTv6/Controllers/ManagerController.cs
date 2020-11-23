@@ -147,6 +147,7 @@ namespace BTv6.Controllers
                         if (product.BUY_PRICE <= product.SELL_PRICE)
                         {
                             products.Update(product);
+                            TempData["edit"] = "product edit Successfully";
 
                             return RedirectToAction("ProductManage", "Manager");
                         }
@@ -236,7 +237,7 @@ namespace BTv6.Controllers
                             {
                                 products.InsertByObj(product);
 
-
+                                TempData["insert"] = "Inserted";
                                 return RedirectToAction("ProductManage", "Manager");
                             }
                             else
