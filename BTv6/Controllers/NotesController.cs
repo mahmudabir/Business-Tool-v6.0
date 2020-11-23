@@ -50,8 +50,7 @@ namespace BTv6.Controllers
                     noteToInsert.NoteName = (string)nt.NoteName;
                     noteToInsert.Text = (string)nt.Text;
 
-                    TempData["names"] = noteToInsert.NoteName;
-                    TempData["texts"] = noteToInsert.Text;
+                    
                     if (noteToInsert.NoteName != null && noteToInsert.Text != null)
                     {
                          noterepo.Insert(noteToInsert);
@@ -78,23 +77,30 @@ namespace BTv6.Controllers
                 if (Session["SID"] != null)
                 {
                     note checkNote = new note();
+
                     checkNote.NoteName = nt.NoteName;
                     checkNote.Text = nt.Text;
-
+                    note getNoteId = new note();
+                    getNoteId.NoteID = nt.NoteID;
+                    if (noterepo.Get(getNoteId.NoteID) != null){ 
                     if (checkNote.NoteName != null && checkNote.Text != null)
-                    {
-                        note getNoteId = new note();
-                        getNoteId.NoteID = nt.NoteID;
-                        noterepo.Delete(getNoteId.NoteID);
-                        TempData["message"] = "Delete Successfull";
-                        return RedirectToAction("Index");
+                        {
 
+                            noterepo.Delete(getNoteId.NoteID);
+                            TempData["message"] = "Delete Successfull";
+                            return RedirectToAction("Index");
+
+                        }
+                        {
+                            TempData["error"] = "Can't delete anything";
+                            return RedirectToAction("Index");
+                        }
                     }
-                    else
-                    {
-                        TempData["error"] = "Can't delete anything";
-                        return RedirectToAction("Index");
-                    }
+                else
+                {
+                    TempData["error"] = "Can't delete anything";
+                    return RedirectToAction("Index");
+                }
                 }
                 else
                 {
@@ -151,12 +157,9 @@ namespace BTv6.Controllers
                 noteToUpdate.OwnerID = (string)Session["LID"];
                 noteToUpdate.NoteName = (string)nt.NoteName;
                 noteToUpdate.Text = (string)nt.Text;
-                if (noteToUpdate.NoteID !=null && noteToUpdate.NoteName !=null && noteToUpdate.Text!=null)
+                if (noteToUpdate.NoteID !=null && noteToUpdate.NoteName !=null && noteToUpdate.Text!=null )
                 {
                     
-
-                    TempData["names"] = noteToUpdate.NoteName;
-                    TempData["texts"] = noteToUpdate.Text;
 
                     if (Session["SID"] != null)
                     {
