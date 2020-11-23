@@ -50,7 +50,7 @@
             <input type="text" name="name" value="@if ((int)Session["SID"] != 5) { @emp.E_NAME} else { @cus.name}" required><br>
 
             <p>Designation</p><br>
-            <input type="text" name="designation" value="@if ((int)Session["SID"] != 5) {@ViewData["a"]@ViewData["m"]@ViewData["s"]@ViewData["d"]} else{ @cus.design }" required><br>
+            <input type="text" name="designation" value="@if ((int)Session["SID"] != 5) {@ViewData["a"]@ViewData["m"]@ViewData["s"]@ViewData["d"]} else{ @cus.design }" readonly><br>
             <p>Email<i class="far fa-envelope"></i></p><br>
             <input type="email" name="email" value="@if ((int)Session["SID"] != 5) { @emp.E_MAIL} else { @cus.email}" readonly><br>
 

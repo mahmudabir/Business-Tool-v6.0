@@ -34,8 +34,8 @@ namespace BTv6.Controllers
 
                     var LID = (string)Session["LID"];
 
-                    if (ModelState.IsValid)
-                    {
+                    /*if (ModelState.IsValid)
+                    {*/
                         if (lo.PASS == l.PASS)
                         {
                             BusinessToolDBEntities context = new BusinessToolDBEntities();
@@ -53,11 +53,11 @@ namespace BTv6.Controllers
                             TempData["Error"] = "Wrong Old Password";
                             return RedirectToAction("Index", "ChangePassword");
                         }
-                    }
-                    else
+                    /*}*/
+                    /*else
                     {
                         return View();
-                    }
+                    }*/
                 }
                 else
                 {

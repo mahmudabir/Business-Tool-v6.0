@@ -34,13 +34,13 @@
         <h1>Password Change</h1>
         <form method="POST">
             <p>Old Password</p>
-            <input type="password" name="PASS" placeholder="Enter Old Password" value=""><br>
-            <span style="color:red;">@Html.ValidationMessageFor(model => model.PASS)</span>
+            <input type="password" name="PASS" placeholder="Enter Old Password" value="" required><br>
+            @*<span style="color:red;">@Html.ValidationMessageFor(model => model.PASS)</span>*@
             <p>New Password</p>
-            <input type="password" name="newpassword" placeholder="Enter New password" value=""><br>
+            <input type="password" name="newpassword" placeholder="Enter New password" value="" required><br>
             <span id="err"></span>
             <p>Confirm New Password</p>
-            <input type="password" name="confirmnewpassword" placeholder="Confirm New password" value=""><br>
+            <input type="password" name="confirmnewpassword" placeholder="Confirm New password" value="" required><br>
             <input type="submit" name="PROCEED" value="Proceed"><span style="color:red">@TempData["Error"]</span><span style="color:red">@TempData["Error1"]</span>
         </form>
     </div>
