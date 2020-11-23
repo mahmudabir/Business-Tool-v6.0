@@ -24,9 +24,9 @@ namespace BTv6.Controllers
             var verifyUrl = "/RecoverPassword/" + emailFor + "/";
             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
 
-            var fromEmail = new MailAddress("businesstoolsv5@gmail.com", "BusinessTools");
+            var fromEmail = new MailAddress("system email", "BusinessTools");
             var toEmail = new MailAddress(emailID);
-            var fromEmailPassword = "business@tools";
+            var fromEmailPassword = "";
             string subject = "Reset Password";
 
             string body = "Hi,<br/><br/>We got Request for Reset your password.Please Click on below link" +
