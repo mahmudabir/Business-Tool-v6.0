@@ -1,4 +1,5 @@
 ﻿using BTv6.Models;
+using BTv6.Repositories.AdminRepositories;
 using BTv6.Repositories.CommonRepositories;
 using System;
 using System.Collections.Generic;
@@ -11,14 +12,14 @@ namespace BTv6.Controllers
     public class ChatController : Controller
     {
         ChatRepository chatrepo = new ChatRepository();
+        EmployeeRepository emprepo = new EmployeeRepository();
 
-        [HttpGet]
+         [HttpGet]
         public ActionResult Index(string id)
         {
 
             if (Session["SID"] != null)
             {
-               
                 ViewData["receiver"] = chatrepo.GetAllByReceiverId((string)Session["LID"]);
                 TempData["ncount"] = chatrepo.GetAllByReceiverId((string)Session["LID"]).Count();
                 TempData["ocount"] = chatrepo.GetAllSeenById((string)Session["LID"]).Count();
@@ -82,10 +83,10 @@ namespace BTv6.Controllers
                 {
                     return View("send");
                 }
-                
+
                 else if (Request["seenmessage"] != null)
                 {
-                   
+
                     ViewData["receiver"] = chatrepo.GetAllSeenById((string)Session["LID"]);
                     return View("seen");
                 }
@@ -99,7 +100,10 @@ namespace BTv6.Controllers
                 {
                     chat chatToInsert = new chat();
                     chatToInsert.RECEIVER = ct.RECEIVER;
-                    if (chatToInsert.RECEIVER == "1" || chatToInsert.RECEIVER == "2" || chatToInsert.RECEIVER == "3" || chatToInsert.RECEIVER == "4" || chatToInsert.RECEIVER == "5")
+                    var sid = emprepo.GetByID(chatToInsert.RECEIVER);
+
+                    if(emprepo.GetByID(chatToInsert.RECEIVER)!=null){
+                    if (sid.DID == 1 || sid.DID == 2 || sid.DID == 3 || sid.DID == 4 || sid.DID == 5)
                     {
 
                         chatToInsert.SENDER = (string)Session["LID"];
@@ -110,18 +114,18 @@ namespace BTv6.Controllers
                             if (chatToInsert.SENDER != chatToInsert.RECEIVER)
                             {
                                 chatrepo.Insert(chatToInsert);
-                                TempData["message"] = "Message Sent";
+                                TempData["message"] = "Message Sent Successfully";
                                 return RedirectToAction("Index");
                             }
                             else
                             {
-                                TempData["message"] = "You are not allowed to send message to yourself";
+                                TempData["error"] = "You are not allowed to send message to yourself";
                                 return RedirectToAction("Index");
                             }
                         }
                         else
                         {
-                            TempData["message"] = "Message Can't Send";
+                            TempData["error"] = "Message Can't Send";
                             return RedirectToAction("Index");
                         }
                     }
@@ -129,7 +133,13 @@ namespace BTv6.Controllers
 
                     else
                     {
-                        TempData["message"] = "Message Can't Send";
+                        TempData["error"] = "Message Can't Send";
+                        return RedirectToAction("Index");
+                    }
+                }
+                    else
+                    {
+                        TempData["error"] = "Message Can't Send";
                         return RedirectToAction("Index");
                     }
                 }
@@ -149,9 +159,6 @@ namespace BTv6.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-
         }
-
-
     }
 }

@@ -17,8 +17,14 @@ namespace BTv6.Controllers
         {
             if (Session["SID"] != null)
             {
-                ViewData["notes"] = noterepo.GetNotice((string)Session["LID"]);
-                return View();
+                if (this.checkUser((int)Session["SID"])){
+                    ViewData["notes"] = noterepo.GetNotice((string)Session["LID"]);
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
             }
 
             else
@@ -38,9 +44,7 @@ namespace BTv6.Controllers
                 if (Session["SID"] != null)
                 {
 
-                    if (ModelState.IsValid)
-                    {
-                        note noteToInsert = new note();
+                    note noteToInsert = new note();
 
                     noteToInsert.OwnerID = (string)Session["LID"];
                     noteToInsert.NoteName = (string)nt.NoteName;
@@ -48,28 +52,17 @@ namespace BTv6.Controllers
 
                     TempData["names"] = noteToInsert.NoteName;
                     TempData["texts"] = noteToInsert.Text;
-
-                   
-
-                        noterepo.Insert(noteToInsert);
-
-                        TempData["message"] = "Note is Saved!";
-                        return RedirectToAction("Index");
+                    if (noteToInsert.NoteName != null && noteToInsert.Text != null)
+                    {
+                         noterepo.Insert(noteToInsert);
+                         TempData["message"] = "Note is Saved!";
+                         return RedirectToAction("Index");
 
                     }
                     else
                     {
-                        
-                       if (Session["SID"] != null)
-                        {
-                            ViewData["notes"] = noterepo.GetNotice((string)Session["LID"]);
-                            return View();
-                        }
-
-                        else
-                        {
-                            return RedirectToAction("Index", "Login");
-                        }
+                        TempData["error"] = "Fill all the fields";
+                        return RedirectToAction("Index");
                     }
 
                 }
@@ -99,7 +92,7 @@ namespace BTv6.Controllers
                     }
                     else
                     {
-                        TempData["message"] = "Can't delete anything";
+                        TempData["error"] = "Can't delete anything";
                         return RedirectToAction("Index");
                     }
                 }
@@ -131,7 +124,7 @@ namespace BTv6.Controllers
                         }
                         else
                         {
-                            TempData["message"] = "Invalid Search";
+                            TempData["error"] = "Invalid Search";
                             return RedirectToAction("Index");
                         }
                  }
@@ -179,7 +172,7 @@ namespace BTv6.Controllers
                 }
                 else
                 {
-                    TempData["message"] = "Nothing Modified";
+                    TempData["error"] = "Nothing Modified";
                     return RedirectToAction("Index");
                 }
             }
@@ -189,6 +182,18 @@ namespace BTv6.Controllers
                 return RedirectToAction("Index");
             }
 
+        }
+
+        public bool checkUser(int SID)
+        {
+            if (SID == 1 || SID == 2 || SID == 3 || SID == 4)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

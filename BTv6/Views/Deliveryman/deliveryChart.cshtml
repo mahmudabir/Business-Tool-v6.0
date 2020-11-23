@@ -2,9 +2,10 @@
     var myChart = new Chart(width: 600, height: 400)
     .AddTitle("Delivery Chart")
     .AddSeries(
-    name: "Delivery Accepted",
-    xValue: new[] { "Deliveryman" },
-    yValues: new[] { ViewData["delivery"] })
+    name: "Delivery",
+    xValue: new[] { "Deiveryman4", "Deiveryman44", "Deiveryman444" },
+    yValues: new[] { ViewData["fsale"], ViewData["ssale"], ViewData["tsale"] })
     .Write();
 }
+
 

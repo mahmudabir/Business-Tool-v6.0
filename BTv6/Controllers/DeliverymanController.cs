@@ -127,7 +127,15 @@ namespace BTv6.Controllers
                 {
                     var deliveryCount = orderrepo.GetAcceptedList((string)Session["LID"]).Count();
                     ViewData["delivery"] = deliveryCount;
+
+                    var fdelCount = orderrepo.GetAcceptedList("4").Count();
+                    var sdelCount = orderrepo.GetAcceptedList("44").Count();
+                    var tdelCount = orderrepo.GetAcceptedList("444").Count();
+                    ViewData["fsale"] = fdelCount;
+                    ViewData["ssale"] = sdelCount;
+                    ViewData["tsale"] = tdelCount;
                     return View();
+
                 }
                 else
                 {

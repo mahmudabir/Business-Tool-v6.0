@@ -15,13 +15,10 @@ namespace BTv6.Models
 
     public partial class note
     {
-        [Required(ErrorMessage = "Invalid Search")]
+        
         public int NoteID { get; set; }
-
-        [Required(ErrorMessage="*")]
         public string NoteName { get; set; }
         public string OwnerID { get; set; }
-        [Required(ErrorMessage ="*")]
         public string Text { get; set; }
     
         public virtual employee employee { get; set; }
