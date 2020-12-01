@@ -5,6 +5,15 @@
 `Database Backup is in DBSchema directory.`<br>
 `Demo Data is already stored in "BusinessToolDB.bak" file.`
 
+# Login Information<br />
+
+USERNAME -------- PASSWORD -------- TYPE<br />
+
+1 ----------------- 1111 ---------- Admin<br />
+2 ----------------- 2222 ---------- Manager<br />
+3 ----------------- 3333 ---------- Salesman<br />
+4 ----------------- 4444 ---------- Deliveryman<br />
+5 ----------------- 5555 ---------- Customer<br />
 
 # Contact<br>
 <a href="mailto:amabirmahmud@gmail.com">Abir Mahmud</a><br>
