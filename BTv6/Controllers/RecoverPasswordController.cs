@@ -24,9 +24,9 @@ namespace BTv6.Controllers
             var verifyUrl = "/RecoverPassword/" + emailFor + "/";
             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
 
-            var fromEmail = new MailAddress("system email", "BusinessTools");
+            var fromEmail = new MailAddress("businesstoolsv5@gmail.com", "BusinessTools");
             var toEmail = new MailAddress(emailID);
-            var fromEmailPassword = "";
+            var fromEmailPassword = "business@tools";
             string subject = "Reset Password";
 
             string body = "Hi,<br/><br/>We got Request for Reset your password.Please Click on below link" +
@@ -74,6 +74,7 @@ namespace BTv6.Controllers
                   
                     Session["email"] = account.E_MAIL;
                     SendVerificationLinkEmail(account.E_MAIL, "ResetPassword");
+
                 }
                 else if (account12!=null)
                 {
@@ -88,6 +89,7 @@ namespace BTv6.Controllers
                 }
                              
             }
+            TempData["succ"] = "Recover Password link sended";
             return RedirectToAction("Index","Login");
         }
         [HttpGet]
